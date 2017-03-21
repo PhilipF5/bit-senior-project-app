@@ -1,0 +1,29 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Navigation</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="openPage(AboutPage)">
+          <ion-icon name="home" item-left></ion-icon>
+        Dashboard
+      </button>
+      <button ion-item (click)="openPage(ContactPage)">
+          <ion-icon name="pricetags" item-left></ion-icon>
+        Auctions
+      </button>
+        <button ion-item>
+            <ion-icon name="contacts" item-left></ion-icon>
+            Accounts
+        </button>
+        <button ion-item>
+            <ion-icon name="stats" item-left></ion-icon>
+            Reports
+        </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #content [root]="rootPage"></ion-nav>
