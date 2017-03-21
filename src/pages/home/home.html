@@ -11,14 +11,14 @@
             <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
                 <ion-card>
                     <ion-card-header>
-                        Hello, Buyer Name.
+                        Hi, Buyer Name.
                     </ion-card-header>
                     <ion-list>
                         <ion-item>
                             <ion-icon name="cash" item-left></ion-icon>
                             $175,000
                         </ion-item>
-                        <button ion-item>
+                        <button ion-item disabled>
                             <ion-icon name="megaphone" item-left></ion-icon>
                             Current Auction
                         </button>
@@ -36,40 +36,25 @@
                     </ion-card-header>
                     <ion-list>
                         <button ion-item>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col col-6>
-                                        Columbia, SC
-                                    </ion-col>
-                                    <ion-col col-6>
-                                        04/10/17
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
+                            <h2>Columbia, SC</h2>
+                            <p>04/10/17</p>
+                            <ion-badge color="danger" item-right>
+                                Unregistered
+                            </ion-badge>
                         </button>
                         <button ion-item>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col col-6>
-                                        Cleveland, OH
-                                    </ion-col>
-                                    <ion-col col-6>
-                                        04/15/17
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
+                            <h2>Cleveland, OH</h2>
+                            <p>04/15/17</p>
+                            <ion-badge color="go" item-right>
+                                Registered
+                            </ion-badge>
                         </button>
                         <button ion-item>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col col-6>
-                                        Trenton, NJ
-                                    </ion-col>
-                                    <ion-col col-6>
-                                        05/03/17
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
+                            <h2>Trenton, NJ</h2>
+                            <p>05/03/17</p>
+                            <ion-badge color="danger" item-right>
+                                Unregistered
+                            </ion-badge>
                         </button>
                     </ion-list>
                 </ion-card>

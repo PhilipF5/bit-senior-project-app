@@ -4,8 +4,9 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 import { AdminHomePage } from '../pages/admin-home/admin-home';
+import { LoginPage } from '../pages/login/login';
+import { LoginProvider } from '../providers/login';
 
 @NgModule({
   declarations: [
@@ -13,8 +14,8 @@ import { AdminHomePage } from '../pages/admin-home/admin-home';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage,
-      AdminHomePage
+      AdminHomePage,
+	  LoginPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -25,8 +26,9 @@ import { AdminHomePage } from '../pages/admin-home/admin-home';
     AboutPage,
     ContactPage,
     HomePage,
-    AdminHomePage
+    AdminHomePage,
+	  LoginPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider]
 })
 export class AppModule {}

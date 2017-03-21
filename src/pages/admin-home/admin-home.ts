@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Chart } from 'chart.js';
+import { LoginPage } from '../../pages/login/login'
 
 /*
   Generated class for the AdminHome page.
@@ -17,7 +18,10 @@ export class AdminHomePage {
     @ViewChild('donutCanvas') donutCanvas;
     donutChart: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+	let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
+    modal.present();
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminHomePage');
