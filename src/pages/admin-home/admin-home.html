@@ -15,18 +15,12 @@
 <ion-content padding>
     <ion-grid>
         <ion-row>
-            <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
-                <ion-card>A CHART WILL GO HERE</ion-card>
-            </ion-col>
-            <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+            <ion-col col-12 col-sm-9 col-md-6 col-lg-3 col-xl-3>
                 <ion-card>
-                    <!--<ion-card-header>
+                    <ion-card-header>
                         Auctions in Progress
-                    </ion-card-header>-->
+                    </ion-card-header>
                     <ion-list>
-                        <ion-list-header>
-                            Auctions in Progress
-                        </ion-list-header>
                         <ion-item-sliding #slidingItem1>
                             <button ion-item>
                                 <h2>Richmond, VA</h2>
@@ -53,11 +47,14 @@
                             <button ion-item>
                                 <h2>Chicago, IL</h2>
                                 <p>Ends at 3:45 PM</p>
-                                <button ion-button icon-only item-right clear (click)="slidingItem2._setOpenAmount(75)">
+                                <button ion-button icon-only item-right clear (click)="slidingItem2._setOpenAmount(100)">
                                     <ion-icon name="more"></ion-icon>
                                 </button>
                             </button>
                             <ion-item-options side="right">
+                                <button ion-button color="danger" icon-only small (click)="slidingItem2.close()">
+                                    <ion-icon name="arrow-back"></ion-icon>
+                                </button>
                                 <button ion-button color="primary">
                                     <ion-icon name="contacts"></ion-icon>
                                     15
@@ -71,10 +68,10 @@
                     </ion-list>
                 </ion-card>
                 <ion-card>
+                    <ion-card-header>
+                        Upcoming Auctions
+                    </ion-card-header>
                     <ion-list>
-                        <ion-list-header>
-                            Upcoming Auctions
-                        </ion-list-header>
                         <button ion-item>
                             <h2>Columbia, SC</h2>
                             <p>04/10/17</p>
@@ -87,6 +84,72 @@
                             <h2>Trenton, NJ</h2>
                             <p>05/03/17</p>
                         </button>
+                    </ion-list>
+                </ion-card>
+            </ion-col>
+            <ion-col col-12 col-sm-9 col-md-6 col-lg-5 col-xl-3>
+                <ion-card>
+                    <ion-card-header>
+                        Most Popular States for Auctions
+                    </ion-card-header>
+                    <canvas #donutCanvas></canvas>
+                </ion-card>
+            </ion-col>
+            <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+                <ion-card>
+                    <ion-card-header>
+                        Top Dealers
+                    </ion-card-header>
+                    <ion-list>
+                        <ion-item>
+                            <h2>Duncan's Hokie Honda</h2>
+                            <p>4 buyers</p>
+                            <ion-badge color="secondary" item-right>
+                                $456k
+                            </ion-badge>
+                        </ion-item>
+                        <ion-item>
+                            <h2>Pinkerton Chevrolet</h2>
+                            <p>3 buyers</p>
+                            <ion-badge item-right>
+                                $432k
+                            </ion-badge>
+                        </ion-item>
+                        <ion-item>
+                            <h2>C&amp;C Automotive Group</h2>
+                            <p>4 buyers</p>
+                            <ion-badge item-right>
+                                $376k
+                            </ion-badge>
+                        </ion-item>
+                    </ion-list>
+                </ion-card>
+                <ion-card>
+                    <ion-card-header>
+                        Top Individual Buyers
+                    </ion-card-header>
+                    <ion-list>
+                        <ion-item>
+                            <h2>John Doe</h2>
+                            <p>Pinkerton Chevrolet</p>
+                            <ion-badge color="secondary" item-right>
+                                $203k
+                            </ion-badge>
+                        </ion-item>
+                        <ion-item>
+                            <h2>Sarah Jane Smith</h2>
+                            <p>Columbus Motors Co.</p>
+                            <ion-badge item-right>
+                                $180k
+                            </ion-badge>
+                        </ion-item>
+                        <ion-item>
+                            <h2>Harry Wells</h2>
+                            <p>Duncan's Hokie Honda</p>
+                            <ion-badge item-right>
+                                $174k
+                            </ion-badge>
+                        </ion-item>
                     </ion-list>
                 </ion-card>
             </ion-col>
