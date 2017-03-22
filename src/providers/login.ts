@@ -11,12 +11,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginProvider {
 	
-	creds = { apiKey: null, error: null, firstName: null, LastName: null, username: null};
+	creds = {
+		apiKey: null,
+		error: null,
+		firstName: null,
+		LastName: null,
+		username: null
+	};
 	username: string;
 	password: string;
 
-  constructor(public http: Http) {
-	  
-  }
+	constructor(public http: Http) {
+
+	}
 	
 }

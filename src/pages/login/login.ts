@@ -11,31 +11,34 @@ import { Http, Headers, Response, ResponseContentType } from '@angular/http';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+	selector: 'page-login',
+	templateUrl: 'login.html'
 })
 export class LoginPage {
-	
+
 	username: string;
 	password: string;
 
-constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public viewCtrl: ViewController, public http: Http) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public viewCtrl: ViewController, public http: Http) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-	
-login() {
-	console.log("Logging in with username " + this.username + " ...");
-	var headers = new Headers();
-	headers.append("Content-Type", "application/json");
-	this.http.post("http://auctionitapi.azurewebsites.net/api/login/mobile", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
-.subscribe(res => this.loginProvider.creds = res.json(), (err) => {}, () => {
-		if (this.loginProvider.creds.apiKey != null)
-			{
-	this.viewCtrl.dismiss();
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad LoginPage');
+	}
+
+	login() {
+		console.log("Logging in with username " + this.username + " ...");
+		var headers = new Headers();
+		headers.append("Content-Type", "application/json");
+		this.http.post("http://auctionitapi.azurewebsites.net/api/login/mobile", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
+		.subscribe(
+			res => this.loginProvider.creds = res.json(),
+			(err) => {},
+			() => {
+				if (this.loginProvider.creds.apiKey != null) {
+					this.viewCtrl.dismiss();
+				}
 			}
-	});
-}
+		);
+	}
 
 }
