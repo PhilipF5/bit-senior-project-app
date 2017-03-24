@@ -15,7 +15,7 @@
 				Auctions
 			</button>
 			<button ion-item *ngIf="loginProvider.creds.role == 'admin'">
-				<ion-icon name="contact" item-left></ion-icon>
+				<ion-icon name="contacts" item-left></ion-icon>
 				Accounts
 			</button>
 			<button ion-item *ngIf="loginProvider.creds.role == 'user'">
@@ -27,6 +27,24 @@
 				Reports
 			</button>
 		</ion-list>
+		<ion-card>
+			<ion-list>
+				<ion-list-header>Logged in as</ion-list-header>
+				<ion-item>
+					<h2>{{loginProvider.creds.firstName}} {{loginProvider.creds.lastName}}</h2>
+					<p *ngIf="loginProvider.creds.role == 'user'">Dealer Name Here</p>
+					<ion-badge *ngIf="loginProvider.creds.role == 'admin'" color="danger" item-right>Admin</ion-badge>
+				</ion-item>
+				<button ion-item>
+					<ion-icon name="person" item-left></ion-icon>
+					View Profile
+				</button>
+				<button ion-item (click)="showLogoutConfirm()">
+					<ion-icon name="log-out" item-left></ion-icon>
+					Log Out
+				</button>
+			</ion-list>
+		</ion-card>
 	</ion-content>
 </ion-menu>
 
