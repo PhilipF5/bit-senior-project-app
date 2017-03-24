@@ -5,12 +5,14 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { LoginProvider } from '../providers/login';
 import { AccountProvider } from '../providers/account';
+import { CurrencyPipe } from '../pipes/currency';
 
 @NgModule({
 	declarations: [
 		MyApp,
 		HomePage,
 		LoginPage,
+		CurrencyPipe
 	],
 	imports: [
 		IonicModule.forRoot(MyApp)

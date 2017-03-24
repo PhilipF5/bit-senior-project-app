@@ -19,7 +19,8 @@
                     <ion-list>
                         <ion-item>
                             <ion-icon name="cash" item-left></ion-icon>
-                            {{acctProvider.myAccount.availableCredit}}
+							<h2>{{acctProvider.myAccount.availableCredit | currency}}</h2>
+							<p>Available Credit</p>
                         </ion-item>
                         <button ion-item disabled>
                             <ion-icon name="megaphone" item-left></ion-icon>
