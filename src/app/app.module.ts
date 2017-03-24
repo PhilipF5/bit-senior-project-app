@@ -6,13 +6,23 @@ import { LoginPage } from '../pages/login/login';
 import { LoginProvider } from '../providers/login';
 import { AccountProvider } from '../providers/account';
 import { CurrencyPipe } from '../pipes/currency';
+import { AccountViewPage } from '../pages/account-view/account-view';
+import { AuctionListPage } from '../pages/auction-list/auction-list';
+import { AuctionViewPage } from '../pages/auction-view/auction-view';
+import { LotPage } from '../pages/lot/lot';
+import { ProfileViewPage } from '../pages/profile-view/profile-view';
 
 @NgModule({
 	declarations: [
 		MyApp,
 		HomePage,
 		LoginPage,
-		CurrencyPipe
+		CurrencyPipe,
+		AccountViewPage,
+		AuctionListPage,
+		AuctionViewPage,
+		LotPage,
+		ProfileViewPage
 	],
 	imports: [
 		IonicModule.forRoot(MyApp)
@@ -22,6 +32,11 @@ import { CurrencyPipe } from '../pipes/currency';
 		MyApp,
 		HomePage,
 		LoginPage,
+		AccountViewPage,
+		AuctionListPage,
+		AuctionViewPage,
+		LotPage,
+		ProfileViewPage
 	],
 	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider, AccountProvider]
 })
