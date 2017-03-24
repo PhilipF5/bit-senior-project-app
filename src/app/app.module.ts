@@ -4,6 +4,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { LoginProvider } from '../providers/login';
+import { AccountProvider } from '../providers/account';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,7 @@ import { LoginProvider } from '../providers/login';
 		HomePage,
 		LoginPage,
 	],
-	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider]
+	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider, AccountProvider]
 })
 
 export class AppModule {}

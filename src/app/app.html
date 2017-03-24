@@ -32,7 +32,7 @@
 				<ion-list-header>Logged in as</ion-list-header>
 				<ion-item>
 					<h2>{{loginProvider.creds.firstName}} {{loginProvider.creds.lastName}}</h2>
-					<p *ngIf="loginProvider.creds.role == 'user'">Dealer Name Here</p>
+					<p *ngIf="loginProvider.creds.role == 'user'">{{acctProvider.myAccount.owner}}</p>
 					<ion-badge *ngIf="loginProvider.creds.role == 'admin'" color="danger" item-right>Admin</ion-badge>
 				</ion-item>
 				<button ion-item>

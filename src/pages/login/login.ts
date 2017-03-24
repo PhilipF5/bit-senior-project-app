@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
+import { AccountProvider } from '../../providers/account';
 import { HomePage } from '../../pages/home/home';
 import { Http, Headers, Response, ResponseContentType } from '@angular/http';
 
@@ -20,7 +21,7 @@ export class LoginPage {
 	username: string;
 	password: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public viewCtrl: ViewController, public http: Http) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public viewCtrl: ViewController, public http: Http) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
@@ -37,6 +38,10 @@ export class LoginPage {
 			() => {
 				if (this.loginProvider.creds.apiKey != null) {
 					this.viewCtrl.dismiss();
+					if (this.loginProvider.creds.role == "user")
+					{
+						this.acctProvider.loadMyAccount();
+					}
 				}
 			}
 		);

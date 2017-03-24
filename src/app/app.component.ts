@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
 import { LoginProvider } from '../providers/login';
+import { AccountProvider } from '../providers/account';
 import { LoginPage } from '../pages/login/login';
 
 
@@ -14,7 +15,7 @@ import { LoginPage } from '../pages/login/login';
 export class MyApp {
   	rootPage = HomePage;
 
-	constructor(platform: Platform, public loginProvider: LoginProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController) {
+constructor(platform: Platform, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController) {
     	platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.
 			// Here you can do any higher level native things you might need.
