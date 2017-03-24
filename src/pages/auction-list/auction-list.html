@@ -26,7 +26,7 @@
 				</ion-list>
 				<ion-list>
 					<ion-list-header>Registered Auctions</ion-list-header>
-					<button ion-item>
+					<button ion-item (click)="navCtrl.push(auctionViewPage)">
 						<h2>Secaucus, NY</h2>
 						<p>April 13, 2017</p>
 					</button>
@@ -35,7 +35,7 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-list>
 					<ion-list-header>Upcoming Auctions</ion-list-header>
-					<button ion-item>
+					<button ion-item (click)="navCtrl.push(auctionViewPage)">
 						<h2>Kansas City, MO</h2>
 						<p>April 9, 2017</p>
 					</button>
@@ -44,7 +44,7 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-list>
 					<ion-list-header>Your History</ion-list-header>
-					<button ion-item>
+					<button ion-item (click)="navCtrl.push(auctionViewPage)">
 						<h2>Baltimore, MD</h2>
 						<p>February 21, 2017</p>
 					</button>

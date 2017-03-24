@@ -26,7 +26,7 @@
                             <ion-icon name="megaphone" item-left></ion-icon>
                             Current Auction
                         </button>
-                        <button ion-item>
+                        <button ion-item (click)="navCtrl.push(profileViewPage)">
                             <ion-icon name="pricetag" item-left></ion-icon>
                             Purchase History
                         </button>
@@ -39,21 +39,21 @@
                         Upcoming Auctions
                     </ion-card-header>
                     <ion-list>
-                        <button ion-item>
+                        <button ion-item (click)="navCtrl.push(auctionViewPage)">
                             <h2>Columbia, SC</h2>
                             <p>April 10, 2017</p>
                             <ion-badge color="danger" item-right>
                                 Unregistered
                             </ion-badge>
                         </button>
-                        <button ion-item>
+                        <button ion-item (click)="navCtrl.push(auctionViewPage)">
                             <h2>Cleveland, OH</h2>
                             <p>April 15, 2017</p>
                             <ion-badge color="go" item-right>
                                 Registered
                             </ion-badge>
                         </button>
-                        <button ion-item>
+                        <button ion-item (click)="navCtrl.push(auctionViewPage)">
                             <h2>Trenton, NJ</h2>
                             <p>May 3, 2017</p>
                             <ion-badge color="danger" item-right>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { LotPage } from '../../pages/lot/lot';
 
 /*
   Generated class for the ProfileView page.
@@ -8,15 +9,20 @@ import { NavController, NavParams } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-profile-view',
-  templateUrl: 'profile-view.html'
+ 	selector: 'page-profile-view',
+ 	templateUrl: 'profile-view.html'
 })
+
 export class ProfileViewPage {
+	
+	lotPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams) {
+		this.lotPage = LotPage;
+	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfileViewPage');
-  }
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad ProfileViewPage');
+	}
 
 }
