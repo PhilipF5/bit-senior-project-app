@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
+import { HomePage } from '../../pages/home/home';
 import { Http, Headers, Response, ResponseContentType } from '@angular/http';
 
 
@@ -29,7 +30,7 @@ export class LoginPage {
 		console.log("Logging in with username " + this.username + " ...");
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
-		this.http.post("http://auctionitapi.azurewebsites.net/api/login/mobile", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
+		this.http.post("http://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
 		.subscribe(
 			res => this.loginProvider.creds = res.json(),
 			(err) => {},

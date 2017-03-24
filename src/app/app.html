@@ -14,14 +14,18 @@
 				<ion-icon name="pricetags" item-left></ion-icon>
 				Auctions
 			</button>
-			<button ion-item>
+			<button ion-item *ngIf="loginProvider.creds.role == 'admin'">
+				<ion-icon name="contact" item-left></ion-icon>
+				Accounts
+			</button>
+			<button ion-item *ngIf="loginProvider.creds.role == 'user'">
 				<ion-icon name="contact" item-left></ion-icon>
 				Account
 			</button>
-			<!--<button ion-item>
+			<button ion-item *ngIf="loginProvider.creds.role == 'admin'">
 				<ion-icon name="stats" item-left></ion-icon>
 				Reports
-			</button>-->
+			</button>
 		</ion-list>
 	</ion-content>
 </ion-menu>

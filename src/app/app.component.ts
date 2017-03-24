@@ -3,17 +3,16 @@ import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
-import { AdminHomePage } from '../pages/admin-home/admin-home';
+import { LoginProvider } from '../providers/login';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = AdminHomePage;
+  rootPage = HomePage;
 
-  constructor(platform: Platform) {
+	constructor(platform: Platform, public loginProvider: LoginProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

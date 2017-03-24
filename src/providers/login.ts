@@ -15,7 +15,8 @@ export class LoginProvider {
 		apiKey: null,
 		error: null,
 		firstName: null,
-		LastName: null,
+		lastName: null,
+		role: null,
 		username: null
 	};
 	username: string;
