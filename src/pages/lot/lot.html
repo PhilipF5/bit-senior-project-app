@@ -7,12 +7,86 @@
 <ion-header>
 
 	<ion-navbar color="primary">
-		<ion-title>View Lot</ion-title>
+		<ion-title>Lot Details</ion-title>
 	</ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+	<ion-grid>
+		<ion-row>
+			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+				<ion-card>
+					<ion-card-header text-center>
+						<h1>Lot #3</h1>
+					</ion-card-header>
+					<ion-list>
+						<ion-item>
+							Make
+							<p item-right>Ford</p>
+						</ion-item>
+						<ion-item>
+							Model
+							<p item-right>Fusion</p>
+						</ion-item>
+						<ion-item>
+							Trim
+							<p item-right>SEL</p>
+						</ion-item>
+						<ion-item>
+							Year
+							<p item-right>2012</p>
+						</ion-item>
+						<ion-item>
+							Mileage
+							<p item-right>35,000</p>
+						</ion-item>
+					</ion-list>
+				</ion-card>
+				<ion-card text-center>
+					<ion-card-header text-left>
+						Place New Bid
+					</ion-card-header>
+					<button ion-button icon-left color="go" large>
+						<ion-icon name="logo-usd"></ion-icon>
+						+1,000
+					</button>
+					<h2>OR</h2>
+					<ion-item>
+					<ion-label inset>USD $ </ion-label>
+					<ion-input type="text" placeholder="Enter here" text-right></ion-input>
+					</ion-item>
+					<button ion-button>Bid</button>
+				</ion-card>
+				<ion-card>
+					<ion-card-header>
+						<h2>Bid History</h2>
+					</ion-card-header>
+					<ion-list>
+						<ion-item>
+							3:55:32 PM
+							<h2 item-right>$ 15,000</h2>
+						</ion-item>
+						<ion-item>
+							3:55:10 PM
+							<h3 item-right>$ 14,000</h3>
+						</ion-item>
+						<ion-item>
+							3:54:40 PM
+							<h3 item-right>$ 13,000</h3>
+						</ion-item>
+					</ion-list>
+				</ion-card>
+			</ion-col>
+			<ion-col col-12 col-sm-9 col-md-6 col-lg-8 col-xl-3>
+				<ion-card>
+					<ion-card-header>
+						Additional Information
+					</ion-card-header>
+					This card will contain additional information from WordPress.
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>

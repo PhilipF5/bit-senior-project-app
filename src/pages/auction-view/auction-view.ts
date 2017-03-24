@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { LotPage } from '../../pages/lot/lot';
 
 /*
   Generated class for the AuctionView page.
@@ -8,15 +9,20 @@ import { NavController, NavParams } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-auction-view',
-  templateUrl: 'auction-view.html'
+ 	selector: 'page-auction-view',
+ 	templateUrl: 'auction-view.html'
 })
+
 export class AuctionViewPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+	lotPage;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AuctionViewPage');
-  }
+	constructor(public navCtrl: NavController, public navParams: NavParams) {
+		this.lotPage = LotPage;
+	}
+
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad AuctionViewPage');
+	}
 
 }
