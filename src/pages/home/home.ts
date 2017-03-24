@@ -4,7 +4,6 @@ import { NavController, ModalController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
 import { AccountProvider } from '../../providers/account';
 import { LoginPage } from '../../pages/login/login';
-import { CurrencyPipe } from '../../pipes/currency';
 import { ProfileViewPage } from '../../pages/profile-view/profile-view';
 import { AuctionViewPage } from '../../pages/auction-view/auction-view';
 

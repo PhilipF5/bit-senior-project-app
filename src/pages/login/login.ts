@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
 import { AccountProvider } from '../../providers/account';
-import { HomePage } from '../../pages/home/home';
-import { Http, Headers, Response, ResponseContentType } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 
 
 /*
