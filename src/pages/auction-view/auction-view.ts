@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { AuctionProvider } from '../../providers/auction';
 import { LotPage } from '../../pages/lot/lot';
 
 /*
@@ -17,8 +18,20 @@ export class AuctionViewPage {
 
 	lotPage;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public loadCtrl: LoadingController, public navParams: NavParams, public auctionProvider: AuctionProvider) {
 		this.lotPage = LotPage;
+		
+		let loader = this.loadCtrl.create({
+      		content: "Loading..."
+    	});
+    	loader.present();
+		
+		console.log(this.navParams.get('auctionID'));
+		
+		auctionProvider.loadAuction(this.navParams.get('auctionID'))
+		.then(() => {
+			loader.dismiss();
+		});
 	}
 
 	ionViewDidLoad() {

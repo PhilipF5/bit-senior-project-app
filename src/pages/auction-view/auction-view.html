@@ -19,15 +19,15 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 offset-lg-3 col-xl-3>
 				<ion-card>
 					<ion-card-header text-center>
-						<p>Auction #11</p>
-						<h1>Richmond, VA</h1>
-						<h3>April 1, 2017</h3>
-						<h3>2:00pm — 5:30pm</h3>
+						<p>Auction #{{auctionProvider.auction.id}}</p>
+						<h1>{{auctionProvider.auction.city.concat(', ', auctionProvider.auction.stateCode)}}</h1>
+						<h3>{{auctionProvider.auction.startTime}}</h3>
+						<h3>{{auctionProvider.auction.endTime}}</h3>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
 							<ion-icon name="navigate" item-left></ion-icon>
-							<p item-right>123 Auction Way, Richmond, VA 23233</p>
+							<p item-right>{{auctionProvider.auction.address.concat(', ', auctionProvider.auction.city, ', ', auctionProvider.auction.stateCode, ', ', auctionProvider.auction.postalCode)}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>

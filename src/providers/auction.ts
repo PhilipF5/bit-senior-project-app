@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { LoginProvider } from '../providers/login';
+import { ProfileProvider } from '../providers/profile';
 import 'rxjs/add/operator/map';
 
 /*
@@ -14,24 +15,44 @@ import 'rxjs/add/operator/map';
 export class AuctionProvider {
 
 	auction = {
-		
+		address: "",
+		buyers: null,
+		city: "",
+		endTime: null,
+		id: null,
+		lots: null,
+		participants: null,
+		postalCode: "",
+		startTime: null,
+		state: null,
+		stateCode: ""
 	};
 	
 	auctions = [];
+	
+	myAuctions = [];
 
-	constructor(public http: Http, public loginProvider: LoginProvider) {
+	constructor(public http: Http, public loginProvider: LoginProvider, public profileProvider: ProfileProvider) {
 		
 	}
 	
-	loadAuction(id: number) {
-		this.http.get("http://auctionit.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + id.toString())
-		.subscribe(
-			res => this.auction = res.json(),
-			(err) => {},
-			() => {
-				
-			}
-		)
+	loadAuction(id) {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + id)
+			.subscribe(
+				res => {
+					this.auction = res.json();
+				},
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
+	}
+	
+	loadMyAuctions() {
+		
 	}
 
 }
