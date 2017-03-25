@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
-import { Http, Headers, Response, ResponseContentType } from '@angular/http';
+import { AccountProvider } from '../../providers/account';
+import { Http, Headers } from '@angular/http';
 
 
 /*
@@ -19,7 +20,7 @@ export class LoginPage {
 	username: string;
 	password: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public viewCtrl: ViewController, public http: Http) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public viewCtrl: ViewController, public http: Http) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
@@ -29,13 +30,17 @@ export class LoginPage {
 		console.log("Logging in with username " + this.username + " ...");
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
-		this.http.post("http://auctionitapi.azurewebsites.net/api/login/mobile", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
+		this.http.post("http://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
 		.subscribe(
 			res => this.loginProvider.creds = res.json(),
 			(err) => {},
 			() => {
 				if (this.loginProvider.creds.apiKey != null) {
 					this.viewCtrl.dismiss();
+					if (this.loginProvider.creds.role == "user")
+					{
+						this.acctProvider.loadMyAccount();
+					}
 				}
 			}
 		);

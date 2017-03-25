@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, ResponseContentType } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -15,7 +15,8 @@ export class LoginProvider {
 		apiKey: null,
 		error: null,
 		firstName: null,
-		LastName: null,
+		lastName: null,
+		role: null,
 		username: null
 	};
 	username: string;
