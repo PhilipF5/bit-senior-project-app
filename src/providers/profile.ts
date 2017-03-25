@@ -22,14 +22,18 @@ export class ProfileProvider {
 	}
 	
 	loadMyProfile() {
-		this.http.get("http://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey)
-		.subscribe(
-			res => this.profile = res.json(),
-			(err) => {},
-			() => {
-				
-			}
-		);
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey)
+			.subscribe(
+				res => {
+					this.profile = res.json();
+				},
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
 	}
 
 }

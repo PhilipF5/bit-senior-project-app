@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { LoginProvider } from '../providers/login'
+import { LoginProvider } from '../providers/login';
 
 /*
   Generated class for the Account provider.
@@ -33,14 +33,16 @@ export class AccountProvider {
 	}
 	
 	loadMyAccount() {
-		this.http.get("http://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
-		.subscribe(
-			res => this.myAccount = res.json(),
-			(err) => {},
-			() => {
-				
-			}
-		);
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			.subscribe(
+				res => this.myAccount = res.json(),
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
 	}
 
 }
