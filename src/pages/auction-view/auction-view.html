@@ -35,7 +35,7 @@
 					<ion-card-header>Lot Listing</ion-card-header>
 					<ion-list>
 						<ion-item-sliding *ngFor="let lot of auctionProvider.auction.lots">
-							<button ion-item (click)="navCtrl.push(lotPage)">
+							<button ion-item (click)="navToLot(lot.id)">
 								<ion-badge item-left>#{{lot.id}}</ion-badge>
 								<h2>{{lot.desc}}</h2>
 								<h3>{{lot.mileage}} miles</h3>

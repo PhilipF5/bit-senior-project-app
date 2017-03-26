@@ -3,6 +3,8 @@ import { Http } from '@angular/http';
 import { LoginProvider } from '../providers/login';
 import { ProfileProvider } from '../providers/profile';
 import 'rxjs/add/operator/map';
+import * as moment from 'moment';
+import 'moment-timezone';
 
 /*
   Generated class for the Auction provider.
@@ -64,6 +66,18 @@ export class AuctionProvider {
 				}
 			);
 		});
+	}
+	
+	isUpcoming(auct) {
+		return !(moment().isAfter(auct.startTime));
+	}
+	
+	isPast(auct) {
+		return moment().isAfter(auct.endTime);
+	}
+	
+	isCurrent(auct) {
+		return (!this.isUpcoming(auct) && !this.isPast(auct));
 	}
 
 }

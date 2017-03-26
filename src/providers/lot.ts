@@ -68,8 +68,7 @@ export class LotProvider {
 				res => bidResult = res.json(),
 				(err) => {},
 				() => {
-					switch (bidResult.status)
-					{
+					switch (bidResult.status) {
 						case "Placed":
 							result = "Bid Placed";
 							message = "Your bid has been placed.";
