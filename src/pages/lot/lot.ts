@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { LotProvider } from '../../providers/lot';
 import { AuctionProvider } from '../../providers/auction';
 import * as moment from 'moment';
@@ -19,7 +19,9 @@ import 'moment-timezone';
 })
 export class LotPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public lotProvider: LotProvider, public auctionProvider: AuctionProvider) {}
+	public bidAmount;
+
+	constructor(public navCtrl: NavController, public navParams: NavParams, public lotProvider: LotProvider, public auctionProvider: AuctionProvider, public alertCtrl: AlertController) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LotPage');
@@ -50,6 +52,33 @@ export class LotPage {
 			return true;
 		}
 		else return false;
+	}
+	
+	quickBid() {
+		this.bidAmount = this.lotProvider.activeLot.currentPrice + 1000;
+		this.confirmBid();
+	}
+	
+	confirmBid() {
+		let confirm = this.alertCtrl.create({
+			title: 'Confirm Bid',
+			message: 'Do you want to bid $' + this.bidAmount + ' on this lot?',
+			buttons: [
+				{
+					text: 'No',
+					handler: () => {
+
+					}
+				},
+				{
+					text: 'Yes',
+					handler: () => {
+						this.lotProvider.bidOnLot(this.bidAmount);
+					}
+				}
+			]
+		});
+		confirm.present();
 	}
 
 }

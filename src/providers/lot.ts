@@ -104,21 +104,33 @@ export class LotProvider {
 					let alert = this.alertCtrl.create({
 						title: result,
 						subTitle: message,
-						buttons: ['OK']
+						buttons: [
+							{
+								text: 'OK',
+								handler: () => {
+									this.loader = this.loadCtrl.create({
+										content: "Refreshing..."
+									});
+									this.loader.present();
+									Promise.all([
+										this.acctProvider.loadMyAccount(),
+										this.profileProvider.loadMyProfile(),
+										this.auctionProvider.loadAllAuctions(),
+										this.auctionProvider.loadAuction(this.auctionProvider.auction.id)
+									]).then(() => {
+										for (let lot of this.auctionProvider.auction.lots) {
+											if (lot.id == this.activeLot.id) {
+												this.activeLot = lot;
+											}
+										}
+										this.loader.dismiss();
+										resolve();
+									});
+								}
+							}
+						]
 					});
 					alert.present();
-					this.loader = this.loadCtrl.create({
-						content: "Refreshing..."
-					});
-					this.loader.present();
-					Promise.all([
-						this.acctProvider.loadMyAccount(),
-						this.profileProvider.loadMyProfile(),
-						this.auctionProvider.loadAllAuctions()
-					]).then(() => {
-						this.loader.dismiss();
-						resolve();
-					});
 				}
 			);
 		});

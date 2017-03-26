@@ -63,16 +63,16 @@
 					<ion-card-header text-left>
 						Place New Bid
 					</ion-card-header>
-					<button ion-button icon-left color="go" large round>
+					<button ion-button icon-left color="go" large round (click)="quickBid()">
 						<ion-icon name="logo-usd"></ion-icon>
 						+1,000
 					</button>
 					<h2>OR</h2>
 					<ion-item>
 						<ion-label inset>USD $ </ion-label>
-						<ion-input type="text" placeholder="Enter here" text-right></ion-input>
+						<ion-input [(ngModel)]="bidAmount" type="text" placeholder="Enter here" text-right></ion-input>
 					</ion-item>
-					<button ion-button round>Bid</button>
+					<button ion-button round (click)="confirmBid()">Bid</button>
 				</ion-card>
 				<ion-card *ngIf="!isUpcoming()">
 					<ion-card-header>
