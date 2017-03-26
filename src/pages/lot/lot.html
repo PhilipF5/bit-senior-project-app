@@ -44,6 +44,12 @@
 						</ion-item>
 					</ion-list>
 				</ion-card>
+				<ion-card *ngIf="isWinning()" text-center padding color="secondary">
+					<h2>Your dealer is winning!</h2>
+				</ion-card>
+				<ion-card *ngIf="hasWon()" text-center padding color="secondary">
+					<h2>Your dealer has won this lot!</h2>
+				</ion-card>
 				<ion-card *ngIf="isOpen()" text-center padding color="go">
 					Bidding is
 					<h1 margin>Open</h1>

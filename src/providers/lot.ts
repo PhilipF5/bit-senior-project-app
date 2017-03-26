@@ -34,7 +34,7 @@ export class LotProvider {
 		"vin": "",
 		"year": 0,
 		"bidsCount": 0,
-		"bidsMax": {},
+		"bidsMax": null,
 		"currentPrice": 0,
 		"desc": "",
 		"status": "",

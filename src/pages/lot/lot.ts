@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { LotProvider } from '../../providers/lot';
 import { AuctionProvider } from '../../providers/auction';
+import { AccountProvider } from '../../providers/account';
 import * as moment from 'moment';
 import 'moment-timezone';
 
@@ -21,7 +22,7 @@ export class LotPage {
 
 	public bidAmount;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public lotProvider: LotProvider, public auctionProvider: AuctionProvider, public alertCtrl: AlertController) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public lotProvider: LotProvider, public auctionProvider: AuctionProvider, public alertCtrl: AlertController, public acctProvider: AccountProvider) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LotPage');
@@ -79,6 +80,24 @@ export class LotPage {
 			]
 		});
 		confirm.present();
+	}
+	
+	isWinning() {
+		if (this.lotProvider.activeLot.bidsCount > 0 && this.lotProvider.activeLot.status == "Unsold") {
+			if (this.lotProvider.activeLot.bidsMax.accountID == this.acctProvider.myAccount.id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	hasWon() {
+		if (this.lotProvider.activeLot.bidsCount > 0 && this.lotProvider.activeLot.status == "Sold") {
+			if (this.lotProvider.activeLot.bidsMax.accountID == this.acctProvider.myAccount.id) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
