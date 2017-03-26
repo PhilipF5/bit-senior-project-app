@@ -63,7 +63,7 @@
 					<ion-card-header text-left>
 						Place New Bid
 					</ion-card-header>
-					<button ion-button icon-left color="go" large>
+					<button ion-button icon-left color="go" large round>
 						<ion-icon name="logo-usd"></ion-icon>
 						+1,000
 					</button>
@@ -72,9 +72,9 @@
 						<ion-label inset>USD $ </ion-label>
 						<ion-input type="text" placeholder="Enter here" text-right></ion-input>
 					</ion-item>
-					<button ion-button>Bid</button>
+					<button ion-button round>Bid</button>
 				</ion-card>
-				<ion-card>
+				<ion-card *ngIf="!isUpcoming()">
 					<ion-card-header>
 						<h2>Bid History</h2>
 					</ion-card-header>
