@@ -32,7 +32,19 @@ export class AuctionProvider {
 	
 	auctions = [];
 	
-	myAuctions = [];
+	currentAuction = {
+		address: "",
+		buyers: null,
+		city: "",
+		endTime: null,
+		id: null,
+		lots: null,
+		participants: null,
+		postalCode: "",
+		startTime: null,
+		state: null,
+		stateCode: ""
+	};
 
 	constructor(public http: Http, public loginProvider: LoginProvider, public profileProvider: ProfileProvider) {
 		
@@ -62,6 +74,13 @@ export class AuctionProvider {
 				},
 				(err) => {},
 				() => {
+					if (this.loginProvider.creds.role == "user") {
+						for (let auct of this.auctions) {
+							if (this.isCurrentForUser(auct)) {
+								this.currentAuction = auct;
+							}
+						}
+					}
 					resolve();
 				}
 			);
@@ -78,6 +97,12 @@ export class AuctionProvider {
 	
 	isCurrent(auct) {
 		return (!this.isUpcoming(auct) && !this.isPast(auct));
+	}
+	
+	isCurrentForUser(auct) {
+		if (this.loginProvider.creds.role == "user") {
+			return (this.profileProvider.profile.auctions.indexOf(auct.id) != -1 && !this.isUpcoming(auct) && !this.isPast(auct));
+		}
 	}
 
 }

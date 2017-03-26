@@ -22,8 +22,12 @@
 							<h2>{{acctProvider.myAccount.availableCredit | currency}}</h2>
 							<p>Available Credit</p>
                         </ion-item>
-                        <button ion-item disabled>
+                        <button *ngIf="auctionProvider.currentAuction.id == null" ion-item disabled>
                             <ion-icon name="megaphone" item-left></ion-icon>
+                            Current Auction
+                        </button>
+						<button *ngIf="auctionProvider.currentAuction.id != null" ion-item (click)="navToAuction(auctionProvider.currentAuction.id)">
+                            <ion-icon name="megaphone" color="go" item-left></ion-icon>
                             Current Auction
                         </button>
                         <button ion-item (click)="navCtrl.push(profileViewPage)">
