@@ -7,6 +7,7 @@ import { LoginProvider } from '../providers/login';
 import { AccountProvider } from '../providers/account';
 import { AuctionProvider } from '../providers/auction';
 import { ProfileProvider } from '../providers/profile';
+import { LotProvider } from '../providers/lot';
 import { CurrencyPipe } from '../pipes/currency';
 import { AccountViewPage } from '../pages/account-view/account-view';
 import { AuctionListPage } from '../pages/auction-list/auction-list';
@@ -40,7 +41,7 @@ import { ProfileViewPage } from '../pages/profile-view/profile-view';
 		LotPage,
 		ProfileViewPage
 	],
-	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider, AccountProvider, AuctionProvider, ProfileProvider]
+	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider, AccountProvider, AuctionProvider, ProfileProvider, LotProvider]
 })
 
 export class AppModule {}

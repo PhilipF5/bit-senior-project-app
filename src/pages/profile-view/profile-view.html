@@ -29,7 +29,7 @@
 						</ion-item>
 						<ion-item>
 							Lots Won
-							<p item-right>-</p>
+							<p item-right>{{profileProvider.wins}}</p>
 						</ion-item>
 						<ion-item>
 							Total Spent
@@ -41,15 +41,19 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header>
-						Purchase History
+						Bid History
 					</ion-card-header>
 					<ion-list>
-						<button ion-item (click)="navCtrl.push(lotPage)">
-							<ion-badge item-left>#14</ion-badge>
-							<h2>2012 Ford Fusion SEL</h2>
-							<p>35,000 miles</p>
-							<h2 item-right>$ 17,000</h2>
-						</button>
+						<template ngFor let-bid [ngForOf]="profileProvider.profile.bids">
+							<button *ngIf="bid.status == 'Placed' || bid.status == 'Outbid' || bid.status == 'Winner'" ion-item>
+								<h2>Lot #{{bid.lotID}}</h2>
+								<h3>{{bid.amount | currency}}</h3>
+								<p>{{formatBidTimestamp(bid.bidTime)}}</p>
+								<ion-badge *ngIf="bid.status == 'Placed'" color="go" item-right>{{bid.status}}</ion-badge>
+								<ion-badge *ngIf="bid.status == 'Outbid'" color="danger" item-right>{{bid.status}}</ion-badge>
+								<ion-badge *ngIf="bid.status == 'Winner'" color="secondary" item-right>{{bid.status}}</ion-badge>
+							</button>
+						</template>
 					</ion-list>
 				</ion-card>
 			</ion-col>

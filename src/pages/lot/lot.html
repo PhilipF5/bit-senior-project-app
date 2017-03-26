@@ -19,66 +19,87 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header text-center>
-						<h1>Lot #3</h1>
+						<h1>Lot #{{lotProvider.activeLot.id}}</h1>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
 							Make
-							<p item-right>Ford</p>
+							<p item-right>{{lotProvider.activeLot.make}}</p>
 						</ion-item>
 						<ion-item>
 							Model
-							<p item-right>Fusion</p>
+							<p item-right>{{lotProvider.activeLot.model}}</p>
 						</ion-item>
 						<ion-item>
 							Trim
-							<p item-right>SEL</p>
+							<p item-right>{{lotProvider.activeLot.trim}}</p>
 						</ion-item>
 						<ion-item>
 							Year
-							<p item-right>2012</p>
+							<p item-right>{{lotProvider.activeLot.year}}</p>
 						</ion-item>
 						<ion-item>
 							Mileage
-							<p item-right>35,000</p>
+							<p item-right>{{lotProvider.activeLot.mileage}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>
-				<ion-card text-center>
+				<ion-card *ngIf="isWinning()" text-center padding color="secondary">
+					<h2>Your dealer is winning!</h2>
+				</ion-card>
+				<ion-card *ngIf="hasWon()" text-center padding color="secondary">
+					<h2>Your dealer has won this lot!</h2>
+				</ion-card>
+				<ion-card *ngIf="isOpen()" text-center padding color="go">
+					Bidding is
+					<h1 margin>Open</h1>
+					Current Price: {{lotProvider.activeLot.currentPrice | currency}}
+				</ion-card>
+				<ion-card *ngIf="isSold()" text-center padding color="danger">
+					This lot has been
+					<h1 margin>SOLD</h1>
+					Winning Bid: {{lotProvider.activeLot.currentPrice | currency}}
+				</ion-card>
+				<ion-card *ngIf="isUpcoming()" text-center padding color="primary">
+					This lot will open on
+					<h1 margin>{{moment(auctionProvider.auction.startTime).format("MMMM D")}}</h1>
+					Winning Bid: {{lotProvider.activeLot.currentPrice | currency}}
+				</ion-card>
+				<ion-card *ngIf="isOpen()" text-center>
 					<ion-card-header text-left>
 						Place New Bid
 					</ion-card-header>
-					<button ion-button icon-left color="go" large>
+					<button ion-button icon-left color="go" large round (click)="quickBid()">
 						<ion-icon name="logo-usd"></ion-icon>
 						+1,000
 					</button>
 					<h2>OR</h2>
 					<ion-item>
 						<ion-label inset>USD $ </ion-label>
-						<ion-input type="text" placeholder="Enter here" text-right></ion-input>
+						<ion-input [(ngModel)]="bidAmount" type="text" placeholder="Enter here" text-right></ion-input>
 					</ion-item>
-					<button ion-button>Bid</button>
+					<button ion-button round (click)="confirmBid()">Bid</button>
 				</ion-card>
-				<ion-card>
+				<ion-card *ngIf="!isUpcoming()">
 					<ion-card-header>
 						<h2>Bid History</h2>
 					</ion-card-header>
 					<ion-list>
-						<ion-item>
-							3:55:32 PM
-							<h2 item-right>$ 15,000</h2>
-						</ion-item>
-						<ion-item>
-							3:55:10 PM
-							<h3 item-right>$ 14,000</h3>
-						</ion-item>
-						<ion-item>
-							3:54:40 PM
-							<h3 item-right>$ 13,000</h3>
-						</ion-item>
+						<template ngFor let-bid [ngForOf]="lotProvider.activeLot.bids">
+							<ion-item *ngIf="bid.status == 'Placed' || bid.status == 'Winner'">
+								{{formatBidTime(bid.bidTime)}}
+								<h2 item-right>{{bid.amount | currency}}</h2>
+							</ion-item>
+						</template>
+						<template ngFor let-bid [ngForOf]="lotProvider.activeLot.bids">
+							<ion-item *ngIf="bid.status == 'Outbid'">
+								{{formatBidTime(bid.bidTime)}}
+								<h3 item-right>{{bid.amount | currency}}</h3>
+							</ion-item>
+						</template>
 					</ion-list>
 				</ion-card>
-			</ion-col>
+			</ion-col><!-- REMOVED UNTIL WE'RE READY FOR IT
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-8 col-xl-3>
 				<ion-card>
 					<ion-card-header>
@@ -86,7 +107,7 @@
 					</ion-card-header>
 					This card will contain additional information from WordPress.
 				</ion-card>
-			</ion-col>
+			</ion-col>-->
 		</ion-row>
 	</ion-grid>
 </ion-content>
