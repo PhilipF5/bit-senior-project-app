@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LotPage } from '../../pages/lot/lot';
+import { AccountProvider } from '../../providers/account';
 
 /*
   Generated class for the AccountView page.
@@ -17,7 +18,7 @@ export class AccountViewPage {
 	
 	lotPage;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public acctProvider: AccountProvider) {
 		this.lotPage = LotPage;
 	}
 

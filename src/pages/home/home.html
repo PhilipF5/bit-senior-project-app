@@ -39,27 +39,18 @@
                         Upcoming Auctions
                     </ion-card-header>
                     <ion-list>
-                        <button ion-item (click)="navCtrl.push(auctionViewPage)">
-                            <h2>Columbia, SC</h2>
-                            <p>April 10, 2017</p>
-                            <ion-badge color="danger" item-right>
-                                Unregistered
-                            </ion-badge>
-                        </button>
-                        <button ion-item (click)="navCtrl.push(auctionViewPage)">
-                            <h2>Cleveland, OH</h2>
-                            <p>April 15, 2017</p>
-                            <ion-badge color="go" item-right>
+                        <template ngFor let-auct [ngForOf]="auctionProvider.auctions">
+						<button *ngIf="isUpcoming(auct)" ion-item (click)="navToAuction(auct.id)">
+							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
+							<p>{{formatDate(auct.startTime)}}</p>
+							<ion-badge *ngIf="isRegistered(auct)" color="go" item-right>
                                 Registered
                             </ion-badge>
-                        </button>
-                        <button ion-item (click)="navCtrl.push(auctionViewPage)">
-                            <h2>Trenton, NJ</h2>
-                            <p>May 3, 2017</p>
-                            <ion-badge color="danger" item-right>
+							<ion-badge *ngIf="!isRegistered(auct)" color="danger" item-right>
                                 Unregistered
                             </ion-badge>
-                        </button>
+						</button>
+					</template>
                     </ion-list>
                 </ion-card>
             </ion-col>

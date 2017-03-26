@@ -19,32 +19,24 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header>
-						<h1>Dealer Name</h1>
+						<h1>{{acctProvider.myAccount.owner}}</h1>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
-							Bids Placed
-							<p item-right>17</p>
-						</ion-item>
-						<ion-item>
-							Lots Won
-							<p item-right>3</p>
-						</ion-item>
-						<ion-item>
 							Total Spent
-							<p item-right>$ 47,000</p>
+							<p item-right>{{acctProvider.myAccount.totalSpent | currency}}</p>
 						</ion-item>
 						<ion-item>
 							Total Credit
-							<p item-right>$ 150,000</p>
+							<p item-right>{{acctProvider.myAccount.totalCredit | currency}}</p>
 						</ion-item>
 						<ion-item>
 							Used Credit
-							<p item-right>— 50,000</p>
+							<p item-right>{{acctProvider.myAccount.usedCredit | currency}}</p>
 						</ion-item>
 						<ion-item>
 							Credit Available
-							<p item-right>$ 100,000</p>
+							<p item-right>{{acctProvider.myAccount.availableCredit | currency}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>
@@ -52,15 +44,22 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header>
-						Purchase History
+						Contact Info
 					</ion-card-header>
 					<ion-list>
-						<button ion-item (click)="navCtrl.push(lotPage)">
-							<ion-badge item-left>#14</ion-badge>
-							<h2>2012 Ford Fusion SEL</h2>
-							<p>35,000 miles</p>
-							<h2 item-right>$ 17,000</h2>
-						</button>
+						<ion-item text-right>
+							<ion-icon name="navigate" item-left></ion-icon>
+							<h2>{{acctProvider.myAccount.address}}</h2>
+							<h3>{{acctProvider.myAccount.city.concat(", ", acctProvider.myAccount.stateCode, " ", acctProvider.myAccount.postalCode)}}</h3>
+						</ion-item>
+						<ion-item text-right>
+							<ion-icon name="call" item-left></ion-icon>
+							{{acctProvider.myAccount.contactPhone}}
+						</ion-item>
+						<ion-item text-right>
+							<ion-icon name="mail" item-left></ion-icon>
+							{{acctProvider.myAccount.contactEmail}}
+						</ion-item>
 					</ion-list>
 				</ion-card>
 			</ion-col>

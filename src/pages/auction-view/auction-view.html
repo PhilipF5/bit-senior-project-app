@@ -19,31 +19,31 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 offset-lg-3 col-xl-3>
 				<ion-card>
 					<ion-card-header text-center>
-						<p>Auction #11</p>
-						<h1>Richmond, VA</h1>
-						<h3>April 1, 2017</h3>
-						<h3>2:00pm — 5:30pm</h3>
+						<p>Auction #{{auctionProvider.auction.id}}</p>
+						<h1>{{auctionProvider.auction.city.concat(', ', auctionProvider.auction.stateCode)}}</h1>
+						<h3>{{formatDate()}}</h3>
+						<h3>{{formatTime()}}</h3>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
 							<ion-icon name="navigate" item-left></ion-icon>
-							<p item-right>123 Auction Way, Richmond, VA 23233</p>
+							<p item-right>{{auctionProvider.auction.address.concat(', ', auctionProvider.auction.city, ', ', auctionProvider.auction.stateCode, ', ', auctionProvider.auction.postalCode)}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>
 				<ion-card>
 					<ion-card-header>Lot Listing</ion-card-header>
 					<ion-list>
-						<ion-item-sliding>
+						<ion-item-sliding *ngFor="let lot of auctionProvider.auction.lots">
 							<button ion-item (click)="navCtrl.push(lotPage)">
-								<ion-badge item-left>#14</ion-badge>
-								<h2>2012 Ford Fusion SEL</h2>
-								<h3>35,000 miles</h3>
-								<p>4 bids</p>
-								<h2 item-right>$ 15,000</h2>
+								<ion-badge item-left>#{{lot.id}}</ion-badge>
+								<h2>{{lot.desc}}</h2>
+								<h3>{{lot.mileage}} miles</h3>
+								<p>{{lot.bidsCount}} bids</p>
+								<h2 item-right>{{lot.currentPrice | currency}}</h2>
 							</button>
 							<ion-item-options side="right">
-								<button ion-button>
+								<button ion-button color="go">
 									<ion-icon name="logo-usd"></ion-icon>
 									+1,000
 								</button>

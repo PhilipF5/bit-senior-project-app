@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
 import { AccountProvider } from '../../providers/account';
+import { ProfileProvider } from '../../providers/profile';
+import { AuctionProvider } from '../../providers/auction';
 import { Http, Headers } from '@angular/http';
 
 
@@ -20,13 +22,17 @@ export class LoginPage {
 	username: string;
 	password: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public viewCtrl: ViewController, public http: Http) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider, public viewCtrl: ViewController, public loadCtrl: LoadingController, public http: Http) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
 	}
 
 	login() {
+		let loader = this.loadCtrl.create({
+      		content: "Logging in..."
+    	});
+    	loader.present();
 		console.log("Logging in with username " + this.username + " ...");
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
@@ -36,10 +42,15 @@ export class LoginPage {
 			(err) => {},
 			() => {
 				if (this.loginProvider.creds.apiKey != null) {
-					this.viewCtrl.dismiss();
-					if (this.loginProvider.creds.role == "user")
-					{
-						this.acctProvider.loadMyAccount();
+					if (this.loginProvider.creds.role == "user") {
+						Promise.all([
+							this.acctProvider.loadMyAccount(),
+							this.profileProvider.loadMyProfile(),
+							this.auctionProvider.loadAllAuctions()
+						]).then(() => {
+							loader.dismiss();
+							this.viewCtrl.dismiss();
+						});
 					}
 				}
 			}
