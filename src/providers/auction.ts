@@ -51,8 +51,19 @@ export class AuctionProvider {
 		});
 	}
 	
-	loadMyAuctions() {
-		
+	loadAllAuctions() {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey)
+			.subscribe(
+				res => {
+					this.auctions = res.json();
+				},
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
 	}
 
 }

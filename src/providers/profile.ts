@@ -14,7 +14,19 @@ import 'rxjs/add/operator/map';
 export class ProfileProvider {
 	
 	profile = {
-		
+		accountID: null,
+		auctions: [],
+		bids: [],
+		bidsMax: null,
+		bidsMin: null,
+		id: null,
+		firstName: "",
+		lastName: "",
+		totalSpent: null,
+		username: "",
+		auctionCount: null,
+		bidsCount: null,
+		fullName: ""
 	};
 
 	constructor(public http: Http, public loginProvider: LoginProvider) {

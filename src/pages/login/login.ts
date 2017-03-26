@@ -3,6 +3,7 @@ import { NavController, NavParams, ViewController, LoadingController } from 'ion
 import { LoginProvider } from '../../providers/login';
 import { AccountProvider } from '../../providers/account';
 import { ProfileProvider } from '../../providers/profile';
+import { AuctionProvider } from '../../providers/auction';
 import { Http, Headers } from '@angular/http';
 
 
@@ -21,7 +22,7 @@ export class LoginPage {
 	username: string;
 	password: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public profileProvider: ProfileProvider, public viewCtrl: ViewController, public loadCtrl: LoadingController, public http: Http) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider, public viewCtrl: ViewController, public loadCtrl: LoadingController, public http: Http) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
@@ -44,7 +45,8 @@ export class LoginPage {
 					if (this.loginProvider.creds.role == "user") {
 						Promise.all([
 							this.acctProvider.loadMyAccount(),
-							this.profileProvider.loadMyProfile()
+							this.profileProvider.loadMyProfile(),
+							this.auctionProvider.loadAllAuctions()
 						]).then(() => {
 							loader.dismiss();
 							this.viewCtrl.dismiss();
