@@ -28,6 +28,8 @@ export class ProfileProvider {
 		bidsCount: null,
 		fullName: ""
 	};
+	
+	wins;
 
 	constructor(public http: Http, public loginProvider: LoginProvider) {
 		
@@ -42,14 +44,16 @@ export class ProfileProvider {
 				},
 				(err) => {},
 				() => {
+					this.wins = 0;
+					for (let bid of this.profile.bids) {
+						if (bid.status == "Winner") {
+							this.wins++;
+						}
+					}
 					resolve();
 				}
 			);
 		});
-	}
-	
-	lotsWon() {
-		
 	}
 
 }
