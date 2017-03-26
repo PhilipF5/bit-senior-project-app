@@ -47,5 +47,9 @@ export class ProfileProvider {
 			);
 		});
 	}
+	
+	lotsWon() {
+		
+	}
 
 }

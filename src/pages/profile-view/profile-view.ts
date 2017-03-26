@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { ProfileProvider } from '../../providers/profile';
+import { AccountProvider } from '../../providers/account';
 import { LotPage } from '../../pages/lot/lot';
 
 /*
@@ -17,7 +19,7 @@ export class ProfileViewPage {
 	
 	lotPage;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public profileProvider: ProfileProvider, public accountProvider: AccountProvider) {
 		this.lotPage = LotPage;
 	}
 

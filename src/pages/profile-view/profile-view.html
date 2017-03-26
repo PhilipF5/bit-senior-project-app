@@ -19,21 +19,21 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header>
-						<h1>Buyer Name</h1>
-						<p>Dealer Name</p>
+						<h1>{{profileProvider.profile.fullName}}</h1>
+						<p>{{accountProvider.myAccount.owner}}</p>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
 							Bids Placed
-							<p item-right>17</p>
+							<p item-right>{{profileProvider.profile.bidsCount}}</p>
 						</ion-item>
 						<ion-item>
 							Lots Won
-							<p item-right>3</p>
+							<p item-right>-</p>
 						</ion-item>
 						<ion-item>
 							Total Spent
-							<p item-right>$ 47,000</p>
+							<p item-right>{{profileProvider.profile.totalSpent | currency}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>
