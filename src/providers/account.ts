@@ -27,6 +27,10 @@ export class AccountProvider {
 		totalSpent: null,
 		usedCredit: null
 	};
+	
+	accounts = [];
+	
+	sortBySpent = [];
 
 	constructor(public http: Http, public loginProvider: LoginProvider) {
 		console.log('Hello Account Provider');
@@ -39,6 +43,29 @@ export class AccountProvider {
 				res => this.myAccount = res.json(),
 				(err) => {},
 				() => {
+					resolve();
+				}
+			);
+		});
+	}
+	
+	loadAllAccounts() {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			.subscribe(
+				res => this.accounts = res.json(),
+				(err) => {},
+				() => {
+					this.sortBySpent = this.accounts.sort((obj1, obj2) => {
+						if (obj1.totalSpent < obj2.totalSpent) {
+							return -1;
+						}
+						else if (obj1.totalSpent > obj2.totalSpent) {
+							return 1;
+						}
+						else return 0;
+					});
+					this.sortBySpent.reverse();
 					resolve();
 				}
 			);

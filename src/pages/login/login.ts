@@ -54,7 +54,10 @@ export class LoginPage {
 					}
 					else if (this.loginProvider.creds.role == "admin") {
 						Promise.all([
-							this.auctionProvider.loadAllAuctions()
+							this.auctionProvider.loadAllAuctions(),
+							this.acctProvider.loadAllAccounts().then(() => {
+								this.profileProvider.loadAllProfiles();
+							})
 						]).then(() => {
 							loader.dismiss();
 							this.viewCtrl.dismiss();

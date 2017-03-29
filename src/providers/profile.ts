@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { LoginProvider } from '../providers/login';
+import { AccountProvider } from '../providers/account';
 import 'rxjs/add/operator/map';
 
 /*
@@ -29,9 +30,13 @@ export class ProfileProvider {
 		fullName: ""
 	};
 	
+	profiles = [];
+	
+	sortBySpent = [];
+	
 	wins;
 
-	constructor(public http: Http, public loginProvider: LoginProvider) {
+	constructor(public http: Http, public loginProvider: LoginProvider, public acctProvider: AccountProvider) {
 		
 	}
 	
@@ -53,6 +58,29 @@ export class ProfileProvider {
 					resolve();
 				}
 			);
+		});
+	}
+	
+	loadAllProfiles() {
+		return new Promise((resolve, reject) => {
+			for (let acct of this.acctProvider.accounts) {
+				// profiles = profiles.concat(acct.buyers);
+				for (let profile of acct.buyers) {
+					profile["accountOwner"] = acct.owner;
+					this.profiles.push(profile);
+				}
+			}
+			this.sortBySpent = this.profiles.sort((obj1, obj2) => {
+				if (obj1.totalSpent < obj2.totalSpent) {
+					return -1;
+				}
+				else if (obj1.totalSpent > obj2.totalSpent) {
+					return 1;
+				}
+				else return 0;
+			});
+			this.sortBySpent.reverse();
+			resolve();
 		});
 	}
 
