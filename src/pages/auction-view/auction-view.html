@@ -43,9 +43,13 @@
 								<h2 item-right>{{lot.currentPrice | currency}}</h2>
 							</button>
 							<ion-item-options side="right">
-								<button ion-button color="go">
+								<button *ngIf="loginProvider.creds.role == 'user'" ion-button color="go">
 									<ion-icon name="logo-usd"></ion-icon>
 									+1,000
+								</button>
+								<button *ngIf="loginProvider.creds.role == 'admin'" ion-button color="go">
+									<ion-icon name="checkmark"></ion-icon>
+									Close
 								</button>
 							</ion-item-options>
 						</ion-item-sliding>
