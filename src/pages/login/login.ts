@@ -52,6 +52,14 @@ export class LoginPage {
 							this.viewCtrl.dismiss();
 						});
 					}
+					else if (this.loginProvider.creds.role == "admin") {
+						Promise.all([
+							this.auctionProvider.loadAllAuctions()
+						]).then(() => {
+							loader.dismiss();
+							this.viewCtrl.dismiss();
+						})
+					}
 				}
 			}
 		);
