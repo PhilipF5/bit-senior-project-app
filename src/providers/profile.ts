@@ -70,7 +70,7 @@ export class ProfileProvider {
 					this.profiles.push(profile);
 				}
 			}
-			this.sortBySpent = this.profiles.sort((obj1, obj2) => {
+			this.sortBySpent = this.profiles.slice().sort((obj1, obj2) => {
 				if (obj1.totalSpent < obj2.totalSpent) {
 					return -1;
 				}

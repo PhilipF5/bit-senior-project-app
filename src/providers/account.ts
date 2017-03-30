@@ -56,7 +56,7 @@ export class AccountProvider {
 				res => this.accounts = res.json(),
 				(err) => {},
 				() => {
-					this.sortBySpent = this.accounts.sort((obj1, obj2) => {
+					this.sortBySpent = this.accounts.slice().sort((obj1, obj2) => {
 						if (obj1.totalSpent < obj2.totalSpent) {
 							return -1;
 						}
