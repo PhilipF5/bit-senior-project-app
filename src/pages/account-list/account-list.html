@@ -20,7 +20,7 @@
 				<ion-card>
 					<ion-card-header>
 						Registered Dealers
-						<button ion-button icon-only text-right outline small round>
+						<button ion-button icon-only text-right outline small round (click)="createAccount()">
 							<ion-icon name="add"></ion-icon>
 						</button>
 					</ion-card-header>
@@ -37,7 +37,7 @@
 				<ion-card>
 					<ion-card-header>
 						Buyer Profiles
-						<button ion-button icon-only text-right outline small round>
+						<button ion-button icon-only text-right outline small round (click)="createBuyer()">
 							<ion-icon name="add"></ion-icon>
 						</button>
 						<p>{{acctProvider.accounts[selectedAcct].owner}}</p>

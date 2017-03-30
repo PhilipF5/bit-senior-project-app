@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { AccountProvider } from '../../providers/account';
+import { CreateAccountPage } from '../../pages/create-account/create-account';
+import { CreateProfilePage } from '../../pages/create-profile/create-profile';
 
 /*
   Generated class for the AccountList page.
@@ -17,7 +19,7 @@ export class AccountListPage {
 
 	selectedAcct = 0;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public acctProvider: AccountProvider) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public acctProvider: AccountProvider, public modalCtrl: ModalController) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad AccountListPage');
@@ -25,6 +27,16 @@ export class AccountListPage {
 	
 	setAccount(i) {
 		this.selectedAcct = i;
+	}
+	
+	createAccount() {
+		let modal = this.modalCtrl.create(CreateAccountPage, {}, {enableBackdropDismiss: false});
+		modal.present();
+	}
+	
+	createBuyer() {
+		let modal = this.modalCtrl.create(CreateProfilePage, {}, {enableBackdropDismiss: false});
+		modal.present();
 	}
 
 }

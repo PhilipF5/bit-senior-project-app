@@ -15,6 +15,8 @@ import { AuctionViewPage } from '../pages/auction-view/auction-view';
 import { LotPage } from '../pages/lot/lot';
 import { ProfileViewPage } from '../pages/profile-view/profile-view';
 import { AccountListPage } from '../pages/account-list/account-list';
+import { CreateAccountPage } from '../pages/create-account/create-account';
+import { CreateProfilePage } from '../pages/create-profile/create-profile';
 
 @NgModule({
 	declarations: [
@@ -27,7 +29,9 @@ import { AccountListPage } from '../pages/account-list/account-list';
 		AuctionViewPage,
 		LotPage,
 		ProfileViewPage,
-		AccountListPage
+		AccountListPage,
+		CreateAccountPage,
+		CreateProfilePage
 	],
 	imports: [
 		IonicModule.forRoot(MyApp)
@@ -42,7 +46,9 @@ import { AccountListPage } from '../pages/account-list/account-list';
 		AuctionViewPage,
 		LotPage,
 		ProfileViewPage,
-		AccountListPage
+		AccountListPage,
+		CreateAccountPage,
+		CreateProfilePage
 	],
 	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider, AccountProvider, AuctionProvider, ProfileProvider, LotProvider]
 })
