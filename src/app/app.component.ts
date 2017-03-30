@@ -12,6 +12,7 @@ import { AccountViewPage } from '../pages/account-view/account-view';
 import { AuctionListPage } from '../pages/auction-list/auction-list';
 import { ProfileViewPage } from '../pages/profile-view/profile-view';
 import { AccountListPage } from '../pages/account-list/account-list';
+import { ReportsPage } from '../pages/reports/reports';
 
 @Component({
   	templateUrl: 'app.html'
@@ -23,6 +24,8 @@ export class MyApp {
 	auctionListPage;
 	profileViewPage;
 	accountListPage;
+	reportsPage;
+	
 	@ViewChild('content') nav: NavController;
 
 	constructor(platform: Platform, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider) {
@@ -37,6 +40,7 @@ export class MyApp {
 		this.auctionListPage = AuctionListPage;
 		this.profileViewPage = ProfileViewPage;
 		this.accountListPage = AccountListPage;
+		this.reportsPage = ReportsPage;
   	}
 	
 	showLogoutConfirm() {

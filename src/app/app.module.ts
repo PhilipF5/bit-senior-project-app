@@ -17,6 +17,7 @@ import { ProfileViewPage } from '../pages/profile-view/profile-view';
 import { AccountListPage } from '../pages/account-list/account-list';
 import { CreateAccountPage } from '../pages/create-account/create-account';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
+import { ReportsPage } from '../pages/reports/reports';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,8 @@ import { CreateProfilePage } from '../pages/create-profile/create-profile';
 		ProfileViewPage,
 		AccountListPage,
 		CreateAccountPage,
-		CreateProfilePage
+		CreateProfilePage,
+		ReportsPage
 	],
 	imports: [
 		IonicModule.forRoot(MyApp)
@@ -48,7 +50,8 @@ import { CreateProfilePage } from '../pages/create-profile/create-profile';
 		ProfileViewPage,
 		AccountListPage,
 		CreateAccountPage,
-		CreateProfilePage
+		CreateProfilePage,
+		ReportsPage
 	],
 	providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LoginProvider, AccountProvider, AuctionProvider, ProfileProvider, LotProvider]
 })

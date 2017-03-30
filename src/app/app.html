@@ -22,7 +22,7 @@
 				<ion-icon name="contact" item-left></ion-icon>
 				Account
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'">
+			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'" (click)="nav.push(reportsPage)">
 				<ion-icon name="stats" item-left></ion-icon>
 				Reports
 			</button>
