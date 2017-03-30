@@ -14,11 +14,11 @@
 				<ion-icon name="pricetags" item-left></ion-icon>
 				Auctions
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'">
+			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'" (click)="nav.push(accountListPage)">
 				<ion-icon name="contacts" item-left></ion-icon>
 				Accounts
 			</button>
-			<button ion-item menuClose (click)="nav.push(accountViewPage)" *ngIf="loginProvider.creds.role == 'user'">
+			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'user'" (click)="nav.push(accountViewPage)">
 				<ion-icon name="contact" item-left></ion-icon>
 				Account
 			</button>
