@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
+import { Http } from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
+import { LoginProvider } from '../../providers/login';
 import { Chart } from 'chart.js';
+import * as randomColor from 'randomcolor';
 
 /*
   Generated class for the Reports page.
@@ -21,14 +24,59 @@ export class ReportsPage {
 	statesChart: any;
 	typesChart: any;
 	modelsChart: any;
+	statesData: any;
+	typesData: any;
+	modelsData: any;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {}
+	constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public loginProvider: LoginProvider) {}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad ReportsPage');
-		this.loadStatesChart();
-		this.loadTypesChart();
-		this.loadModelsChart();
+		this.loadStatesData()
+		.then(() => { this.loadTypesData(); })
+		.then(() => { this.loadModelsData(); });
+	}
+	
+	loadStatesData() {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/states")
+			.subscribe(
+				res => this.statesData = res.json(),
+				(err) => {},
+				() => {
+					this.loadStatesChart();
+					resolve();
+				}
+			);
+		});
+	}
+	
+	loadTypesData() {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/types")
+			.subscribe(
+				res => this.typesData = res.json(),
+				(err) => {},
+				() => {
+					this.loadTypesChart();
+					resolve();
+				}
+			);
+		});
+	}
+	
+	loadModelsData() {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/models")
+			.subscribe(
+				res => this.modelsData = res.json(),
+				(err) => {},
+				() => {
+					this.loadModelsChart();
+					resolve();
+				}
+			);
+		});
 	}
 	
 	loadStatesChart() {
@@ -41,33 +89,21 @@ export class ReportsPage {
 				layout: { padding: 10 }
 			},
 			data: {
-				labels: [
-					"Virginia",
-					"New York",
-					"Illinois",
-					"South Carolina",
-					"Ohio",
-					"New Jersey"
-				],
+				labels: this.statesData.stateNames,
 				datasets: [{
     				label: "Test",
-					data: [750, 1147, 675, 432, 703, 450],
-					backgroundColor: [
-    					'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-					],
-					hoverBackgroundColor: [
-    					'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-					]
+					data: this.statesData.salesByVolume,
+					//test data
+					//data: [456,83,583,53,693,29,593,280,385,22,495,231,523,25,354,323,54,346],
+					backgroundColor: randomColor({
+						count: this.statesData.stateNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: this.statesData.stateNames.length,
+						luminosity: "light"
+					}),
+					borderWidth: 1
 				}]
 			}
         });
@@ -78,35 +114,23 @@ export class ReportsPage {
         	type: 'bar',
         	options: {
 				legend: {
-					position: 'bottom'
+					display: false
 				},
 				layout: { padding: 10 }
 			},
 			data: {
-				labels: [
-					"Coupe",
-					"Sedan",
-					"SUV",
-					"Truck",
-					"Van"
-				],
+				labels: this.typesData.typeNames,
 				datasets: [{
     				label: "Test",
-					data: [750, 1147, 675, 432, 703, 450],
-					backgroundColor: [
-    					'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)'
-					],
-					hoverBackgroundColor: [
-    					'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-					]
+					data: this.typesData.salesByVolume,
+					backgroundColor: randomColor({
+						count: this.typesData.typeNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: this.typesData.typeNames.length,
+						luminosity: "light"
+					}),
 				}]
 			}
         });
@@ -114,41 +138,32 @@ export class ReportsPage {
 	
 	loadModelsChart() {
 		this.modelsChart = new Chart(this.modelsCanvas.nativeElement, {
-        	type: 'bar',
+        	type: 'horizontalBar',
         	options: {
 				legend: {
-					position: 'bottom'
+					display: false
 				},
-				layout: { padding: 10 }
+				layout: { padding: 10 },
+				maintainAspectRatio: false
 			},
 			data: {
-				labels: [
-					"Toyota Camry",
-					"Ford Fusion",
-					"Honda CX-3",
-					"Lincoln MKS",
-					"Chevrolet Bolt",
-					"BMW i3"
-				],
+				labels: this.modelsData.modelNames,
 				datasets: [{
     				label: "Test",
-					data: [750, 1147, 675, 432, 703, 450],
-					backgroundColor: [
-    					'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-					],
-					hoverBackgroundColor: [
-    					'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-					]
+					data: this.modelsData.salesByVolume,
+					backgroundColor: randomColor({
+						count: this.modelsData.modelNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: this.modelsData.modelNames.length,
+						luminosity: "light"
+					}),
+					scales: {
+						yAxes: [{
+							barThickness: 20
+						}]
+					}
 				}]
 			}
         });
