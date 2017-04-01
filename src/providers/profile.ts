@@ -62,6 +62,7 @@ export class ProfileProvider {
 	}
 	
 	loadAllProfiles() {
+		this.profiles = [];
 		return new Promise((resolve, reject) => {
 			for (let acct of this.acctProvider.accounts) {
 				// profiles = profiles.concat(acct.buyers);

@@ -31,6 +31,10 @@ export class AccountProvider {
 	accounts = [];
 	
 	sortBySpent = [];
+	
+	selectedAcct = 0;
+	
+	selectedAcctID = 1;
 
 	constructor(public http: Http, public loginProvider: LoginProvider) {
 		console.log('Hello Account Provider');

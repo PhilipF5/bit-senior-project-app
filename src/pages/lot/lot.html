@@ -54,7 +54,7 @@
 					Bidding is
 					<h1 margin>Open</h1>
 					<p>Current Price: {{lotProvider.activeLot.currentPrice | currency}}</p>
-					<button *ngIf="loginProvider.creds.role == 'admin'" ion-button round>
+					<button *ngIf="loginProvider.creds.role == 'admin'" ion-button round (click)="lotProvider.acceptBid()">
 						Accept &amp; Close
 					</button>
 				</ion-card>

@@ -17,17 +17,17 @@
 	<ion-list>
 		<ion-item>
 			<ion-label floating>First name</ion-label>
-			<ion-input type="text" [(ngModel)]="newUser.firstName"></ion-input>
+			<ion-input type="text" [(ngModel)]="user.firstName"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label floating>Last name</ion-label>
-			<ion-input type="text" [(ngModel)]="newUser.lastName"></ion-input>
+			<ion-input type="text" [(ngModel)]="user.lastName"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label floating>Username</ion-label>
-			<ion-input type="text" [(ngModel)]="newUser.username"></ion-input>
+			<ion-input type="text" [(ngModel)]="user.username"></ion-input>
 		</ion-item>
 	</ion-list>
-	<button ion-button full>Submit</button>
+	<button ion-button full (click)="submit()">Submit</button>
 	<button ion-button color="danger" full (click)="cancel()">Cancel</button>
 </ion-content>

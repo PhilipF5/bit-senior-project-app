@@ -17,8 +17,6 @@ import { CreateProfilePage } from '../../pages/create-profile/create-profile';
 
 export class AccountListPage {
 
-	selectedAcct = 0;
-
 	constructor(public navCtrl: NavController, public navParams: NavParams, public acctProvider: AccountProvider, public modalCtrl: ModalController) {}
 
 	ionViewDidLoad() {
@@ -26,7 +24,8 @@ export class AccountListPage {
 	}
 	
 	setAccount(i) {
-		this.selectedAcct = i;
+		this.acctProvider.selectedAcct = i;
+		this.acctProvider.selectedAcctID = this.acctProvider.accounts[i].id;
 	}
 	
 	createAccount() {
