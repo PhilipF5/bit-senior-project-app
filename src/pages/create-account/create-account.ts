@@ -45,7 +45,7 @@ export class CreateAccountPage {
     	this.loader.present();
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
-		this.http.post("http://localhost:5000/api/accounts/" + this.loginProvider.creds.apiKey + "/create", JSON.stringify(this.account), {headers: headers})
+		this.http.post("http://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey + "/create", JSON.stringify(this.account), {headers: headers})
 		.subscribe(
 			res => this.newAccount = res.json(),
 			(err) => {},

@@ -43,7 +43,7 @@ export class CreateProfilePage {
 		this.user.accountID = this.acctProvider.selectedAcctID;
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
-		this.http.post("http://localhost:5000/api/profiles/" + this.loginProvider.creds.apiKey + "/create", JSON.stringify(this.user), {headers: headers})
+		this.http.post("http://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey + "/create", JSON.stringify(this.user), {headers: headers})
 		.subscribe(
 			res => this.newUser = res.json(),
 			(err) => {},
