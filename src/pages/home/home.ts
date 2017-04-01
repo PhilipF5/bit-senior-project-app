@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Http } from '@angular/http';
 
 import { NavController, ModalController, LoadingController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login';
@@ -11,6 +12,7 @@ import { AuctionViewPage } from '../../pages/auction-view/auction-view';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
 import 'moment-timezone';
+import * as randomColor from 'randomcolor';
 
 @Component({
   	selector: 'page-home',
@@ -21,56 +23,56 @@ export class HomePage {
 	
 	profileViewPage;
 	auctionViewPage;
-	@ViewChild('donutCanvas') donutCanvas;
-    donutChart: any;
+	@ViewChild('chartCanvas') chartCanvas;
+    chart: any;
+	typesData: any;
 
-	constructor(public navCtrl: NavController, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public modalCtrl: ModalController, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider, public loadCtrl: LoadingController) {
+	constructor(public navCtrl: NavController, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public modalCtrl: ModalController, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider, public loadCtrl: LoadingController, public http: Http) {
 		this.profileViewPage = ProfileViewPage;
 		this.auctionViewPage = AuctionViewPage;
 		let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
 		modal.onDidDismiss(() => {
-			this.loadChart();
+			this.loadTypesData();
 		});
 		modal.present();
  	}
 	
-	loadChart() {
-		this.donutChart = new Chart(this.donutCanvas.nativeElement, {
-        	type: 'doughnut',
+	loadTypesData() {
+		return new Promise((resolve, reject) => {
+			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/types")
+			.subscribe(
+				res => this.typesData = res.json(),
+				(err) => {},
+				() => {
+					this.loadTypesChart();
+					resolve();
+				}
+			);
+		});
+	}
+	
+	loadTypesChart() {
+		this.chart = new Chart(this.chartCanvas.nativeElement, {
+        	type: 'polarArea',
         	options: {
 				legend: {
-					position: 'bottom'
+					position: "bottom"
 				},
 				layout: { padding: 10 }
 			},
 			data: {
-				labels: [
-					"Virginia",
-					"New York",
-					"Illinois",
-					"South Carolina",
-					"Ohio",
-					"New Jersey"
-				],
+				labels: this.typesData.typeNames,
 				datasets: [{
     				label: "Test",
-					data: [750, 1147, 675, 432, 703, 450],
-					backgroundColor: [
-    					'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-					],
-					hoverBackgroundColor: [
-    					'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-					]
+					data: this.typesData.salesByVolume,
+					backgroundColor: randomColor({
+						count: this.typesData.typeNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: this.typesData.typeNames.length,
+						luminosity: "light"
+					}),
 				}]
 			}
         });
