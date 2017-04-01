@@ -53,7 +53,7 @@ export class LotProvider {
 		this.loader.present();
 		var result;
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/accept")
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/accept")
 			.subscribe(
 				res => result = res.json(),
 				(err) => {},
@@ -112,7 +112,7 @@ export class LotProvider {
 		let result = "";
 		let message = "";
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/bid/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/" + amount)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/bid/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/" + amount)
 			.subscribe(
 				res => bidResult = res.json(),
 				(err) => {},

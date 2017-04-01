@@ -52,7 +52,7 @@ export class AuctionProvider {
 	
 	loadAuction(id) {
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + id)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + id)
 			.subscribe(
 				res => {
 					this.auction = res.json();
@@ -67,7 +67,7 @@ export class AuctionProvider {
 	
 	loadAllAuctions() {
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey)
 			.subscribe(
 				res => {
 					this.auctions = res.json();

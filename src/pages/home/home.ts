@@ -39,7 +39,7 @@ export class HomePage {
 	
 	loadTypesData() {
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/types")
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/types")
 			.subscribe(
 				res => this.typesData = res.json(),
 				(err) => {},

@@ -42,7 +42,7 @@ export class ProfileProvider {
 	
 	loadMyProfile() {
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey)
 			.subscribe(
 				res => {
 					this.profile = res.json();

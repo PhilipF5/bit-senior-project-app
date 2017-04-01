@@ -42,7 +42,7 @@ export class AccountProvider {
 	
 	loadMyAccount() {
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
 			.subscribe(
 				res => this.myAccount = res.json(),
 				(err) => {},
@@ -55,7 +55,7 @@ export class AccountProvider {
 	
 	loadAllAccounts() {
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
 			.subscribe(
 				res => this.accounts = res.json(),
 				(err) => {},

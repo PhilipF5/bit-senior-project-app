@@ -36,7 +36,7 @@ export class LoginPage {
 		console.log("Logging in with username " + this.username + " ...");
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
-		this.http.post("http://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
+		this.http.post("https://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
 		.subscribe(
 			res => this.loginProvider.creds = res.json(),
 			(err) => {},
