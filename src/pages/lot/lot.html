@@ -53,7 +53,10 @@
 				<ion-card *ngIf="isOpen()" text-center padding color="go">
 					Bidding is
 					<h1 margin>Open</h1>
-					Current Price: {{lotProvider.activeLot.currentPrice | currency}}
+					<p>Current Price: {{lotProvider.activeLot.currentPrice | currency}}</p>
+					<button *ngIf="loginProvider.creds.role == 'admin'" ion-button round (click)="lotProvider.acceptBid()">
+						Accept &amp; Close
+					</button>
 				</ion-card>
 				<ion-card *ngIf="isSold()" text-center padding color="danger">
 					This lot has been
@@ -63,9 +66,8 @@
 				<ion-card *ngIf="isUpcoming()" text-center padding color="primary">
 					This lot will open on
 					<h1 margin>{{moment(auctionProvider.auction.startTime).format("MMMM D")}}</h1>
-					Winning Bid: {{lotProvider.activeLot.currentPrice | currency}}
 				</ion-card>
-				<ion-card *ngIf="isOpen()" text-center>
+				<ion-card *ngIf="isOpen() && loginProvider.creds.role == 'user'" text-center>
 					<ion-card-header text-left>
 						Place New Bid
 					</ion-card-header>

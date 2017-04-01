@@ -45,6 +45,55 @@ export class LotProvider {
 		console.log('Hello Lot Provider');
 	}
 	
+	acceptBid()
+	{
+		this.loader = this.loadCtrl.create({
+			content: "Accepting bid..."
+		});
+		this.loader.present();
+		var result;
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/accept")
+			.subscribe(
+				res => result = res.json(),
+				(err) => {},
+				() => {
+					this.loader.dismiss();
+					let alert = this.alertCtrl.create({
+						title: "Bid accepted",
+						subTitle: "This lot is now closed.",
+						buttons: [
+							{
+								text: 'OK',
+								handler: () => {
+									this.loader = this.loadCtrl.create({
+										content: "Refreshing..."
+									});
+									this.loader.present();
+									Promise.all([
+										this.auctionProvider.loadAllAuctions(),
+										this.acctProvider.loadAllAccounts()
+										.then(() => this.profileProvider.loadAllProfiles()),
+										this.auctionProvider.loadAuction(this.auctionProvider.auction.id)
+									]).then(() => {
+										for (let lot of this.auctionProvider.auction.lots) {
+											if (lot.id == this.activeLot.id) {
+												this.activeLot = lot;
+											}
+										}
+										this.loader.dismiss();
+										resolve();
+									});
+								}
+							}
+						]
+					});
+					alert.present();
+				}
+			)
+		})
+	}
+	
 	bidOnLot(amount)
 	{
 		this.loader = this.loadCtrl.create({
@@ -63,7 +112,7 @@ export class LotProvider {
 		let result = "";
 		let message = "";
 		return new Promise((resolve, reject) => {
-			this.http.get("http://auctionitapi.azurewebsites.net/api/auctions/bid/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/" + amount)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/bid/" + this.loginProvider.creds.apiKey + "/" + this.activeLot.id + "/" + amount)
 			.subscribe(
 				res => bidResult = res.json(),
 				(err) => {},

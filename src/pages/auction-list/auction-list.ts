@@ -70,6 +70,7 @@ export class AuctionListPage {
 		if (this.loginProvider.creds.role == "user") {
 			return (this.profileProvider.profile.auctions.indexOf(auct.id) != -1 && !this.isUpcoming(auct) && !this.isPast(auct));
 		}
+		return (!this.isUpcoming(auct) && !this.isPast(auct));
 	}
 	
 	isRegistered(auct) {

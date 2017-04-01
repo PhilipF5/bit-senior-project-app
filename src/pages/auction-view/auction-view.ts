@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AuctionProvider } from '../../providers/auction';
 import { LotProvider } from '../../providers/lot';
 import { LotPage } from '../../pages/lot/lot';
+import { LoginProvider } from '../../providers/login';
 import * as moment from 'moment';
 import 'moment-timezone';
 
@@ -21,7 +22,7 @@ export class AuctionViewPage {
 
 	lotPage;
 
-	constructor(public navCtrl: NavController, public loadCtrl: LoadingController, public navParams: NavParams, public auctionProvider: AuctionProvider, public lotProvider: LotProvider) {
+	constructor(public navCtrl: NavController, public loadCtrl: LoadingController, public navParams: NavParams, public auctionProvider: AuctionProvider, public lotProvider: LotProvider, public loginProvider: LoginProvider) {
 		this.lotPage = LotPage;
 	}
 

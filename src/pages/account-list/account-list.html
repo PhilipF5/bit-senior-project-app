@@ -1,0 +1,81 @@
+<!--
+  Generated template for the AccountList page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>Dealer Accounts</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+				<ion-card>
+					<ion-card-header>
+						Registered Dealers
+						<button ion-button icon-only text-right outline small round (click)="createAccount()">
+							<ion-icon name="add"></ion-icon>
+						</button>
+					</ion-card-header>
+					<ion-list>
+						<template ngFor let-acct [ngForOf]="acctProvider.accounts" let-i="index">
+							<button ion-item (click)="setAccount(i)">
+								{{acct.owner}}
+							</button>
+						</template>
+					</ion-list>
+				</ion-card>
+			</ion-col>
+			<ion-col col-12 col-sm-9 col-md-6 col-lg-8 col-xl-3>
+				<ion-card>
+					<ion-card-header>
+						Buyer Profiles
+						<button ion-button icon-only text-right outline small round (click)="createBuyer()">
+							<ion-icon name="add"></ion-icon>
+						</button>
+						<p>{{acctProvider.accounts[acctProvider.selectedAcct].owner}}</p>
+					</ion-card-header>
+					<ion-grid>
+						<ion-row class="header">
+							<ion-col>
+								Full Name
+							</ion-col>
+							<ion-col>
+								Total Spent
+							</ion-col>
+							<ion-col>
+								Bids
+							</ion-col>
+							<ion-col>
+								Username
+							</ion-col>
+						</ion-row>
+						<template ngFor let-buyer [ngForOf]="acctProvider.accounts[acctProvider.selectedAcct].buyers">
+							<ion-row>
+								<ion-col>
+									{{buyer.fullName}}
+								</ion-col>
+								<ion-col>
+									{{buyer.totalSpent}}
+								</ion-col>
+								<ion-col>
+									{{buyer.bidsCount}}
+								</ion-col>
+								<ion-col>
+									{{buyer.username}}
+								</ion-col>
+							</ion-row>
+						</template>
+					</ion-grid>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

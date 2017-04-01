@@ -36,7 +36,7 @@ export class LoginPage {
 		console.log("Logging in with username " + this.username + " ...");
 		var headers = new Headers();
 		headers.append("Content-Type", "application/json");
-		this.http.post("http://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
+		this.http.post("https://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
 		.subscribe(
 			res => this.loginProvider.creds = res.json(),
 			(err) => {},
@@ -51,6 +51,17 @@ export class LoginPage {
 							loader.dismiss();
 							this.viewCtrl.dismiss();
 						});
+					}
+					else if (this.loginProvider.creds.role == "admin") {
+						Promise.all([
+							this.auctionProvider.loadAllAuctions(),
+							this.acctProvider.loadAllAccounts().then(() => {
+								this.profileProvider.loadAllProfiles();
+							})
+						]).then(() => {
+							loader.dismiss();
+							this.viewCtrl.dismiss();
+						})
 					}
 				}
 			}
