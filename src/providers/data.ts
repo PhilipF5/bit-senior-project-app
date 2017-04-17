@@ -20,31 +20,44 @@ export class DataProvider {
 		console.log('Hello Data Provider');
 	}
 	
-	public login(username: string, password: string) {
+	// Load data based on user role
+	public loadData(): Promise {
+		return new Promise((resolve, reject) => {
+			if (this.loginProvider.creds.role == "user") {
+				// The login is for a User
+				Promise.all([
+					this.acctProvider.loadMyAccount(),
+					this.profileProvider.loadMyProfile(),
+					this.auctionProvider.loadAllAuctions()
+				]).then(() => {
+					resolve();
+				});
+			}
+			else if (this.loginProvider.creds.role == "admin") {
+				// The login is for an Admin
+				Promise.all([
+					this.auctionProvider.loadAllAuctions(),
+					this.acctProvider.loadAllAccounts().then(() => {
+						this.profileProvider.loadAllProfiles();
+					})
+				]).then(() => {
+					resolve();
+				})
+			}
+		}
+	}
+	
+	// Handles login requests
+	public login(username: string, password: string): Promise {
 		return new Promise((resolve, reject) => {
 			this.loginProvider.login(username, password)
 			.then(() => {
 				if (this.loginProvider.creds.apiKey == null) {
+					// The login was invalid and returned an error
 					reject(this.loginProvider.creds.error);
 				}
-				if (this.loginProvider.creds.role == "user") {
-					Promise.all([
-						this.acctProvider.loadMyAccount(),
-						this.profileProvider.loadMyProfile(),
-						this.auctionProvider.loadAllAuctions()
-					]).then(() => {
-						resolve();
-					});
-				}
-				else if (this.loginProvider.creds.role == "admin") {
-					Promise.all([
-						this.auctionProvider.loadAllAuctions(),
-						this.acctProvider.loadAllAccounts().then(() => {
-							this.profileProvider.loadAllProfiles();
-						})
-					]).then(() => {
-						resolve();
-					})
+				else {
+					this.loadData();
 				}
 			});
 		});
