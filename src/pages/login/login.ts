@@ -1,7 +1,13 @@
+/* Login Page
+Form to enter username and password.
+Should be displayed as a Modal.
+*/
+
+// Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
-import { Http, Headers } from '@angular/http';
 
+// Import base view and main data service
 import { BaseView } from '../../app/base-view';
 import { DataProvider } from '../../providers/data';
 
@@ -11,21 +17,27 @@ import { DataProvider } from '../../providers/data';
 })
 export class LoginPage extends BaseView {
 
+	// Data-bound to the corresponding fields on the form
 	public username: string;
 	public password: string;
 
+	// Constructor injects all base view and data service dependencies
 	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
 		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
 
+	// Auto-generated
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
 	}
 
+	// Tell the DataProvider to log the user in
 	public login() {
 		this.createLoader("Logging in...");
 		this.dataSrv.login(this.username, this.password)
 		.then(
+			// Handle the result
 			() => {
 				this.dismissLoader();
 				this.dismissView();
