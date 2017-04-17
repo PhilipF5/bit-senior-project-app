@@ -19,7 +19,7 @@ export class LoginProvider {
 	}
 	
 	// Create Promise to check login info against the API
-	public login(username: string, password: string): Promise {
+	public login(username: string, password: string) {
 		return new Promise((resolve, reject) => {
 			console.log("Logging in with username " + username + " ...");
 			// Use HTTPS POST to send credentials to the server

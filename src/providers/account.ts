@@ -1,48 +1,33 @@
+/* AccountProvider Service
+Manages account-related data
+*/
+
+// Standard service stuff
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { LoginProvider } from '../providers/login';
 
-/*
-  Generated class for the Account provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class AccountProvider {
 	
-	myAccount = {
-		address: null,
-		availableCredit: null,
-		city: null,
-		contactEmail: null,
-		contactPhone: null,
-		id: null,
-		owner: null,
-		postalCode: null,
-		state: null,
-		stateCode: null,
-		totalCredit: null,
-		totalSpent: null,
-		usedCredit: null
-	};
-	
-	accounts = [];
-	
-	sortBySpent = [];
-	
-	selectedAcct = 0;
-	
-	selectedAcctID = 1;
+	// Array containing all accounts
+	public accounts: Account[];
+	// Array containing current user's account
+	public myAccount: Account = new Account();
+	// Index and ID of selected account on AccountListPage
+	public selectedAcct: number = 0;
+	public selectedAcctID: number = 1;
+	// Array containing all accounts sorted by total spent (descending)
+	public sortBySpent: Account[];
 
-	constructor(public http: Http, public loginProvider: LoginProvider) {
+	constructor(public http: Http) {
 		console.log('Hello Account Provider');
 	}
 	
-	loadMyAccount() {
+	// Load the current user's account
+	loadMyAccount(apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
 			.subscribe(
 				res => this.myAccount = res.json(),
 				(err) => {},
@@ -53,13 +38,15 @@ export class AccountProvider {
 		});
 	}
 	
-	loadAllAccounts() {
+	// Load all accounts
+	loadAllAccounts(apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
 			.subscribe(
 				res => this.accounts = res.json(),
 				(err) => {},
 				() => {
+					// Duplicate the array and order it by total spent
 					this.sortBySpent = this.accounts.slice().sort((obj1, obj2) => {
 						if (obj1.totalSpent < obj2.totalSpent) {
 							return -1;
@@ -69,6 +56,7 @@ export class AccountProvider {
 						}
 						else return 0;
 					});
+					// Change from ascending to descending order
 					this.sortBySpent.reverse();
 					resolve();
 				}
@@ -76,4 +64,24 @@ export class AccountProvider {
 		});
 	}
 
+}
+
+// Structure of account objects from API
+export class Account {
+
+	public address: string;
+	public availableCredit: number;
+	public buyers: any;
+	public city: string;
+	public contactEmail: string;
+	public contactPhone: string;
+	public id: number;
+	public owner: string;
+	public postalCode: string;
+	public state: string;
+	public stateCode: string;
+	public totalCredit: number;
+	public totalSpent: number;
+	public usedCredit: number;
+	
 }
