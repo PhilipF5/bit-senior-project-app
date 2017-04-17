@@ -3,6 +3,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+// Import base page
+import { BaseView } from '../app/base-view';
+
 // Import app pages
 import { AccountListPage } from '../pages/account-list/account-list';
 import { AccountViewPage } from '../pages/account-view/account-view';
@@ -20,7 +23,6 @@ import { ReportsPage } from '../pages/reports/reports';
 import { AccountProvider } from '../providers/account';
 import { AuctionProvider } from '../providers/auction';
 import { DataProvider } from '../providers/data';
-import { GfxProvider } from '../providers/gfx';
 import { LoginProvider } from '../providers/login';
 import { LotProvider } from '../providers/lot';
 import { ProfileProvider } from '../providers/profile';
@@ -71,7 +73,6 @@ import { CurrencyPipe } from '../pipes/currency';
 		AccountProvider,
 		AuctionProvider,
 		DataProvider,
-		GfxProvider,
 		LoginProvider,
 		LotProvider,
 		ProfileProvider

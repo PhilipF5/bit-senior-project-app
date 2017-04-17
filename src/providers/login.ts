@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -11,19 +11,37 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginProvider {
 	
-	creds = {
-		apiKey: null,
-		error: null,
-		firstName: null,
-		lastName: null,
-		role: null,
-		username: null
-	};
-	username: string;
-	password: string;
+	public creds: Credentials = new Credentials();
 
 	constructor(public http: Http) {
 
 	}
+	
+	public login(username: string, password: string) {
+		return new Promise((resolve, reject) => {
+			console.log("Logging in with username " + username + " ...");
+			let headers = new Headers();
+			headers.append("Content-Type", "application/json");
+			this.http.post("https://auctionitapi.azurewebsites.net/api/login", JSON.stringify(username + ' ' + password), {headers: headers})
+			.subscribe(
+				res => this.creds = res.json(),
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
+	}
+	
+}
+
+export class Credentials {
+	
+	public apiKey: string;
+	public error: string;
+	public firstName: string;
+	public lastName: string;
+	public role: string;
+	public username: string;
 	
 }
