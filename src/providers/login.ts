@@ -8,11 +8,13 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import * as models from '../app/classes';
+
 @Injectable()
 export class LoginProvider {
 	
 	// Credentials info retrieved from API call
-	public creds: Credentials = new Credentials();
+	public creds: models.Credentials = new models.Credentials();
 
 	constructor(public http: Http) {
 
@@ -35,17 +37,5 @@ export class LoginProvider {
 			);
 		});
 	}
-	
-}
-
-// Structure of object retrieved from API
-export class Credentials {
-	
-	public apiKey: string;
-	public error: string;
-	public firstName: string;
-	public lastName: string;
-	public role: string;
-	public username: string;
 	
 }

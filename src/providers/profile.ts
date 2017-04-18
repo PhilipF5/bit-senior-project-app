@@ -1,48 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { LoginProvider } from '../providers/login';
-import { AccountProvider } from '../providers/account';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the Profile provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
+import * as models from '../app/classes';
 
 @Injectable()
 export class ProfileProvider {
 	
-	profile = {
-		accountID: null,
-		auctions: [],
-		bids: [],
-		bidsMax: null,
-		bidsMin: null,
-		id: null,
-		firstName: "",
-		lastName: "",
-		totalSpent: null,
-		username: "",
-		auctionCount: null,
-		bidsCount: null,
-		fullName: ""
-	};
-	
-	profiles = [];
-	
-	sortBySpent = [];
-	
-	wins;
+	public profile: models.Profile = new models.Profile();
+	public profiles: models.Profile[] = [];
+	public sortBySpent: models.Profile[];
+	public wins: number;
 
-	constructor(public http: Http, public loginProvider: LoginProvider, public acctProvider: AccountProvider) {
+	constructor(public http: Http) {
 		
 	}
 	
-	loadMyProfile() {
+	loadMyProfile(apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey)
 			.subscribe(
 				res => {
 					this.profile = res.json();
@@ -61,11 +37,9 @@ export class ProfileProvider {
 		});
 	}
 	
-	loadAllProfiles() {
-		this.profiles = [];
+	loadAllProfiles(accounts: models.Account[]) {
 		return new Promise((resolve, reject) => {
-			for (let acct of this.acctProvider.accounts) {
-				// profiles = profiles.concat(acct.buyers);
+			for (let acct of accounts) {
 				for (let profile of acct.buyers) {
 					profile["accountOwner"] = acct.owner;
 					this.profiles.push(profile);

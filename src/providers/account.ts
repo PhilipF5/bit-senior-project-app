@@ -7,18 +7,20 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import * as models from '../app/classes';
+
 @Injectable()
 export class AccountProvider {
 	
 	// Array containing all accounts
-	public accounts: Account[];
+	public accounts: models.Account[] = [];
 	// Array containing current user's account
-	public myAccount: Account = new Account();
+	public myAccount: models.Account = new models.Account();
 	// Index and ID of selected account on AccountListPage
 	public selectedAcct: number = 0;
 	public selectedAcctID: number = 1;
 	// Array containing all accounts sorted by total spent (descending)
-	public sortBySpent: Account[];
+	public sortBySpent: models.Account[];
 
 	constructor(public http: Http) {
 		console.log('Hello Account Provider');
@@ -64,24 +66,4 @@ export class AccountProvider {
 		});
 	}
 
-}
-
-// Structure of account objects from API
-export class Account {
-
-	public address: string;
-	public availableCredit: number;
-	public buyers: any;
-	public city: string;
-	public contactEmail: string;
-	public contactPhone: string;
-	public id: number;
-	public owner: string;
-	public postalCode: string;
-	public state: string;
-	public stateCode: string;
-	public totalCredit: number;
-	public totalSpent: number;
-	public usedCredit: number;
-	
 }
