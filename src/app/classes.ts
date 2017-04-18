@@ -1,4 +1,3 @@
-// Structure of account objects from API
 export class Account {
 
 	public address: string;
@@ -26,7 +25,7 @@ export class Auction {
 	public endTime: string,
 	public id: number,
 	public lots: Lot[],
-	public participants: null,
+	public participants: number[],
 	public postalCode: string,
 	public startTime: string,
 	public state: string,
@@ -34,7 +33,16 @@ export class Auction {
 
 }
 
-// Structure of login objects from API
+export class Bid {
+	public accountID: number,
+	public amount: number,
+	public bidTime: string,
+	public buyerID: number,
+	public id: number,
+	public lotID: number,
+	public status: string
+}
+
 export class Credentials {
 	
 	public apiKey: string;
@@ -46,7 +54,30 @@ export class Credentials {
 	
 }
 
-// Structure of buyer objects from API
+export class Lot {
+
+	public auctionID: number,
+	public bids: Bid[],
+	public bidsCount: number,
+	public bidsMax: Bid,
+	public color: string,
+	public currentPrice: number,
+	public desc: string,
+	public detailLink: string,
+	public id: number,
+	public make: string,
+	public mileage: number,
+	public minPrice: number,
+	public model: string,
+	public status: string,
+	public trim: string,
+	public vehicleID: number,
+	public vin: string,
+	public winner: Bid
+	public year: number,
+	
+}
+
 export class Profile {
 	
 	public accountID: number,
