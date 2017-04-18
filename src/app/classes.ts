@@ -18,6 +18,22 @@ export class Account {
 	
 }
 
+export class Auction {
+
+	public address: string,
+	public buyers: Profile[],
+	public city: string,
+	public endTime: string,
+	public id: number,
+	public lots: Lot[],
+	public participants: null,
+	public postalCode: string,
+	public startTime: string,
+	public state: string,
+	public stateCode: string
+
+}
+
 // Structure of login objects from API
 export class Credentials {
 	

@@ -27,7 +27,7 @@ export class AccountProvider {
 	}
 	
 	// Load the current user's account
-	loadMyAccount(apiKey: string) {
+	public loadMyAccount(apiKey: string) {
 		return new Promise((resolve, reject) => {
 			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
 			.subscribe(
@@ -41,7 +41,7 @@ export class AccountProvider {
 	}
 	
 	// Load all accounts
-	loadAllAccounts(apiKey: string) {
+	public loadAllAccounts(apiKey: string) {
 		return new Promise((resolve, reject) => {
 			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
 			.subscribe(

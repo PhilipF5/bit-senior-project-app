@@ -16,7 +16,7 @@ export class ProfileProvider {
 		
 	}
 	
-	loadMyProfile(apiKey: string) {
+	public loadMyProfile(apiKey: string) {
 		return new Promise((resolve, reject) => {
 			this.http.get("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey)
 			.subscribe(
@@ -37,7 +37,7 @@ export class ProfileProvider {
 		});
 	}
 	
-	loadAllProfiles(accounts: models.Account[]) {
+	public loadAllProfiles(accounts: models.Account[]) {
 		return new Promise((resolve, reject) => {
 			for (let acct of accounts) {
 				for (let profile of acct.buyers) {
