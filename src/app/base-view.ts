@@ -26,6 +26,94 @@ export class BaseView {
 		this.viewCtrl.dismiss();
 	}
 	
+	loadModelsChart(canvas: any, data: any) {
+		this.modelsChart = new Chart(canvas.nativeElement, {
+        	type: 'horizontalBar',
+        	options: {
+				legend: {
+					display: false
+				},
+				layout: { padding: 10 },
+				maintainAspectRatio: false
+			},
+			data: {
+				labels: data.modelNames,
+				datasets: [{
+    				label: "Test",
+					data: data.salesByVolume,
+					backgroundColor: randomColor({
+						count: data.modelNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: data.modelNames.length,
+						luminosity: "light"
+					}),
+					scales: {
+						yAxes: [{
+							barThickness: 20
+						}]
+					}
+				}]
+			}
+        });
+	}
+	
+	loadStatesChart(canvas: any, data: any) {
+		this.statesChart = new Chart(canvas.nativeElement, {
+        	type: 'doughnut',
+        	options: {
+				legend: {
+					position: 'bottom'
+				},
+				layout: { padding: 10 }
+			},
+			data: {
+				labels: data.stateNames,
+				datasets: [{
+    				label: "Test",
+					data: data.salesByVolume,
+					backgroundColor: randomColor({
+						count: this.data.stateNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: this.data.stateNames.length,
+						luminosity: "light"
+					}),
+					borderWidth: 1
+				}]
+			}
+        });
+	}
+	
+	loadTypesChart(canvas: any, data: any) {
+		this.typesChart = new Chart(canvas.nativeElement, {
+        	type: 'bar',
+        	options: {
+				legend: {
+					display: false
+				},
+				layout: { padding: 10 }
+			},
+			data: {
+				labels: data.typeNames,
+				datasets: [{
+    				label: "Test",
+					data: data.salesByVolume,
+					backgroundColor: randomColor({
+						count: data.typeNames.length,
+						luminosity: "bright"
+					}),
+					hoverBackgroundColor: randomColor({
+						count: data.typeNames.length,
+						luminosity: "light"
+					}),
+				}]
+			}
+        });
+	}
+	
 	public showAlert(title: string, subtitle: string) {
 		let alert = this.alertCtrl.create({
 			title: title,

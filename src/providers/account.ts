@@ -26,15 +26,18 @@ export class AccountProvider {
 		console.log('Hello Account Provider');
 	}
 	
-	// Load the current user's account
-	public loadMyAccount(apiKey: string) {
+	// Create new account
+	public createAccount(acct: any, apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
+			let headers = new Headers();
+			let newAccount: models.Account;
+			headers.append("Content-Type", "application/json");
+			this.http.post("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey + "/create", JSON.stringify(this.account), {headers: headers})
 			.subscribe(
-				res => this.myAccount = res.json(),
+				res => newAccount = res.json(),
 				(err) => {},
 				() => {
-					resolve();
+					resolve(newAccount);
 				}
 			);
 		});
@@ -60,6 +63,20 @@ export class AccountProvider {
 					});
 					// Change from ascending to descending order
 					this.sortBySpent.reverse();
+					resolve();
+				}
+			);
+		});
+	}
+	
+	// Load the current user's account
+	public loadMyAccount(apiKey: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
+			.subscribe(
+				res => this.myAccount = res.json(),
+				(err) => {},
+				() => {
 					resolve();
 				}
 			);

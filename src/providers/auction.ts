@@ -22,12 +22,12 @@ export class AuctionProvider {
 		return (!this.isUpcoming(auct) && !this.isPast(auct));
 	}
 	
-	public isCurrentForUser(auct: models.Auction, myAuctions: number[]) {
-		return (myAuctions.indexOf(auct.id) != -1 && !this.isUpcoming(auct) && !this.isPast(auct));
-	}
-	
 	public isPast(auct: models.Auction) {
 		return moment().isAfter(auct.endTime);
+	}
+	
+	public isRegistered(auct: models.Auction, myAuctions: number[]) {
+		return (myAuctions.indexOf(auct.id) != -1);
 	}
 	
 	public isUpcoming(auct: models.Auction) {

@@ -27,11 +27,6 @@ export class LoginPage extends BaseView {
 		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
 
-	// Auto-generated
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad LoginPage');
-	}
-
 	// Tell the DataProvider to log the user in
 	public login() {
 		this.createLoader("Logging in...");

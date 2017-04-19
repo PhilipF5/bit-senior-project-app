@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 // Import all specific providers
@@ -17,8 +17,14 @@ import * as models from '../app/classes';
 @Injectable()
 export class DataProvider {
 
+	public chartData: any = {
+		models: null,
+		states: null,
+		types: null
+	};
+
 	constructor(public http: Http, public acctProvider: AccountProvider, public auctionProvider: AuctionProvider, public loginProvider: LoginProvider, public lotProvider: LotProvider, public profileProvider: ProfileProvider) {
-		console.log('Hello Data Provider');
+		
 	}
 	
 	// Accept highest bid on active lot as winner
@@ -48,9 +54,6 @@ export class DataProvider {
 		if (!auct) {
 			auct = this.auctionProvider.auction;
 		}
-		if (this.getRole() == "user" && this.auctionProvider.isCurrentForUser(auct)) {
-			return "currentForUser";
-		}
 		if (this.auctionProvider.isCurrent(auct)) {
 			return "current";
 		}
@@ -62,6 +65,29 @@ export class DataProvider {
 		}
 		else return "error";
 	}
+	
+	// Create new dealer account
+	public createAccount(acct: any) {
+		return new Promise((resolve, reject) => {
+			this.acctProvider.createAccount(acct, this.getApiKey())
+			.then((newAccount) => this.loadData().then(() => resolve(newAccount)));
+		});
+	}
+	
+	// Create new buyer profile
+	public createProfile(prof: any) {
+		return new Promise((resolve, reject) => {
+			this.profileProvider.createProfile(prof, this.getApiKey())
+			.then((newUser) => this.loadData().then(() => resolve(newUser)));
+		});
+	}
+	
+	// Easy access to account ID loaded in memory
+	public getActiveAcctID(): number {
+		return this.acctProvider.selectedAcctID;
+	}
+	
+	
 	
 	// Easy access to lot loaded in memory
 	public getActiveLot(): models.Lot {
@@ -86,12 +112,60 @@ export class DataProvider {
 		return this.lotProvider.hasWon(acctID);
 	}
 	
+	// Check if user is registered for auction
+	public isRegForAuction(auct?: models.Auction): boolean {
+		if (!auct) {
+			auct = this.auctionProvider.auction;
+		}
+		return this.auctionProvider.isRegistered(auct, this.profileProvider.profile.auctions);
+	}
+	
 	// Check if user's account is winning the active lot
 	public isWinningActiveLot(acctID?: number): boolean {
 		if (!acctID) {
 			acctID = this.acctProvider.myAccount.id;
 		}
 		return this.lotProvider.isWinning(acctID);
+	}
+	
+	// Load charts data
+	public loadChartsDataModels() {
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.getApiKey() + "/models")
+			.subscribe(
+				res => this.chartData.models = res.json(),
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
+	}
+	
+	public loadChartsDataStates() {
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.getApiKey() + "/states")
+			.subscribe(
+				res => this.chartData.states = res.json(),
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
+	}
+	
+	public loadChartsDataTypes() {
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.getApiKey() + "/types")
+			.subscribe(
+				res => this.chartData.types = res.json(),
+				(err) => {},
+				() => {
+					resolve();
+				}
+			);
+		});
 	}
 	
 	// Load data based on user role
@@ -134,6 +208,9 @@ export class DataProvider {
 				else {
 					this.loadData()
 					.then(() => {
+						loadChartsDataTypes();
+					})
+					.then(() => {
 						resolve();
 					});
 				}
@@ -167,10 +244,46 @@ export class DataProvider {
 	
 	// Reloads auction
 	public refreshAuction() {
-		this.auctionProvider.loadAuction(this.auctionProvider.auction.id, this.getApiKey());
+		return new Promise((resolve, reject) => {
+			this.auctionProvider.loadAuction(this.auctionProvider.auction.id, this.getApiKey())
+			.then(
+				() => {
+					resolve();
+				}
+			);
+		});
+	}
+	
+	// Sets the active account for AccountListPage
+	public setActiveAccount(index: number) {
+		this.acctProvider.selectedAcct = index;
+		this.acctProvider.selectedAcctID = this.acctProvider.accounts[index].id;
+	}
+	
+	// Load auction into memory
+	public setActiveAuction(auctID: number) {
+		return new Promise((resolve, reject) => {
+			this.auctionProvider.loadAuction(auctID, this.getApiKey())
+			.then(
+				() => {
+					resolve();
+				}
+			);
+		});
 	}
 	
 	// Sets the active lot in LotProvider
-	public setActiveLot()
+	public setActiveLot(lotID: number) {
+		this.refreshAuction()
+		.then(
+			() => {
+				for (let lot of this.auctionProvider.auction.lots) {
+					if (lot.id == id) {
+						this.lotProvider.activeLot = lot;
+					}
+				}
+			}
+		);
+	}
 
 }

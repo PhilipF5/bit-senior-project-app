@@ -16,22 +16,17 @@ export class ProfileProvider {
 		
 	}
 	
-	public loadMyProfile(apiKey: string) {
+	public createProfile(prof: any, apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey)
+			let headers = new Headers();
+			let newUser: models.Profile;
+			headers.append("Content-Type", "application/json");
+			this.http.post("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey + "/create", JSON.stringify(this.account), {headers: headers})
 			.subscribe(
-				res => {
-					this.profile = res.json();
-				},
+				res => newUser = res.json(),
 				(err) => {},
 				() => {
-					this.wins = 0;
-					for (let bid of this.profile.bids) {
-						if (bid.status == "Winner") {
-							this.wins++;
-						}
-					}
-					resolve();
+					resolve(newUser);
 				}
 			);
 		});
@@ -56,6 +51,27 @@ export class ProfileProvider {
 			});
 			this.sortBySpent.reverse();
 			resolve();
+		});
+	}
+	
+	public loadMyProfile(apiKey: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey)
+			.subscribe(
+				res => {
+					this.profile = res.json();
+				},
+				(err) => {},
+				() => {
+					this.wins = 0;
+					for (let bid of this.profile.bids) {
+						if (bid.status == "Winner") {
+							this.wins++;
+						}
+					}
+					resolve();
+				}
+			);
 		});
 	}
 

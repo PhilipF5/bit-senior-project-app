@@ -1,72 +1,55 @@
+// Standard page stuff
 import { Component } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
-import { LoginProvider } from '../../providers/login';
-import { AccountProvider } from '../../providers/account';
-import { ProfileProvider } from '../../providers/profile';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 
-/*
-  Generated class for the CreateProfile page.
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+// Import needed libraries
+import * as models from '../app/classes';
+
 @Component({
 	selector: 'page-create-profile',
 	templateUrl: 'create-profile.html'
 })
+export class CreateProfilePage extends BaseView {
 
-export class CreateProfilePage {
-
-	loader;
-	
-	user = {
+	public user: any = {
 		firstName: null,
 		lastName: null,
 		username: null,
 		accountID: null
 	}
 	
-	newUser;
-	
-	constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public viewCtrl: ViewController, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public loadCtrl: LoadingController, public profileProvider: ProfileProvider, public alertCtrl: AlertController) {}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad CreateProfilePage');
-	}
-	
-	submit() {
-		this.loader = this.loadCtrl.create({
-      		content: "Loading..."
-    	});
-    	this.loader.present();
-		this.user.accountID = this.acctProvider.selectedAcctID;
-		var headers = new Headers();
-		headers.append("Content-Type", "application/json");
-		this.http.post("https://auctionitapi.azurewebsites.net/api/profiles/" + this.loginProvider.creds.apiKey + "/create", JSON.stringify(this.user), {headers: headers})
-		.subscribe(
-			res => this.newUser = res.json(),
-			(err) => {},
-			() => {
-				this.acctProvider.loadAllAccounts()
-				.then(() => this.profileProvider.loadAllProfiles())
-				.then(() => {
-					this.loader.dismiss();
-					this.viewCtrl.dismiss();
-					let alert = this.alertCtrl.create({
-						title: 'User ' + this.newUser.item1 + ' created',
-						subTitle: 'Provide them this auth key to log in:  ' + this.newUser.item2,
-						buttons: ['OK'],
-						enableBackdropDismiss: false
-					});
-					alert.present();
-				});
-			}
-		);
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
+		// Get selected account ID
+		this.user.accountID = this.dataSrv.getActiveAcctID();
 	}
 	
 	cancel() {
 		this.viewCtrl.dismiss();
+	}
+	
+	submit() {
+		this.createLoader("Loading...");
+		this.dataSrv.createProfile(user)
+		.then(
+			(newUser) => {
+				this.dismissLoader();
+				this.viewCtrl.dismiss();
+				let alert = this.alertCtrl.create({
+					title: 'User ' + newUser.item1 + ' created',
+					subTitle: 'Provide them this auth key to log in:  ' + newUser.item2,
+					buttons: ['OK'],
+					enableBackdropDismiss: false
+				});
+				alert.present();
+			}
+		);
 	}
 
 }

@@ -1,35 +1,37 @@
+// Standard page stuff
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { AuctionProvider } from '../../providers/auction';
-import { LotProvider } from '../../providers/lot';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
+
+// Import pages for navigation
 import { LotPage } from '../../pages/lot/lot';
-import { LoginProvider } from '../../providers/login';
+
+// Import needed libraries
 import * as moment from 'moment';
 import 'moment-timezone';
+import * as models from '../app/classes';
 
-/*
-  Generated class for the AuctionView page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
  	selector: 'page-auction-view',
  	templateUrl: 'auction-view.html'
 })
+export class AuctionViewPage extends BaseView {
 
-export class AuctionViewPage {
+	// Navigation pages
+	private lotPage: any;
 
-	lotPage;
-
-	constructor(public navCtrl: NavController, public loadCtrl: LoadingController, public navParams: NavParams, public auctionProvider: AuctionProvider, public lotProvider: LotProvider, public loginProvider: LoginProvider) {
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
+		// Navigation pages
 		this.lotPage = LotPage;
 	}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad AuctionViewPage');
-	}
 	
+	// Format dates and times with Moment Timezone
 	formatDate() {
 		return moment(this.auctionProvider.auction.startTime)
 		.tz('America/New_York')
@@ -44,20 +46,14 @@ export class AuctionViewPage {
 		.format("h:mm A (z)");
 	}
 	
+	// Load page for lot
 	navToLot(id) {
-		let loader = this.loadCtrl.create({
-      		content: "Loading..."
-    	});
-    	loader.present();
-		this.auctionProvider.loadAuction(this.auctionProvider.auction.id)
+		this.createLoader("Loading...");
+		this.dataSrv.refreshAuction()
 		.then(() => {
-			for (let lot of this.auctionProvider.auction.lots) {
-				if (lot.id == id) {
-					this.lotProvider.activeLot = lot;
-					loader.dismiss();
-					this.navCtrl.push(this.lotPage);
-				}
-			}
+			this.dataSrv.setActiveLot(id);
+			this.dismissLoader();
+			this.navCtrl.push(this.lotPage);
 		});
 	}
 
