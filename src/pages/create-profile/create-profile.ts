@@ -27,7 +27,7 @@ export class CreateProfilePage extends BaseView {
 		// Pass along to the base view constructor
 		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 		// Get selected account ID
-		this.user.accountID = this.dataSrv.getActiveAcctID();
+		this.user.accountID = this.dataSrv.selectedAcctID;
 	}
 	
 	cancel() {

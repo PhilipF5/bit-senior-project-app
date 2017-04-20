@@ -60,7 +60,7 @@ export class HomePage extends BaseView {
 	navToAuction(id)
 	{
 		this.createLoader("Loading...")
-		this.auctionProvider.loadAuction(id)
+		this.dataSrv.loadAuction(id)
 		.then(() => {
 			this.dismissLoader();
 			this.navCtrl.push(this.auctionViewPage);

@@ -17,7 +17,7 @@
 					</ion-card-header>
 					<ion-list>
 						<template ngFor let-acct [ngForOf]="dataSrv.accounts" let-i="index">
-							<button ion-item (click)="setAccount(i)">
+							<button ion-item (click)="dataSrv.activeAccount = i">
 								{{acct.owner}}
 							</button>
 						</template>
@@ -31,7 +31,7 @@
 						<button ion-button icon-only text-right outline small round (click)="createBuyer()">
 							<ion-icon name="add"></ion-icon>
 						</button>
-						<p>{{dataSrv.accounts[dataSrv.getActiveAcctIndex()].owner}}</p>
+						<p>{{dataSrv.accounts[dataSrv.selectedAcctIndex].owner}}</p>
 					</ion-card-header>
 					<ion-grid>
 						<ion-row class="header">
@@ -48,7 +48,7 @@
 								Username
 							</ion-col>
 						</ion-row>
-						<template ngFor let-buyer [ngForOf]="dataSrv.accounts[dataSrv.getActiveAcctIndex()].buyers">
+						<template ngFor let-buyer [ngForOf]="dataSrv.accounts[dataSrv.selectedAcctIndex].buyers">
 							<ion-row>
 								<ion-col>
 									{{buyer.fullName}}

@@ -27,7 +27,7 @@ export class DataProvider {
 		
 	}
 	
-	// Getters
+	// Getters and setters
 	public get accounts(): models.Account[] {
 		return this.acctProvider.accounts;
 	}
@@ -40,24 +40,42 @@ export class DataProvider {
 		return this.acctProvider.account;
 	}
 	
+	public set activeAccount(index: number) {
+		this.acctProvider.selectedAcct = index;
+		this.acctProvider.selectedAcctID = this.acctProvider.accounts[index].id;
+	}
+	
+	public get activeAuction(): models.Auction {
+		this.auctionProvider.auction;
+	}
+	
 	public get activeLot(): models.Lot {
 		return this.lotProvider.activeLot;
+	}
+	
+	public set activeLot(lotID: number) {
+		this.refreshAuction()
+		.then(
+			() => {
+				for (let lot of this.auctionProvider.auction.lots) {
+					if (lot.id == id) {
+						this.lotProvider.activeLot = lot;
+					}
+				}
+			}
+		);
 	}
 	
 	public get activeProfile(): models.Profile {
 		return this.profileProvider.profile;
 	}
 	
-	public get auctions(): models.Auction[] {
-		return this.auctionProvider.auctions;
-	}
-	
-	public get myAccount(): models.Account {
-		return this.acctProvider.myAccount;
-	}
-	
 	public get apiKey(): string {
 		return this.loginProvider.creds.apiKey;
+	}
+	
+	public get auctions(): models.Auction[] {
+		return this.auctionProvider.auctions;
 	}
 	
 	public get creds(): models.Credentials {
@@ -68,12 +86,24 @@ export class DataProvider {
 		return this.auctionProvider.currentAuction;
 	}
 	
+	public get myAccount(): models.Account {
+		return this.acctProvider.myAccount;
+	}
+	
 	public get profilesBySpent(): models.Profile[] {
 		return this.profileProvider.sortBySpent;
 	}
 	
 	public get role(): string {
 		return this.loginProvider.creds.role;
+	}
+	
+	public get selectedAcctID(): number {
+		return this.acctProvider.selectedAcctID;
+	}
+	
+	public get selectedAcctIndex(): number {
+		return this.acctProvider.selectedAcct;
 	}
 	
 	// Accept highest bid on active lot as winner
@@ -131,21 +161,6 @@ export class DataProvider {
 		});
 	}
 	
-	// Easy access to account ID loaded in memory
-	public getActiveAcctID(): number {
-		return this.acctProvider.selectedAcctID;
-	}
-	
-	// Easy access to account index loaded in memory
-	public getActiveAcctIndex(): number {
-		return this.acctProvider.selectedAcct;
-	}
-	
-	// Easy access to lot loaded in memory
-	public getActiveLot(): models.Lot {
-		return this.lotProvider.activeLot;
-	}
-	
 	// Check if user's account has won the active lot
 	public hasWonActiveLot(acctID?: number): boolean {
 		if (!acctID) {
@@ -168,6 +183,17 @@ export class DataProvider {
 			acctID = this.acctProvider.myAccount.id;
 		}
 		return this.lotProvider.isWinning(acctID);
+	}
+	
+	public loadAuction(auctID: number) {
+		return new Promise((resolve, reject) => {
+			this.auctionProvider.loadAuction(auctID, this.getApiKey())
+			.then(
+				() => {
+					resolve();
+				}
+			);
+		});
 	}
 	
 	// Load charts data
@@ -294,38 +320,6 @@ export class DataProvider {
 				}
 			);
 		});
-	}
-	
-	// Sets the active account for AccountListPage
-	public setActiveAccount(index: number) {
-		this.acctProvider.selectedAcct = index;
-		this.acctProvider.selectedAcctID = this.acctProvider.accounts[index].id;
-	}
-	
-	// Load auction into memory
-	public setActiveAuction(auctID: number) {
-		return new Promise((resolve, reject) => {
-			this.auctionProvider.loadAuction(auctID, this.getApiKey())
-			.then(
-				() => {
-					resolve();
-				}
-			);
-		});
-	}
-	
-	// Sets the active lot in LotProvider
-	public setActiveLot(lotID: number) {
-		this.refreshAuction()
-		.then(
-			() => {
-				for (let lot of this.auctionProvider.auction.lots) {
-					if (lot.id == id) {
-						this.lotProvider.activeLot = lot;
-					}
-				}
-			}
-		);
 	}
 
 }

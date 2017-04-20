@@ -119,7 +119,7 @@ export class LotPage extends BaseView {
 	
 	// Automatically bid $1000 above current price
 	public quickBid() {
-		this.bidAmount = this.dataSrv.getActiveLot().currentPrice + 1000;
+		this.bidAmount = this.dataSrv.activeLot.currentPrice + 1000;
 		this.confirmBid();
 	}
 

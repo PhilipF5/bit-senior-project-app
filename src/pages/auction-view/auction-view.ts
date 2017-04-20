@@ -51,7 +51,7 @@ export class AuctionViewPage extends BaseView {
 		this.createLoader("Loading...");
 		this.dataSrv.refreshAuction()
 		.then(() => {
-			this.dataSrv.setActiveLot(id);
+			this.dataSrv.activeLot = id;
 			this.dismissLoader();
 			this.navCtrl.push(this.lotPage);
 		});
