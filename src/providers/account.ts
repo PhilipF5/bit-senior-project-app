@@ -4,7 +4,7 @@ Manages account-related data
 
 // Standard service stuff
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as models from '../app/classes';
@@ -32,7 +32,7 @@ export class AccountProvider {
 			let headers = new Headers();
 			let newAccount: models.Account;
 			headers.append("Content-Type", "application/json");
-			this.http.post("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey + "/create", JSON.stringify(this.account), {headers: headers})
+			this.http.post("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey + "/create", JSON.stringify(acct), {headers: headers})
 			.subscribe(
 				res => newAccount = res.json(),
 				(err) => {},

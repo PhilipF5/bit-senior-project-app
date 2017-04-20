@@ -1,5 +1,5 @@
 // Standard page stuff
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 
 // Import base view and main data service
@@ -31,9 +31,9 @@ export class ReportsPage extends BaseView {
 		.then(() => { this.dataSrv.loadChartsDataStates(); })
 		.then(() => { this.dataSrv.loadChartsDataTypes(); })
 		.then(() => {
-			this.loadModelsChart(modelsCanvas, this.dataSrv.chartData.models);
-			this.loadStatesChart(statesCanvas, this.dataSrv.chartData.states);
-			this.loadTypesChart(typesCanvas, this.dataSrv.chartData.types);
+			this.loadModelsChart(this.modelsCanvas, this.dataSrv.chartData.models);
+			this.loadStatesChart(this.statesCanvas, this.dataSrv.chartData.states);
+			this.loadTypesChart(this.typesCanvas, this.dataSrv.chartData.types);
 		});
 	}
 

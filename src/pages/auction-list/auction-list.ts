@@ -45,21 +45,21 @@ export class AuctionListPage extends BaseView {
 	}
 	
 	isCurrent(auct) {
-		if (this.dataSrv.getRole() == "user") {
+		if (this.dataSrv.role == "user") {
 			return (this.dataSrv.auctionTiming(auct) == "current" && this.dataSrv.isRegForAuction(auct));
 		}
 		return this.dataSrv.auctionTiming(auct) == "current";
 	}
 	
 	isPast(auct) {
-		if (this.dataSrv.getRole() == "user") {
+		if (this.dataSrv.role == "user") {
 			return (this.dataSrv.auctionTiming(auct) == "past" && this.dataSrv.isRegForAuction(auct));
 		}
 		return this.dataSrv.auctionTiming(auct) == "past";
 	}
 	
 	isRegistered(auct) {
-		if (this.dataSrv.getRole() == "user") {
+		if (this.dataSrv.role == "user") {
 			return (this.dataSrv.auctionTiming(auct) == "upcoming" && this.dataSrv.isRegForAuction(auct));
 		}
 	}

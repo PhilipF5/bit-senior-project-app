@@ -32,33 +32,33 @@ export class DataProvider {
 		return this.acctProvider.accounts;
 	}
 	
-	public get accountsBySpent = models.Account[] {
+	public get accountsBySpent(): models.Account[] {
 		return this.acctProvider.sortBySpent;
 	}
 	
-	public get activeAccount(): models.Account {
-		return this.acctProvider.account;
+	public get activeAccount(): any {
+		return this.acctProvider.myAccount;
 	}
 	
-	public set activeAccount(index: number) {
+	public set activeAccount(index: any) {
 		this.acctProvider.selectedAcct = index;
 		this.acctProvider.selectedAcctID = this.acctProvider.accounts[index].id;
 	}
 	
 	public get activeAuction(): models.Auction {
-		this.auctionProvider.auction;
+		return this.auctionProvider.auction;
 	}
 	
-	public get activeLot(): models.Lot {
+	public get activeLot(): any {
 		return this.lotProvider.activeLot;
 	}
 	
-	public set activeLot(lotID: number) {
+	public set activeLot(lotID: any) {
 		this.refreshAuction()
 		.then(
 			() => {
 				for (let lot of this.auctionProvider.auction.lots) {
-					if (lot.id == id) {
+					if (lot.id == lotID) {
 						this.lotProvider.activeLot = lot;
 					}
 				}
@@ -109,7 +109,7 @@ export class DataProvider {
 	// Accept highest bid on active lot as winner
 	public acceptBid() {
 		return new Promise((resolve, reject) => {
-			this.lotProvider.acceptBid()
+			this.lotProvider.acceptBid(this.apiKey)
 			.then(
 				() => {
 					resolve();
@@ -125,7 +125,7 @@ export class DataProvider {
 	
 	// Check if active lot is sold
 	public activeLotIsSold(): boolean {
-		return this.lotProvider.isSold();
+		return this.activeLot.status == "Sold";
 	}
 	
 	// Check if auction is in past, present, or future
@@ -148,7 +148,7 @@ export class DataProvider {
 	// Create new dealer account
 	public createAccount(acct: any) {
 		return new Promise((resolve, reject) => {
-			this.acctProvider.createAccount(acct, this.getApiKey())
+			this.acctProvider.createAccount(acct, this.apiKey)
 			.then((newAccount) => this.loadData().then(() => resolve(newAccount)));
 		});
 	}
@@ -156,7 +156,7 @@ export class DataProvider {
 	// Create new buyer profile
 	public createProfile(prof: any) {
 		return new Promise((resolve, reject) => {
-			this.profileProvider.createProfile(prof, this.getApiKey())
+			this.profileProvider.createProfile(prof, this.apiKey)
 			.then((newUser) => this.loadData().then(() => resolve(newUser)));
 		});
 	}
@@ -187,7 +187,7 @@ export class DataProvider {
 	
 	public loadAuction(auctID: number) {
 		return new Promise((resolve, reject) => {
-			this.auctionProvider.loadAuction(auctID, this.getApiKey())
+			this.auctionProvider.loadAuction(auctID, this.apiKey)
 			.then(
 				() => {
 					resolve();
@@ -199,7 +199,7 @@ export class DataProvider {
 	// Load charts data
 	public loadChartsDataModels() {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.getApiKey() + "/models")
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.apiKey + "/models")
 			.subscribe(
 				res => this.chartData.models = res.json(),
 				(err) => {},
@@ -212,7 +212,7 @@ export class DataProvider {
 	
 	public loadChartsDataStates() {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.getApiKey() + "/states")
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.apiKey + "/states")
 			.subscribe(
 				res => this.chartData.states = res.json(),
 				(err) => {},
@@ -225,7 +225,7 @@ export class DataProvider {
 	
 	public loadChartsDataTypes() {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.getApiKey() + "/types")
+			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + this.apiKey + "/types")
 			.subscribe(
 				res => this.chartData.types = res.json(),
 				(err) => {},
@@ -242,9 +242,9 @@ export class DataProvider {
 			if (this.loginProvider.creds.role == "user") {
 				// The login is for a User
 				Promise.all([
-					this.acctProvider.loadMyAccount(this.getApiKey()),
-					this.profileProvider.loadMyProfile(),
-					this.auctionProvider.loadAllAuctions()
+					this.acctProvider.loadMyAccount(this.apiKey),
+					this.profileProvider.loadMyProfile(this.apiKey),
+					this.auctionProvider.loadAllAuctions(this.apiKey, this.role)
 				]).then(() => {
 					resolve();
 				});
@@ -252,10 +252,10 @@ export class DataProvider {
 			else if (this.loginProvider.creds.role == "admin") {
 				// The login is for an Admin
 				Promise.all([
-					this.auctionProvider.loadAllAuctions(),
-					this.acctProvider.loadAllAccounts(this.getApiKey())
+					this.auctionProvider.loadAllAuctions(this.apiKey, this.role),
+					this.acctProvider.loadAllAccounts(this.apiKey)
 					.then(() => {
-						this.profileProvider.loadAllProfiles();
+						this.profileProvider.loadAllProfiles(this.acctProvider.accounts);
 					})
 				]).then(() => {
 					resolve();
@@ -269,14 +269,14 @@ export class DataProvider {
 		return new Promise((resolve, reject) => {
 			this.loginProvider.login(username, password)
 			.then(() => {
-				if (this.getApiKey() == null) {
+				if (this.apiKey == null) {
 					// The login was invalid and returned an error
 					reject(this.loginProvider.creds.error);
 				}
 				else {
 					this.loadData()
 					.then(() => {
-						loadChartsDataTypes();
+						this.loadChartsDataTypes();
 					})
 					.then(() => {
 						resolve();
@@ -289,7 +289,7 @@ export class DataProvider {
 	// Place new bid
 	public placeBid(amount: number) {
 		return new Promise((resolve, reject) => {
-			this.lotProvider.bidOnLot(amount, apiKey)
+			this.lotProvider.bidOnLot(amount, this.apiKey)
 			.then(
 				() => {
 					resolve();
@@ -313,7 +313,7 @@ export class DataProvider {
 	// Reloads auction
 	public refreshAuction() {
 		return new Promise((resolve, reject) => {
-			this.auctionProvider.loadAuction(this.auctionProvider.auction.id, this.getApiKey())
+			this.auctionProvider.loadAuction(this.auctionProvider.auction.id, this.apiKey)
 			.then(
 				() => {
 					resolve();

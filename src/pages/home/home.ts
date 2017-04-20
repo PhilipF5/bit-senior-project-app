@@ -39,7 +39,7 @@ export class HomePage extends BaseView {
 		
 		let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
 		modal.onDidDismiss(() => {
-			this.loadTypesChart(chartCanvas, this.dataSrv.chartData.types);
+			this.loadTypesChart(this.chartCanvas, this.dataSrv.chartData.types);
 		});
 		modal.present();
  	}

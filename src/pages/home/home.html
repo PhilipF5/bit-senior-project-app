@@ -9,7 +9,7 @@
 	<!--
 		BEGIN USER VIEW ----------------------------------
 	-->
-    <ion-grid *ngIf="loginProvider.creds.role == 'user'">
+    <ion-grid *ngIf="dataSrv.role == 'user'">
         <ion-row>
             <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
                 <ion-card>
@@ -19,7 +19,7 @@
                     <ion-list>
                         <ion-item>
                             <ion-icon name="cash" item-left></ion-icon>
-							<h2>{{acctProvider.myAccount.availableCredit | currency}}</h2>
+							<h2>{{dataSrv.myAccount.availableCredit | currency}}</h2>
 							<p>Available Credit</p>
                         </ion-item>
                         <button *ngIf="dataSrv.currentAuction.id == null" ion-item disabled>
@@ -44,7 +44,7 @@
                     </ion-card-header>
                     <ion-list>
                         <template ngFor let-auct [ngForOf]="dataSrv.auctions">
-							<button *ngIf="isUpcoming(auct)" ion-item (click)="navToAuction(auct.id)">
+							<button *ngIf="dataSrv.auctionTiming(auct) == 'upcoming'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 								<p>{{formatDate(auct.startTime)}}</p>
 								<ion-badge *ngIf="dataSrv.isRegForAuction(auct)" color="go" item-right>

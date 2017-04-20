@@ -7,7 +7,7 @@ import { BaseView } from '../../app/base-view';
 import { DataProvider } from '../../providers/data';
 
 // Import needed libraries
-import * as models from '../app/classes';
+import * as models from '../../app/classes';
 
 @Component({
 	selector: 'page-create-account',
@@ -38,9 +38,9 @@ export class CreateAccountPage extends BaseView {
 	
 	submit() {
 		this.createLoader("Loading...");
-		this.dataSrv.createAccount(account)
+		this.dataSrv.createAccount(this.account)
 		.then(
-			(newAccount) => {
+			(newAccount: models.Account) => {
 				this.dismissLoader();
 				this.viewCtrl.dismiss();
 				let alert = this.alertCtrl.create({

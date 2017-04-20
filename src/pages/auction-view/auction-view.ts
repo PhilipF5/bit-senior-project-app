@@ -33,15 +33,15 @@ export class AuctionViewPage extends BaseView {
 	
 	// Format dates and times with Moment Timezone
 	formatDate() {
-		return moment(this.auctionProvider.auction.startTime)
+		return moment(this.dataSrv.activeAuction.startTime)
 		.tz('America/New_York')
 		.format("MMMM D, YYYY");
 	}
 	
 	formatTime() {
-		return moment(this.auctionProvider.auction.startTime)
+		return moment(this.dataSrv.activeAuction.startTime)
 		.tz('America/New_York')
-		.format("h:mm A") + " to " + moment(this.auctionProvider.auction.endTime)
+		.format("h:mm A") + " to " + moment(this.dataSrv.activeAuction.endTime)
 		.tz('America/New_York')
 		.format("h:mm A (z)");
 	}

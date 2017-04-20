@@ -7,7 +7,7 @@ import { BaseView } from '../../app/base-view';
 import { DataProvider } from '../../providers/data';
 
 // Import needed libraries
-import * as models from '../app/classes';
+import * as models from '../../app/classes';
 
 @Component({
 	selector: 'page-create-profile',
@@ -36,14 +36,14 @@ export class CreateProfilePage extends BaseView {
 	
 	submit() {
 		this.createLoader("Loading...");
-		this.dataSrv.createProfile(user)
+		this.dataSrv.createProfile(this.user)
 		.then(
-			(newUser) => {
+			(newUser: models.Profile) => {
 				this.dismissLoader();
 				this.viewCtrl.dismiss();
 				let alert = this.alertCtrl.create({
-					title: 'User ' + newUser.item1 + ' created',
-					subTitle: 'Provide them this auth key to log in:  ' + newUser.item2,
+					title: 'User ' + newUser["item1"] + ' created',
+					subTitle: 'Provide them this auth key to log in:  ' + newUser["item2"],
 					buttons: ['OK'],
 					enableBackdropDismiss: false
 				});

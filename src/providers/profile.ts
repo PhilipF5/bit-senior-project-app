@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import * as models from '../app/classes';
@@ -21,7 +21,7 @@ export class ProfileProvider {
 			let headers = new Headers();
 			let newUser: models.Profile;
 			headers.append("Content-Type", "application/json");
-			this.http.post("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey + "/create", JSON.stringify(this.account), {headers: headers})
+			this.http.post("https://auctionitapi.azurewebsites.net/api/profiles/" + apiKey + "/create", JSON.stringify(prof), {headers: headers})
 			.subscribe(
 				res => newUser = res.json(),
 				(err) => {},

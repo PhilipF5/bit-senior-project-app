@@ -80,8 +80,8 @@ export class LotPage extends BaseView {
 							(result) => {
 								this.dismissLoader();
 								let alert = this.alertCtrl.create({
-									title: result.title,
-									subTitle: result.subtitle,
+									title: result["title"],
+									subTitle: result["subtitle"],
 									buttons: [
 										{
 											text: 'OK',
@@ -100,7 +100,7 @@ export class LotPage extends BaseView {
 								alert.present();
 							},
 							(err) => {
-								this.showAlert("An unknown error occurred.");
+								this.showAlert("Bid failed", "An unknown error occurred.");
 							}
 						)
 					}

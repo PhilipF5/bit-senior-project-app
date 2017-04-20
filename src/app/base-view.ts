@@ -6,6 +6,9 @@ import * as randomColor from 'randomcolor';
 export class BaseView {
 
 	public loader: any;
+	public modelsChart: any;
+	public statesChart: any;
+	public typesChart: any;
 
 	constructor(public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
 		
@@ -26,7 +29,7 @@ export class BaseView {
 		this.viewCtrl.dismiss();
 	}
 	
-	loadModelsChart(canvas: any, data: any) {
+	public loadModelsChart(canvas: any, data: any) {
 		this.modelsChart = new Chart(canvas.nativeElement, {
         	type: 'horizontalBar',
         	options: {
@@ -59,7 +62,7 @@ export class BaseView {
         });
 	}
 	
-	loadStatesChart(canvas: any, data: any) {
+	public loadStatesChart(canvas: any, data: any) {
 		this.statesChart = new Chart(canvas.nativeElement, {
         	type: 'doughnut',
         	options: {
@@ -74,11 +77,11 @@ export class BaseView {
     				label: "Test",
 					data: data.salesByVolume,
 					backgroundColor: randomColor({
-						count: this.data.stateNames.length,
+						count: data.stateNames.length,
 						luminosity: "bright"
 					}),
 					hoverBackgroundColor: randomColor({
-						count: this.data.stateNames.length,
+						count: data.stateNames.length,
 						luminosity: "light"
 					}),
 					borderWidth: 1
@@ -87,7 +90,7 @@ export class BaseView {
         });
 	}
 	
-	loadTypesChart(canvas: any, data: any) {
+	public loadTypesChart(canvas: any, data: any) {
 		this.typesChart = new Chart(canvas.nativeElement, {
         	type: 'bar',
         	options: {
