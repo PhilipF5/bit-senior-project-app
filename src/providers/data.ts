@@ -54,16 +54,11 @@ export class DataProvider {
 	}
 	
 	public set activeLot(lotID: any) {
-		this.refreshAuction()
-		.then(
-			() => {
-				for (let lot of this.auctionProvider.auction.lots) {
-					if (lot.id == lotID) {
-						this.lotProvider.activeLot = lot;
-					}
-				}
+		for (let lot of this.auctionProvider.auction.lots) {
+			if (lot.id == lotID) {
+				this.lotProvider.activeLot = lot;
 			}
-		);
+		}
 	}
 	
 	public get activeProfile(): models.Profile {
@@ -174,6 +169,7 @@ export class DataProvider {
 		if (!auct) {
 			auct = this.auctionProvider.auction;
 		}
+		console.log(this.profileProvider.profile.auctions);
 		return this.auctionProvider.isRegistered(auct, this.profileProvider.profile.auctions);
 	}
 	
@@ -243,23 +239,23 @@ export class DataProvider {
 				// The login is for a User
 				Promise.all([
 					this.acctProvider.loadMyAccount(this.apiKey),
-					this.profileProvider.loadMyProfile(this.apiKey),
-					this.auctionProvider.loadAllAuctions(this.apiKey, this.role)
-				]).then(() => {
-					resolve();
-				});
+					this.profileProvider.loadMyProfile(this.apiKey)
+				]).then(() => 
+					this.auctionProvider.loadAllAuctions(this.apiKey, this.role, this.profileProvider.profile.auctions)
+				).then(() => 
+					resolve()
+				);
 			}
 			else if (this.loginProvider.creds.role == "admin") {
 				// The login is for an Admin
 				Promise.all([
 					this.auctionProvider.loadAllAuctions(this.apiKey, this.role),
 					this.acctProvider.loadAllAccounts(this.apiKey)
-					.then(() => {
-						this.profileProvider.loadAllProfiles(this.acctProvider.accounts);
-					})
-				]).then(() => {
-					resolve();
-				});
+				]).then(() => 
+					this.profileProvider.loadAllProfiles(this.acctProvider.accounts)
+				).then(() =>
+					resolve()
+				);
 			}
 		});
 	}
@@ -276,10 +272,13 @@ export class DataProvider {
 				else {
 					this.loadData()
 					.then(() => {
-						this.loadChartsDataTypes();
-					})
-					.then(() => {
-						resolve();
+						if (this.role == "admin") {
+							this.loadChartsDataTypes()
+							.then(() => resolve());
+						}
+						else {
+							resolve();
+						}
 					});
 				}
 			});
@@ -291,8 +290,8 @@ export class DataProvider {
 		return new Promise((resolve, reject) => {
 			this.lotProvider.bidOnLot(amount, this.apiKey)
 			.then(
-				() => {
-					resolve();
+				(result) => {
+					resolve(result);
 				},
 				(err) => {
 					reject(err);

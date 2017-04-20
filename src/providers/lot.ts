@@ -7,7 +7,7 @@ import * as models from '../app/classes';
 @Injectable()
 export class LotProvider {
 
-	public activeLot: models.Lot;
+	public activeLot: models.Lot = new models.Lot();
 
 	constructor(public http: Http) {
 		console.log('Hello Lot Provider');

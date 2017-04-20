@@ -11,7 +11,7 @@
 				<ion-list>
 					<ion-list-header *ngIf="dataSrv.role == 'user'">Current Auction</ion-list-header>
 					<ion-list-header *ngIf="dataSrv.role == 'admin'">Current Auctions</ion-list-header>
-					<template ngFor let-auct [ngForOf]="auctionProvider.auctions">
+					<template ngFor let-auct [ngForOf]="dataSrv.auctions">
 						<button *ngIf="isCurrent(auct)" ion-item (click)="navToAuction(auct.id)">
 							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 							<p>Ends at {{formatTime(auct.endTime)}}</p>

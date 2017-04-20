@@ -15,8 +15,6 @@ export class Account {
 	public totalSpent: number;
 	public usedCredit: number;
 	
-	constructor() {}
-	
 }
 
 export class Auction {
@@ -31,7 +29,7 @@ export class Auction {
 	public postalCode: string;
 	public startTime: string;
 	public state: string;
-	public stateCode: string
+	public stateCode: string;
 
 }
 
@@ -42,7 +40,7 @@ export class Bid {
 	public buyerID: number;
 	public id: number;
 	public lotID: number;
-	public status: string
+	public status: string;
 }
 
 export class Credentials {
@@ -53,8 +51,6 @@ export class Credentials {
 	public lastName: string;
 	public role: string;
 	public username: string;
-	
-	constructor() {}
 	
 }
 
@@ -96,6 +92,7 @@ export class Profile {
 	public id: number;
 	public lastName: string;
 	public totalSpent: number;
-	public username: string
+	public username: string;
+	public wins?: number;
 	
 }

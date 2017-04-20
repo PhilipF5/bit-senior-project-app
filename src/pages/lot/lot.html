@@ -82,7 +82,7 @@
 					</ion-item>
 					<button ion-button round (click)="confirmBid()">Bid</button>
 				</ion-card>
-				<ion-card *ngIf="!isUpcoming()">
+				<ion-card *ngIf="dataSrv.auctionTiming != 'upcoming'">
 					<ion-card-header>
 						<h2>Bid History</h2>
 					</ion-card-header>

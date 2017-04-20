@@ -49,7 +49,7 @@ export class AuctionProvider {
 		});
 	}
 	
-	public loadAllAuctions(apiKey: string, role: string, myAuctions?: number[]) {
+	public loadAllAuctions(apiKey: string, role: string, myAuctions: number[] = []) {
 		return new Promise((resolve, reject) => {
 			this.http.get("https://auctionitapi.azurewebsites.net/api/auctions/" + apiKey)
 			.subscribe(
