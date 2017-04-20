@@ -1,17 +1,8 @@
-<!--
-  Generated template for the ProfileView page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
 	<ion-navbar color="primary">
 		<ion-title>View Profile</ion-title>
 	</ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 	<ion-grid>
@@ -19,13 +10,13 @@
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header>
-						<h1>{{profileProvider.profile.fullName}}</h1>
-						<p>{{accountProvider.myAccount.owner}}</p>
+						<h1>{{dataSrv.activeProfile.fullName}}</h1>
+						<p>{{dataSrv.myAccount.owner}}</p>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
 							Bids Placed
-							<p item-right>{{profileProvider.profile.bidsCount}}</p>
+							<p item-right>{{dataSrv.activeProfile.bidsCount}}</p>
 						</ion-item>
 						<ion-item>
 							Lots Won
@@ -33,7 +24,7 @@
 						</ion-item>
 						<ion-item>
 							Total Spent
-							<p item-right>{{profileProvider.profile.totalSpent | currency}}</p>
+							<p item-right>{{dataSrv.activeProfile.totalSpent | currency}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>
@@ -44,7 +35,7 @@
 						Bid History
 					</ion-card-header>
 					<ion-list>
-						<template ngFor let-bid [ngForOf]="profileProvider.profile.bids">
+						<template ngFor let-bid [ngForOf]="dataSrv.activeProfile.bids">
 							<button *ngIf="bid.status == 'Placed' || bid.status == 'Outbid' || bid.status == 'Winner'" ion-item>
 								<h2>Lot #{{bid.lotID}}</h2>
 								<h3>{{bid.amount | currency}}</h3>

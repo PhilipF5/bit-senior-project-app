@@ -1,17 +1,8 @@
-<!--
-  Generated template for the AccountList page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
 	<ion-navbar color="primary">
 		<ion-title>Dealer Accounts</ion-title>
 	</ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 	<ion-grid>
@@ -25,7 +16,7 @@
 						</button>
 					</ion-card-header>
 					<ion-list>
-						<template ngFor let-acct [ngForOf]="acctProvider.accounts" let-i="index">
+						<template ngFor let-acct [ngForOf]="dataSrv.accounts" let-i="index">
 							<button ion-item (click)="setAccount(i)">
 								{{acct.owner}}
 							</button>
@@ -40,7 +31,7 @@
 						<button ion-button icon-only text-right outline small round (click)="createBuyer()">
 							<ion-icon name="add"></ion-icon>
 						</button>
-						<p>{{acctProvider.accounts[acctProvider.selectedAcct].owner}}</p>
+						<p>{{dataSrv.accounts[dataSrv.getActiveAcctIndex()].owner}}</p>
 					</ion-card-header>
 					<ion-grid>
 						<ion-row class="header">
@@ -57,7 +48,7 @@
 								Username
 							</ion-col>
 						</ion-row>
-						<template ngFor let-buyer [ngForOf]="acctProvider.accounts[acctProvider.selectedAcct].buyers">
+						<template ngFor let-buyer [ngForOf]="dataSrv.accounts[dataSrv.getActiveAcctIndex()].buyers">
 							<ion-row>
 								<ion-col>
 									{{buyer.fullName}}

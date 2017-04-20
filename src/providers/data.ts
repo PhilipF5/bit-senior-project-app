@@ -27,6 +27,55 @@ export class DataProvider {
 		
 	}
 	
+	// Getters
+	public get accounts(): models.Account[] {
+		return this.acctProvider.accounts;
+	}
+	
+	public get accountsBySpent = models.Account[] {
+		return this.acctProvider.sortBySpent;
+	}
+	
+	public get activeAccount(): models.Account {
+		return this.acctProvider.account;
+	}
+	
+	public get activeLot(): models.Lot {
+		return this.lotProvider.activeLot;
+	}
+	
+	public get activeProfile(): models.Profile {
+		return this.profileProvider.profile;
+	}
+	
+	public get auctions(): models.Auction[] {
+		return this.auctionProvider.auctions;
+	}
+	
+	public get myAccount(): models.Account {
+		return this.acctProvider.myAccount;
+	}
+	
+	public get apiKey(): string {
+		return this.loginProvider.creds.apiKey;
+	}
+	
+	public get creds(): models.Credentials {
+		return this.loginProvider.creds;
+	}
+	
+	public get currentAuction(): models.Auction {
+		return this.auctionProvider.currentAuction;
+	}
+	
+	public get profilesBySpent(): models.Profile[] {
+		return this.profileProvider.sortBySpent;
+	}
+	
+	public get role(): string {
+		return this.loginProvider.creds.role;
+	}
+	
 	// Accept highest bid on active lot as winner
 	public acceptBid() {
 		return new Promise((resolve, reject) => {
@@ -87,21 +136,14 @@ export class DataProvider {
 		return this.acctProvider.selectedAcctID;
 	}
 	
-	
+	// Easy access to account index loaded in memory
+	public getActiveAcctIndex(): number {
+		return this.acctProvider.selectedAcct;
+	}
 	
 	// Easy access to lot loaded in memory
 	public getActiveLot(): models.Lot {
 		return this.lotProvider.activeLot;
-	}
-	
-	// Easy access to API key from LoginProvider
-	public getApiKey(): string {
-		return this.loginProvider.creds.apiKey;
-	}
-	
-	// Easy access to user role from LoginProvider
-	public getRole(): string {
-		return this.loginProvider.creds.role;
 	}
 	
 	// Check if user's account has won the active lot
