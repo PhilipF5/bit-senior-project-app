@@ -285,6 +285,13 @@ export class DataProvider {
 		});
 	}
 	
+	// Handles logout and clearing data
+	public logout() {
+		this.loginProvider.creds = new models.Credentials();
+		this.auctionProvider.currentAuction = new models.Auction();
+		this.profileProvider.profile = new models.Profile();
+	}
+	
 	// Place new bid
 	public placeBid(amount: number) {
 		return new Promise((resolve, reject) => {

@@ -82,7 +82,7 @@ export class Profile {
 	
 	public accountID: number;
 	public auctionCount: number;
-	public auctions: number[];
+	public auctions: number[] = [];
 	public bids: Bid[];
 	public bidsCount: number;
 	public bidsMax: Bid;

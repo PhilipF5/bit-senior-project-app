@@ -14,15 +14,15 @@
 				<ion-icon name="pricetags" item-left></ion-icon>
 				Auctions
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'" (click)="nav.push(accountListPage)">
+			<button ion-item menuClose *ngIf="dataSrv.role == 'admin'" (click)="nav.push(accountListPage)">
 				<ion-icon name="contacts" item-left></ion-icon>
 				Accounts
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'user'" (click)="nav.push(accountViewPage)">
+			<button ion-item menuClose *ngIf="dataSrv.role == 'user'" (click)="nav.push(accountViewPage)">
 				<ion-icon name="contact" item-left></ion-icon>
 				Account
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'" (click)="nav.push(reportsPage)">
+			<button ion-item menuClose *ngIf="dataSrv.role == 'admin'" (click)="nav.push(reportsPage)">
 				<ion-icon name="stats" item-left></ion-icon>
 				Reports
 			</button>
@@ -31,11 +31,11 @@
 			<ion-list>
 				<ion-list-header>Logged in as</ion-list-header>
 				<ion-item>
-					<h2>{{loginProvider.creds.firstName}} {{loginProvider.creds.lastName}}</h2>
-					<p *ngIf="loginProvider.creds.role == 'user'">{{acctProvider.myAccount.owner}}</p>
-					<ion-badge *ngIf="loginProvider.creds.role == 'admin'" color="danger" item-right>Admin</ion-badge>
+					<h2>{{dataSrv.creds.firstName}} {{dataSrv.creds.lastName}}</h2>
+					<p *ngIf="dataSrv.role == 'user'">{{dataSrv.myAccount.owner}}</p>
+					<ion-badge *ngIf="dataSrv.role == 'admin'" color="danger" item-right>Admin</ion-badge>
 				</ion-item>
-				<button ion-item menuClose (click)="nav.push(profileViewPage)" *ngIf="loginProvider.creds.role == 'user'">
+				<button ion-item menuClose (click)="nav.push(profileViewPage)" *ngIf="dataSrv.role == 'user'">
 					<ion-icon name="person" item-left></ion-icon>
 					View Profile
 				</button>

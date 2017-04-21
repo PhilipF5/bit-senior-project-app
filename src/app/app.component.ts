@@ -2,11 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, AlertController, ModalController, MenuController, NavController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+import { DataProvider } from '../providers/data';
+
+// Import pages for navigation
 import { HomePage } from '../pages/home/home';
-import { LoginProvider } from '../providers/login';
-import { AccountProvider } from '../providers/account';
-import { ProfileProvider } from '../providers/profile';
-import { AuctionProvider } from '../providers/auction';
 import { LoginPage } from '../pages/login/login';
 import { AccountViewPage } from '../pages/account-view/account-view';
 import { AuctionListPage } from '../pages/auction-list/auction-list';
@@ -17,7 +16,6 @@ import { ReportsPage } from '../pages/reports/reports';
 @Component({
   	templateUrl: 'app.html'
 })
-
 export class MyApp {
   	rootPage = HomePage;
 	accountViewPage;
@@ -28,7 +26,7 @@ export class MyApp {
 	
 	@ViewChild('content') nav: NavController;
 
-	constructor(platform: Platform, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider) {
+	constructor(platform: Platform, public dataSrv: DataProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController) {
     	platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.
 			// Here you can do any higher level native things you might need.
@@ -58,42 +56,7 @@ export class MyApp {
 					text: 'Log Out',
 					handler: () => {
 						this.menuCtrl.close();
-						this.loginProvider.creds = {
-							apiKey: null,
-							error: null,
-							firstName: null,
-							lastName: null,
-							role: null,
-							username: null
-						};
-						this.auctionProvider.currentAuction = {
-							address: "",
-							buyers: null,
-							city: "",
-							endTime: null,
-							id: null,
-							lots: null,
-							participants: null,
-							postalCode: "",
-							startTime: null,
-							state: null,
-							stateCode: ""
-						};
-						this.profileProvider.profile = {
-							accountID: null,
-							auctions: [],
-							bids: [],
-							bidsMax: null,
-							bidsMin: null,
-							id: null,
-							firstName: "",
-							lastName: "",
-							totalSpent: null,
-							username: "",
-							auctionCount: null,
-							bidsCount: null,
-							fullName: ""
-						};
+						this.dataSrv.logout();
 						let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
 						modal.present();
 					}
