@@ -1,3 +1,9 @@
+/*
+	Home Page Script
+	================
+	Dashboard for both users and admins.
+*/
+
 // Standard page stuff plus ViewChild
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -23,6 +29,7 @@ import * as randomColor from 'randomcolor';
 })
 export class HomePage extends BaseView {
 
+	// Grab canvas element from HTML
 	@ViewChild('chartCanvas') chartCanvas;
 	
 	// Navigation pages
@@ -36,10 +43,11 @@ export class HomePage extends BaseView {
 		// Navigation pages
 		this.profileViewPage = ProfileViewPage;
 		this.auctionViewPage = AuctionViewPage;
-		
+		// Lock user into login modal
 		let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
 		modal.onDidDismiss(() => {
 			if (this.dataSrv.role == "admin") {
+				// Load the "Sales by Type" chart
 				this.loadTypesChart(this.chartCanvas, this.dataSrv.chartData.types);
 			}
 		});
@@ -59,6 +67,7 @@ export class HomePage extends BaseView {
 		.format("h:mm A");
 	}
 	
+	// Load AuctionViewPage
 	navToAuction(id)
 	{
 		this.createLoader("Loading...")

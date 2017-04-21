@@ -1,7 +1,16 @@
+/*
+	Root Component Script
+	=====================
+	The root component contains the slideout navigation menu
+	and a container for whichever page is being displayed.
+*/
+
+// Standard root component stuff
 import { Component, ViewChild } from '@angular/core';
 import { Platform, AlertController, ModalController, MenuController, NavController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+// Import main data service
 import { DataProvider } from '../providers/data';
 
 // Import pages for navigation
@@ -17,15 +26,21 @@ import { ReportsPage } from '../pages/reports/reports';
   	templateUrl: 'app.html'
 })
 export class MyApp {
-  	rootPage = HomePage;
+
+	// Set the HomePage as our navigation root
+	rootPage = HomePage;
+	
+	// Navigation pages
 	accountViewPage;
 	auctionListPage;
 	profileViewPage;
 	accountListPage;
 	reportsPage;
 	
+	// Grab the nav controller from the HTML
 	@ViewChild('content') nav: NavController;
-
+	
+	// Unique constructor because we don't inherit BaseView
 	constructor(platform: Platform, public dataSrv: DataProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController) {
     	platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.
@@ -33,7 +48,7 @@ export class MyApp {
 			StatusBar.styleDefault();
 			Splashscreen.hide();
     	});
-		
+		// Navigation pages
 		this.accountViewPage = AccountViewPage;
 		this.auctionListPage = AuctionListPage;
 		this.profileViewPage = ProfileViewPage;
@@ -41,6 +56,7 @@ export class MyApp {
 		this.reportsPage = ReportsPage;
   	}
 	
+	// Begin logout procedure
 	showLogoutConfirm() {
 		let confirm = this.alertCtrl.create({
 			title: 'Log out?',
@@ -49,14 +65,16 @@ export class MyApp {
 				{
 					text: 'Cancel',
 					handler: () => {
-						
+						// Do nothing
 					}
 				},
 				{
 					text: 'Log Out',
 					handler: () => {
+						// Close the menu and run the logout code
 						this.menuCtrl.close();
 						this.dataSrv.logout();
+						// Lock the user back into the login screen
 						let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
 						modal.present();
 					}
@@ -65,4 +83,5 @@ export class MyApp {
 		});
 		confirm.present();
 	}
+	
 }

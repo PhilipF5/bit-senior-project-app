@@ -1,3 +1,10 @@
+/*
+	Classes for Objects
+	===================
+	These are the class structures for items going
+	to and from the API.
+*/
+
 export class Account {
 
 	public address: string;

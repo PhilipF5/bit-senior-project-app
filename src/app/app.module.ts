@@ -1,3 +1,9 @@
+/*
+	Angular Module
+	==============
+	The NgModule bootstraps the components and services.
+*/
+
 // Import Angular and Ionic components
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';

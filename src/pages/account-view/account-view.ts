@@ -1,3 +1,9 @@
+/*
+	Account View Page Script
+	========================
+	Page for users to view their dealer account.
+*/
+
 // Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';

@@ -1,6 +1,8 @@
-/* LoginProvider Service
-Handles the login API call and stores validated credentials,
-including the API key, for use throughout the app.
+/*
+	Login Provider Service
+	======================
+	Handles the login API call and stores validated credentials,
+	including the API key, for use throughout the app.
 */
 
 // Standard service stuff
@@ -8,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+// Import needed libraries
 import * as models from '../app/classes';
 
 @Injectable()

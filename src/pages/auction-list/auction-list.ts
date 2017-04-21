@@ -1,3 +1,10 @@
+/*
+	Auction List Page Script
+	========================
+	Page that shows all auctions in categories
+	based on time or registration status.
+*/
+
 // Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -44,6 +51,8 @@ export class AuctionListPage extends BaseView {
 		.format("h:mm A");
 	}
 	
+	// Check times and registrations for auctions
+	// Basically a page-specific wrapper
 	isCurrent(auct) {
 		if (this.dataSrv.role == "user") {
 			return (this.dataSrv.auctionTiming(auct) == "current" && this.dataSrv.isRegForAuction(auct));
@@ -68,6 +77,7 @@ export class AuctionListPage extends BaseView {
 		return this.dataSrv.auctionTiming(auct) == "upcoming";
 	}
 	
+	// Load AuctionViewPage
 	navToAuction(id)
 	{
 		this.createLoader("Loading...")

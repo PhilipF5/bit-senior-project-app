@@ -1,3 +1,10 @@
+/*
+	Create Account Page Script
+	==========================
+	Form to create a new dealer account.
+	Should be displayed as a modal.
+*/
+
 // Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -15,6 +22,7 @@ import * as models from '../../app/classes';
 })
 export class CreateAccountPage extends BaseView {
 
+	// Special object for new account
 	public account: any = {
 		dealerName: null,
 		contactPhone: null,
@@ -32,10 +40,12 @@ export class CreateAccountPage extends BaseView {
 		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
 	
+	// Return to AccountListPage
 	cancel() {
 		this.viewCtrl.dismiss();
 	}
 	
+	// Submit the new dealer to API
 	submit() {
 		this.createLoader("Loading...");
 		this.dataSrv.createAccount(this.account)

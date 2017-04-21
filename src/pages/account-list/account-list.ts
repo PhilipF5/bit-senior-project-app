@@ -1,6 +1,8 @@
-/* Account List Page
-Displays all accounts and their buyers
-for administrative purposes.
+/*
+	Account List Page Script
+	========================
+	Displays all accounts and their buyers
+	for administrative purposes.
 */
 
 // Standard page stuff

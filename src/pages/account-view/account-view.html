@@ -1,9 +1,17 @@
+<!--
+	Account View Page
+	=================
+	Page for users to view their dealer account.
+-->
+
+<!-- Page header -->
 <ion-header>
 	<ion-navbar color="primary">
 		<ion-title>View Account</ion-title>
 	</ion-navbar>
 </ion-header>
 
+<!-- Everything else -->
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
@@ -12,6 +20,7 @@
 					<ion-card-header>
 						<h1>{{dataSrv.myAccount.owner}}</h1>
 					</ion-card-header>
+					<!-- Financial information -->
 					<ion-list>
 						<ion-item>
 							Total Spent
@@ -38,15 +47,18 @@
 						Contact Info
 					</ion-card-header>
 					<ion-list>
+						<!-- Mailing address -->
 						<ion-item text-right>
 							<ion-icon name="navigate" item-left></ion-icon>
 							<h2>{{dataSrv.myAccount.address}}</h2>
 							<h3>{{dataSrv.myAccount.city.concat(", ", dataSrv.myAccount.stateCode, " ", dataSrv.myAccount.postalCode)}}</h3>
 						</ion-item>
+						<!-- Phone number -->
 						<ion-item text-right>
 							<ion-icon name="call" item-left></ion-icon>
 							{{dataSrv.myAccount.contactPhone}}
 						</ion-item>
+						<!-- Email -->
 						<ion-item text-right>
 							<ion-icon name="mail" item-left></ion-icon>
 							{{dataSrv.myAccount.contactEmail}}

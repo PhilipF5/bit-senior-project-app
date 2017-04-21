@@ -1,18 +1,28 @@
+/*
+	Lot Provider Service
+	========================
+	Manages lot-related data.
+*/
+
+// Standard service stuff
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+// Import needed libraries
 import * as models from '../app/classes';
 
 @Injectable()
 export class LotProvider {
-
+	
+	// Lot being viewed or accessed
 	public activeLot: models.Lot = new models.Lot();
 
 	constructor(public http: Http) {
-		console.log('Hello Lot Provider');
+		
 	}
 	
+	// Accept current bid as the winner
 	public acceptBid(apiKey: string) {
 		return new Promise((resolve, reject) => {
 			let result: any;
@@ -27,6 +37,7 @@ export class LotProvider {
 		})
 	}
 	
+	// Place a new bid
 	public bidOnLot(amount: number, apiKey: string) {
 		return new Promise((resolve, reject) => {
 			let bidResult: models.Bid;
@@ -37,6 +48,7 @@ export class LotProvider {
 				res => bidResult = res.json(),
 				(err) => {},
 				() => {
+					// Handle the result returned by the API
 					switch (bidResult.status) {
 						case "Placed":
 							result = "Bid Placed";
@@ -76,6 +88,7 @@ export class LotProvider {
 		});
 	}
 	
+	// Check if account has won the lot
 	public hasWon(acctID: number) {
 		if (this.activeLot.bidsCount > 0 && this.activeLot.status == "Sold") {
 			if (this.activeLot.bidsMax.accountID == acctID) {
@@ -85,6 +98,7 @@ export class LotProvider {
 		return false;
 	}
 	
+	// Check if account has the highest valid bid
 	public isWinning(acctID: number) {
 		if (this.activeLot.bidsCount > 0 && this.activeLot.status == "Unsold") {
 			if (this.activeLot.bidsMax.accountID == acctID) {

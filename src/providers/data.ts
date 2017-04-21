@@ -1,15 +1,23 @@
+/*
+	Data Provider Service
+	========================
+	Acts as the central access point
+	for all pages and functions.
+*/
+
+// Standard service stuff
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-// Import all specific providers
+// Import all specific providers we're managing
 import { AccountProvider } from '../providers/account';
 import { AuctionProvider } from '../providers/auction';
 import { LoginProvider } from '../providers/login';
 import { LotProvider } from '../providers/lot';
 import { ProfileProvider } from '../providers/profile';
 
-// Import libraries
+// Import needed libraries
 import * as moment from 'moment';
 import 'moment-timezone';
 import * as models from '../app/classes';
@@ -17,12 +25,14 @@ import * as models from '../app/classes';
 @Injectable()
 export class DataProvider {
 
+	// Object to hold loaded chart data
 	public chartData: any = {
 		models: null,
 		states: null,
 		types: null
 	};
 
+	// Inject all other providers into this one
 	constructor(public http: Http, public acctProvider: AccountProvider, public auctionProvider: AuctionProvider, public loginProvider: LoginProvider, public lotProvider: LotProvider, public profileProvider: ProfileProvider) {
 		
 	}
@@ -181,6 +191,7 @@ export class DataProvider {
 		return this.lotProvider.isWinning(acctID);
 	}
 	
+	// Load single auction
 	public loadAuction(auctID: number) {
 		return new Promise((resolve, reject) => {
 			this.auctionProvider.loadAuction(auctID, this.apiKey)
@@ -232,7 +243,7 @@ export class DataProvider {
 		});
 	}
 	
-	// Load data based on user role
+	// Load all data based on user role
 	public loadData() {
 		return new Promise((resolve, reject) => {
 			if (this.loginProvider.creds.role == "user") {
@@ -272,6 +283,7 @@ export class DataProvider {
 				else {
 					this.loadData()
 					.then(() => {
+						// Load home page chart data for admin only
 						if (this.role == "admin") {
 							this.loadChartsDataTypes()
 							.then(() => resolve());

@@ -1,20 +1,31 @@
+<!--
+	Account List Page
+	=================
+	Displays all accounts and their buyers
+	for administrative purposes.
+-->
+
+<!-- Page header -->
 <ion-header>
 	<ion-navbar color="primary">
 		<ion-title>Dealer Accounts</ion-title>
 	</ion-navbar>
 </ion-header>
 
+<!-- Everything else -->
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
+					<!-- Dealer list header -->
 					<ion-card-header>
 						Registered Dealers
 						<button ion-button icon-only text-right outline small round (click)="createAccount()">
 							<ion-icon name="add"></ion-icon>
 						</button>
 					</ion-card-header>
+					<!-- Dealer list -->
 					<ion-list>
 						<template ngFor let-acct [ngForOf]="dataSrv.accounts" let-i="index">
 							<button ion-item (click)="dataSrv.activeAccount = i">
@@ -26,6 +37,7 @@
 			</ion-col>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-8 col-xl-3>
 				<ion-card>
+					<!-- Buyer list header -->
 					<ion-card-header>
 						Buyer Profiles
 						<button ion-button icon-only text-right outline small round (click)="createBuyer()">
@@ -34,6 +46,7 @@
 						<p>{{dataSrv.accounts[dataSrv.selectedAcctIndex].owner}}</p>
 					</ion-card-header>
 					<ion-grid>
+						<!-- Buyer table headers -->
 						<ion-row class="header">
 							<ion-col>
 								Full Name
@@ -48,6 +61,7 @@
 								Username
 							</ion-col>
 						</ion-row>
+						<!-- Buyer table rows -->
 						<template ngFor let-buyer [ngForOf]="dataSrv.accounts[dataSrv.selectedAcctIndex].buyers">
 							<ion-row>
 								<ion-col>

@@ -1,6 +1,8 @@
-/* Lot Page
-Details for a particular lot. Allows bidding and
-accepting of bids.
+/*
+	Lot Page Script
+	===============
+	Details for a particular lot. Allows bidding
+	and accepting of bids.
 */
 
 // Standard page stuff
@@ -45,6 +47,7 @@ export class LotPage extends BaseView {
 						{
 							text: 'OK',
 							handler: () => {
+								// Reload all data so it's current
 								this.createLoader("Refreshing...");
 								this.dataSrv.loadData()
 								.then(() => {
@@ -88,6 +91,7 @@ export class LotPage extends BaseView {
 										{
 											text: 'OK',
 											handler: () => {
+												// Reload all data so it's current
 												this.createLoader("Refreshing...");
 												this.dataSrv.loadData()
 												.then(() => {

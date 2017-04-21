@@ -1,3 +1,9 @@
+/*
+	Auction View Page Script
+	========================
+	Displays a single auction with list of lots.
+*/
+
 // Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -46,7 +52,7 @@ export class AuctionViewPage extends BaseView {
 		.format("h:mm A (z)");
 	}
 	
-	// Load page for lot
+	// Load LotPage
 	navToLot(id) {
 		this.createLoader("Loading...");
 		this.dataSrv.refreshAuction()

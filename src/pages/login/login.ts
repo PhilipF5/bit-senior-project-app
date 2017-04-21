@@ -1,6 +1,8 @@
-/* Login Page
-Form to enter username and password.
-Should be displayed as a Modal.
+/*
+	Login Page Script
+	=================
+	Form to enter username and password.
+	Should be displayed as a Modal.
 */
 
 // Standard page stuff

@@ -1,15 +1,23 @@
+<!--
+	Auction View Page
+	=================
+	Displays a single auction with list of lots.
+-->
+
+<!-- Page header -->
 <ion-header>
 	<ion-navbar color="primary">
 		<ion-title>View Auction</ion-title>
 	</ion-navbar>
 </ion-header>
 
-
+<!-- Everything else -->
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 offset-lg-3 col-xl-3>
 				<ion-card>
+					<!-- Auction ID, city, and time -->
 					<ion-card-header text-center>
 						<p>Auction #{{dataSrv.activeAuction.id}}</p>
 						<h1>{{dataSrv.activeAuction.city.concat(', ', dataSrv.activeAuction.stateCode)}}</h1>
@@ -17,6 +25,7 @@
 						<h3>{{formatTime()}}</h3>
 					</ion-card-header>
 					<ion-list>
+						<!-- Address of auction -->
 						<ion-item>
 							<ion-icon name="navigate" item-left></ion-icon>
 							<p item-right>{{dataSrv.activeAuction.address.concat(', ', dataSrv.activeAuction.city, ', ', dataSrv.activeAuction.stateCode, ', ', dataSrv.activeAuction.postalCode)}}</p>
@@ -25,6 +34,7 @@
 				</ion-card>
 				<ion-card>
 					<ion-card-header>Lot Listing</ion-card-header>
+					<!-- List of lots in the auction -->
 					<ion-list>
 						<ion-item-sliding *ngFor="let lot of dataSrv.activeAuction.lots">
 							<button ion-item (click)="navToLot(lot.id)">
@@ -34,6 +44,7 @@
 								<p>{{lot.bidsCount}} bids</p>
 								<h2 item-right>{{lot.currentPrice | currency}}</h2>
 							</button>
+							<!-- Quick bid / quick close on mobile devices -->
 							<ion-item-options side="right">
 								<button *ngIf="dataSrv.role == 'user'" ion-button color="go">
 									<ion-icon name="logo-usd"></ion-icon>

@@ -1,3 +1,10 @@
+/*
+	Create Profile Page Script
+	==========================
+	Form to create a new buyer profile.
+	Should be displayed as a modal.
+*/
+
 // Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -15,6 +22,7 @@ import * as models from '../../app/classes';
 })
 export class CreateProfilePage extends BaseView {
 
+	// Special object for new profile
 	public user: any = {
 		firstName: null,
 		lastName: null,
@@ -30,10 +38,12 @@ export class CreateProfilePage extends BaseView {
 		this.user.accountID = this.dataSrv.selectedAcctID;
 	}
 	
+	// Return to AccountListPage
 	cancel() {
 		this.viewCtrl.dismiss();
 	}
 	
+	// Submit the new buyer to API
 	submit() {
 		this.createLoader("Loading...");
 		this.dataSrv.createProfile(this.user)

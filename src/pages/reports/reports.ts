@@ -1,3 +1,9 @@
+/*
+	Reports Page
+	============
+	Shows graphical statistics for admins.
+*/
+
 // Standard page stuff
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -15,7 +21,8 @@ import * as randomColor from 'randomcolor';
 	templateUrl: 'reports.html'
 })
 export class ReportsPage extends BaseView {
-
+	
+	// Grab canvas elements from HTML
 	@ViewChild('modelsCanvas') modelsCanvas;
 	@ViewChild('statesCanvas') statesCanvas;
 	@ViewChild('typesCanvas') typesCanvas;
@@ -25,12 +32,15 @@ export class ReportsPage extends BaseView {
 		// Pass along to the base view constructor
 		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
-
+	
+	// Fires when the page has loaded
 	ionViewDidLoad() {
+		// Load each chart's data in sequence
 		this.dataSrv.loadChartsDataModels()
 		.then(() => this.dataSrv.loadChartsDataStates())
 		.then(() => this.dataSrv.loadChartsDataTypes())
 		.then(() => {
+			// Put the data into the charts
 			this.loadModelsChart(this.modelsCanvas, this.dataSrv.chartData.models);
 			this.loadStatesChart(this.statesCanvas, this.dataSrv.chartData.states);
 			this.loadTypesChart(this.typesCanvas, this.dataSrv.chartData.types);

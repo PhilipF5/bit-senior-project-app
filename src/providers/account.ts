@@ -1,5 +1,7 @@
-/* AccountProvider Service
-Manages account-related data
+/*
+	Account Provider Service
+	========================
+	Manages account-related data.
 */
 
 // Standard service stuff
@@ -7,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
+// Import needed libraries
 import * as models from '../app/classes';
 
 @Injectable()
@@ -29,6 +32,7 @@ export class AccountProvider {
 	// Create new account
 	public createAccount(acct: any, apiKey: string) {
 		return new Promise((resolve, reject) => {
+			// Use HTTPS POST
 			let headers = new Headers();
 			let newAccount: models.Account;
 			headers.append("Content-Type", "application/json");

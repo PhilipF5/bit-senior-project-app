@@ -1,3 +1,9 @@
+/*
+	Profile View Page
+	=================
+	Shows a buyer's profile history.
+*/
+
 // Standard page stuff
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -20,6 +26,7 @@ import * as models from '../app/classes';
 })
 export class ProfileViewPage extends BaseView {
 	
+	// Navigation pages
 	public lotPage: any;
 
 	// Constructor injects all base view and data service dependencies
@@ -30,6 +37,7 @@ export class ProfileViewPage extends BaseView {
 		this.lotPage = LotPage;
 	}
 	
+	// Format timestamps with Moment Timezone
 	formatBidTimestamp(input) {
 		return moment(input)
 		.tz("America/New_York")
