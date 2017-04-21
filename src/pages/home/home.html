@@ -96,7 +96,7 @@
             <ion-col col-12 col-sm-9 col-md-6 col-lg-5 col-xl-3>
                 <ion-card>
                     <ion-card-header>
-                        Most Popular States for Auctions
+                        Total Sales by Vehicle Type
                     </ion-card-header>
                     <canvas #chartCanvas></canvas>
                 </ion-card>
@@ -107,7 +107,7 @@
                         Top Dealers
                     </ion-card-header>
                     <ion-list>
-						<template ngFor let-acct [ngForOf]="dataSrv.accountsbySpent" let-i="index">
+						<template ngFor let-acct [ngForOf]="dataSrv.accountsBySpent" let-i="index">
 							<ion-item *ngIf="i < 4">
 								<h2>{{acct.owner}}</h2>
 								<p>{{acct.buyers.length}} {{acct.buyers.length == 1 ? "buyer" : "buyers"}}</p>

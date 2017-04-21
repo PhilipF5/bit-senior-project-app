@@ -28,8 +28,8 @@ export class ReportsPage extends BaseView {
 
 	ionViewDidLoad() {
 		this.dataSrv.loadChartsDataModels()
-		.then(() => { this.dataSrv.loadChartsDataStates(); })
-		.then(() => { this.dataSrv.loadChartsDataTypes(); })
+		.then(() => this.dataSrv.loadChartsDataStates())
+		.then(() => this.dataSrv.loadChartsDataTypes())
 		.then(() => {
 			this.loadModelsChart(this.modelsCanvas, this.dataSrv.chartData.models);
 			this.loadStatesChart(this.statesCanvas, this.dataSrv.chartData.states);

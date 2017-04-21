@@ -48,8 +48,10 @@ export class LotPage extends BaseView {
 								this.createLoader("Refreshing...");
 								this.dataSrv.loadData()
 								.then(() => {
-									this.dataSrv.refreshAuction();
-									this.dataSrv.refreshActiveLot();
+									this.dataSrv.refreshAuction()
+									.then(() => {
+										this.dataSrv.refreshActiveLot();
+									});
 									this.dismissLoader();
 								});
 							}
