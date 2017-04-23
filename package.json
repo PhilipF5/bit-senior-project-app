@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "bit-senior-project-app",
+  "author": "Philip Fulgham",
+  "homepage": "",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -53,5 +53,5 @@
       "locator": "ios"
     }
   ],
-  "description": "bit-senior-project-app: An Ionic project"
+  "description": "bit-senior-project-app: Ionic 2 hybrid app for Auction It project"
 }
