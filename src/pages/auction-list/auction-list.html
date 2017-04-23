@@ -1,36 +1,38 @@
 <!--
-  Generated template for the AuctionList page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+	Auction List Page
+	=================
+	Page that shows all auctions in categories
+	based on time or registration status.
 -->
-<ion-header>
 
+<!-- Page header -->
+<ion-header>
 	<ion-navbar color="primary">
 		<ion-title>Auctions</ion-title>
 	</ion-navbar>
-
 </ion-header>
 
-
+<!-- Everything else -->
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+				<!-- Show current auction for user, or all currents for admin -->
 				<ion-list>
-					<ion-list-header *ngIf="loginProvider.creds.role == 'user'">Current Auction</ion-list-header>
-					<ion-list-header *ngIf="loginProvider.creds.role == 'admin'">Current Auctions</ion-list-header>
-					<template ngFor let-auct [ngForOf]="auctionProvider.auctions">
+					<ion-list-header *ngIf="dataSrv.role == 'user'">Current Auction</ion-list-header>
+					<ion-list-header *ngIf="dataSrv.role == 'admin'">Current Auctions</ion-list-header>
+					<template ngFor let-auct [ngForOf]="dataSrv.auctions">
 						<button *ngIf="isCurrent(auct)" ion-item (click)="navToAuction(auct.id)">
 							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 							<p>Ends at {{formatTime(auct.endTime)}}</p>
 						</button>
 					</template>
 				</ion-list>
-				<ion-list *ngIf="loginProvider.creds.role == 'user'">
+				<!-- List of auctions for which user is registered -->
+				<ion-list *ngIf="dataSrv.role == 'user'">
 					<ion-list-header>Registered Auctions</ion-list-header>
-					<template ngFor let-auct [ngForOf]="auctionProvider.auctions">
-						<button *ngIf="isRegistered(auct)" ion-item (click)="navToAuction(auct.id)">
+					<template ngFor let-auct [ngForOf]="dataSrv.auctions">
+						<button *ngIf="isRegistered(auct) && isUpcoming(auct)" ion-item (click)="navToAuction(auct.id)">
 							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 							<p>{{formatDate(auct.startTime)}}</p>
 						</button>
@@ -38,9 +40,10 @@
 				</ion-list>
 			</ion-col>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+				<!-- List of all upcoming auctions -->
 				<ion-list>
 					<ion-list-header>Upcoming Auctions</ion-list-header>
-					<template ngFor let-auct [ngForOf]="auctionProvider.auctions">
+					<template ngFor let-auct [ngForOf]="dataSrv.auctions">
 						<button *ngIf="isUpcoming(auct)" ion-item (click)="navToAuction(auct.id)">
 							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 							<p>{{formatDate(auct.startTime)}}</p>
@@ -49,10 +52,20 @@
 				</ion-list>
 			</ion-col>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
-				<ion-list>
-					<ion-list-header *ngIf="loginProvider.creds.role == 'user'">Your History</ion-list-header>
-					<ion-list-header *ngIf="loginProvider.creds.role == 'admin'">Past Auctions</ion-list-header>
-					<template ngFor let-auct [ngForOf]="auctionProvider.auctions">
+				<!-- Users see their past auctions -->
+				<ion-list *ngIf="dataSrv.role == 'user'">
+					<ion-list-header>Your History</ion-list-header>
+					<template ngFor let-auct [ngForOf]="dataSrv.auctions">
+						<button *ngIf="isPast(auct) && isRegistered(auct)" ion-item (click)="navToAuction(auct.id)">
+							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
+							<p>{{formatDate(auct.startTime)}}</p>
+						</button>
+					</template>
+				</ion-list>
+				<!-- Admins see all past auctions -->
+				<ion-list *ngIf="dataSrv.role == 'admin'">
+					<ion-list-header>Past Auctions</ion-list-header>
+					<template ngFor let-auct [ngForOf]="dataSrv.auctions">
 						<button *ngIf="isPast(auct)" ion-item (click)="navToAuction(auct.id)">
 							<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 							<p>{{formatDate(auct.startTime)}}</p>

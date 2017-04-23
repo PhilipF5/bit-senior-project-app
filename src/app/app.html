@@ -1,4 +1,13 @@
+<!--
+	Root Component Script
+	=====================
+	The root component contains the slideout navigation menu
+	and a container for whichever page is being displayed.
+-->
+
+<!-- Slideout navigation menu (only on home page) -->
 <ion-menu [content]="content">
+	<!-- Header -->
 	<ion-header>
 		<ion-toolbar color="primary">
 			<ion-title>Navigation</ion-title>
@@ -6,6 +15,7 @@
 	</ion-header>
 	<ion-content>
 		<ion-list>
+			<!-- Menu items for both role types -->
 			<button ion-item menuClose>
 				<ion-icon name="home" item-left></ion-icon>
 				Dashboard
@@ -14,31 +24,37 @@
 				<ion-icon name="pricetags" item-left></ion-icon>
 				Auctions
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'" (click)="nav.push(accountListPage)">
-				<ion-icon name="contacts" item-left></ion-icon>
-				Accounts
-			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'user'" (click)="nav.push(accountViewPage)">
+			<!-- User-specific menu items -->
+			<button ion-item menuClose *ngIf="dataSrv.role == 'user'" (click)="nav.push(accountViewPage)">
 				<ion-icon name="contact" item-left></ion-icon>
 				Account
 			</button>
-			<button ion-item menuClose *ngIf="loginProvider.creds.role == 'admin'" (click)="nav.push(reportsPage)">
+			<!-- Admin-specific menu items -->
+			<button ion-item menuClose *ngIf="dataSrv.role == 'admin'" (click)="nav.push(accountListPage)">
+				<ion-icon name="contacts" item-left></ion-icon>
+				Accounts
+			</button>
+			<button ion-item menuClose *ngIf="dataSrv.role == 'admin'" (click)="nav.push(reportsPage)">
 				<ion-icon name="stats" item-left></ion-icon>
 				Reports
 			</button>
 		</ion-list>
+		<!-- Profile card -->
 		<ion-card>
 			<ion-list>
 				<ion-list-header>Logged in as</ion-list-header>
 				<ion-item>
-					<h2>{{loginProvider.creds.firstName}} {{loginProvider.creds.lastName}}</h2>
-					<p *ngIf="loginProvider.creds.role == 'user'">{{acctProvider.myAccount.owner}}</p>
-					<ion-badge *ngIf="loginProvider.creds.role == 'admin'" color="danger" item-right>Admin</ion-badge>
+					<h2>{{dataSrv.creds.firstName}} {{dataSrv.creds.lastName}}</h2>
+					<!-- Show a badge for admins -->
+					<p *ngIf="dataSrv.role == 'user'">{{dataSrv.myAccount.owner}}</p>
+					<ion-badge *ngIf="dataSrv.role == 'admin'" color="danger" item-right>Admin</ion-badge>
 				</ion-item>
-				<button ion-item menuClose (click)="nav.push(profileViewPage)" *ngIf="loginProvider.creds.role == 'user'">
+				<!-- ProfileViewPage access for users -->
+				<button ion-item menuClose (click)="nav.push(profileViewPage)" *ngIf="dataSrv.role == 'user'">
 					<ion-icon name="person" item-left></ion-icon>
 					View Profile
 				</button>
+				<!-- Log Out button -->
 				<button ion-item menuClose (click)="showLogoutConfirm()">
 					<ion-icon name="log-out" item-left></ion-icon>
 					Log Out
@@ -48,4 +64,5 @@
 	</ion-content>
 </ion-menu>
 
+<!-- View container -->
 <ion-nav #content [root]="rootPage"></ion-nav>

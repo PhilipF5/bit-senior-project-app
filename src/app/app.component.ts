@@ -1,12 +1,20 @@
+/*
+	Root Component Script
+	=====================
+	The root component contains the slideout navigation menu
+	and a container for whichever page is being displayed.
+*/
+
+// Standard root component stuff
 import { Component, ViewChild } from '@angular/core';
 import { Platform, AlertController, ModalController, MenuController, NavController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+// Import main data service
+import { DataProvider } from '../providers/data';
+
+// Import pages for navigation
 import { HomePage } from '../pages/home/home';
-import { LoginProvider } from '../providers/login';
-import { AccountProvider } from '../providers/account';
-import { ProfileProvider } from '../providers/profile';
-import { AuctionProvider } from '../providers/auction';
 import { LoginPage } from '../pages/login/login';
 import { AccountViewPage } from '../pages/account-view/account-view';
 import { AuctionListPage } from '../pages/auction-list/auction-list';
@@ -17,25 +25,30 @@ import { ReportsPage } from '../pages/reports/reports';
 @Component({
   	templateUrl: 'app.html'
 })
-
 export class MyApp {
-  	rootPage = HomePage;
+
+	// Set the HomePage as our navigation root
+	rootPage = HomePage;
+	
+	// Navigation pages
 	accountViewPage;
 	auctionListPage;
 	profileViewPage;
 	accountListPage;
 	reportsPage;
 	
+	// Grab the nav controller from the HTML
 	@ViewChild('content') nav: NavController;
-
-	constructor(platform: Platform, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider) {
+	
+	// Unique constructor because we don't inherit BaseView
+	constructor(platform: Platform, public dataSrv: DataProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public menuCtrl: MenuController) {
     	platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.
 			// Here you can do any higher level native things you might need.
 			StatusBar.styleDefault();
 			Splashscreen.hide();
     	});
-		
+		// Navigation pages
 		this.accountViewPage = AccountViewPage;
 		this.auctionListPage = AuctionListPage;
 		this.profileViewPage = ProfileViewPage;
@@ -43,6 +56,7 @@ export class MyApp {
 		this.reportsPage = ReportsPage;
   	}
 	
+	// Begin logout procedure
 	showLogoutConfirm() {
 		let confirm = this.alertCtrl.create({
 			title: 'Log out?',
@@ -51,49 +65,16 @@ export class MyApp {
 				{
 					text: 'Cancel',
 					handler: () => {
-						
+						// Do nothing
 					}
 				},
 				{
 					text: 'Log Out',
 					handler: () => {
+						// Close the menu and run the logout code
 						this.menuCtrl.close();
-						this.loginProvider.creds = {
-							apiKey: null,
-							error: null,
-							firstName: null,
-							lastName: null,
-							role: null,
-							username: null
-						};
-						this.auctionProvider.currentAuction = {
-							address: "",
-							buyers: null,
-							city: "",
-							endTime: null,
-							id: null,
-							lots: null,
-							participants: null,
-							postalCode: "",
-							startTime: null,
-							state: null,
-							stateCode: ""
-						};
-						this.profileProvider.profile = {
-							accountID: null,
-							auctions: [],
-							bids: [],
-							bidsMax: null,
-							bidsMin: null,
-							id: null,
-							firstName: "",
-							lastName: "",
-							totalSpent: null,
-							username: "",
-							auctionCount: null,
-							bidsCount: null,
-							fullName: ""
-						};
+						this.dataSrv.logout();
+						// Lock the user back into the login screen
 						let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
 						modal.present();
 					}
@@ -102,4 +83,5 @@ export class MyApp {
 		});
 		confirm.present();
 	}
+	
 }

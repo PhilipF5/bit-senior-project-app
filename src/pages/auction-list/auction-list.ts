@@ -1,48 +1,44 @@
+/*
+	Auction List Page Script
+	========================
+	Page that shows all auctions in categories
+	based on time or registration status.
+*/
+
+// Standard page stuff
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
+
+// Import pages for navigation
 import { AuctionViewPage } from '../../pages/auction-view/auction-view';
-import { AuctionProvider } from '../../providers/auction';
-import { LoginProvider } from '../../providers/login';
-import { ProfileProvider } from '../../providers/profile';
+
+// Import needed libraries
 import * as moment from 'moment';
 import 'moment-timezone';
+import * as models from '../app/classes';
 
-/*
-  Generated class for the AuctionList page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
  	selector: 'page-auction-list',
  	templateUrl: 'auction-list.html'
 })
-
-export class AuctionListPage {
+export class AuctionListPage extends BaseView {
 	
-	auctionViewPage;
+	// Navigation pages
+	private auctionViewPage: any;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public auctionProvider: AuctionProvider, public loadCtrl: LoadingController, public loginProvider: LoginProvider, public profileProvider: ProfileProvider) {
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
+		// Navigation pages
 		this.auctionViewPage = AuctionViewPage;
 	}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad AuctionListPage');
-	}
 	
-	navToAuction(id)
-	{
-		let loader = this.loadCtrl.create({
-      		content: "Loading..."
-    	});
-    	loader.present();
-		this.auctionProvider.loadAuction(id)
-		.then(() => {
-			loader.dismiss();
-			this.navCtrl.push(this.auctionViewPage);
-		});
-	}
-	
+	// Format dates and times with Moment Timezone
 	formatDate(input) {
 		return moment(input)
 		.tz('America/New_York')
@@ -55,28 +51,41 @@ export class AuctionListPage {
 		.format("h:mm A");
 	}
 	
-	isUpcoming(auct) {
-		return !(moment().isAfter(auct.startTime));
+	// Check times and registrations for auctions
+	// Basically a page-specific wrapper
+	isCurrent(auct) {
+		if (this.dataSrv.role == "user") {
+			return (this.dataSrv.auctionTiming(auct) == "current" && this.dataSrv.isRegForAuction(auct));
+		}
+		return this.dataSrv.auctionTiming(auct) == "current";
 	}
 	
 	isPast(auct) {
-		if (this.loginProvider.creds.role == "user") {
-			return (this.profileProvider.profile.auctions.indexOf(auct.id) != -1 && moment().isAfter(auct.endTime));
+		if (this.dataSrv.role == "user") {
+			return (this.dataSrv.auctionTiming(auct) == "past" && this.dataSrv.isRegForAuction(auct));
 		}
-		return moment().isAfter(auct.endTime);
-	}
-	
-	isCurrent(auct) {
-		if (this.loginProvider.creds.role == "user") {
-			return (this.profileProvider.profile.auctions.indexOf(auct.id) != -1 && !this.isUpcoming(auct) && !this.isPast(auct));
-		}
-		return (!this.isUpcoming(auct) && !this.isPast(auct));
+		return this.dataSrv.auctionTiming(auct) == "past";
 	}
 	
 	isRegistered(auct) {
-		if (this.loginProvider.creds.role == "user") {
-			return (this.profileProvider.profile.auctions.indexOf(auct.id) != -1 && this.isUpcoming(auct));
+		if (this.dataSrv.role == "user") {
+			return (this.dataSrv.auctionTiming(auct) == "upcoming" && this.dataSrv.isRegForAuction(auct));
 		}
+	}
+	
+	isUpcoming(auct) {
+		return this.dataSrv.auctionTiming(auct) == "upcoming";
+	}
+	
+	// Load AuctionViewPage
+	navToAuction(id)
+	{
+		this.createLoader("Loading...")
+		this.dataSrv.loadAuction(id)
+		.then(() => {
+			this.dismissLoader();
+			this.navCtrl.push(this.auctionViewPage);
+		});
 	}
 
 }
