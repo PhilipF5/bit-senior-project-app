@@ -1,33 +1,38 @@
+/*
+	Account List Page Script
+	========================
+	Displays all accounts and their buyers
+	for administrative purposes.
+*/
+
+// Standard page stuff
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
-import { AccountProvider } from '../../providers/account';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
+
+// Import pages for navigation
 import { CreateAccountPage } from '../../pages/create-account/create-account';
 import { CreateProfilePage } from '../../pages/create-profile/create-profile';
 
-/*
-  Generated class for the AccountList page.
+// Import needed libraries
+import * as models from '../app/classes';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
 	selector: 'page-account-list',
 	templateUrl: 'account-list.html'
 })
+export class AccountListPage extends BaseView {
 
-export class AccountListPage {
-
-	constructor(public navCtrl: NavController, public navParams: NavParams, public acctProvider: AccountProvider, public modalCtrl: ModalController) {}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad AccountListPage');
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
 	
-	setAccount(i) {
-		this.acctProvider.selectedAcct = i;
-		this.acctProvider.selectedAcctID = this.acctProvider.accounts[i].id;
-	}
-	
+	// Present modals for creating new accounts and buyers
 	createAccount() {
 		let modal = this.modalCtrl.create(CreateAccountPage, {}, {enableBackdropDismiss: false});
 		modal.present();

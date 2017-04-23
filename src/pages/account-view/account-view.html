@@ -1,42 +1,42 @@
 <!--
-  Generated template for the AccountView page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+	Account View Page
+	=================
+	Page for users to view their dealer account.
 -->
-<ion-header>
 
+<!-- Page header -->
+<ion-header>
 	<ion-navbar color="primary">
 		<ion-title>View Account</ion-title>
 	</ion-navbar>
-
 </ion-header>
 
-
+<!-- Everything else -->
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
 			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
 				<ion-card>
 					<ion-card-header>
-						<h1>{{acctProvider.myAccount.owner}}</h1>
+						<h1>{{dataSrv.myAccount.owner}}</h1>
 					</ion-card-header>
+					<!-- Financial information -->
 					<ion-list>
 						<ion-item>
 							Total Spent
-							<p item-right>{{acctProvider.myAccount.totalSpent | currency}}</p>
+							<p item-right>{{dataSrv.myAccount.totalSpent | currency}}</p>
 						</ion-item>
 						<ion-item>
 							Total Credit
-							<p item-right>{{acctProvider.myAccount.totalCredit | currency}}</p>
+							<p item-right>{{dataSrv.myAccount.totalCredit | currency}}</p>
 						</ion-item>
 						<ion-item>
 							Used Credit
-							<p item-right>{{acctProvider.myAccount.usedCredit | currency}}</p>
+							<p item-right>{{dataSrv.myAccount.usedCredit | currency}}</p>
 						</ion-item>
 						<ion-item>
 							Credit Available
-							<p item-right>{{acctProvider.myAccount.availableCredit | currency}}</p>
+							<p item-right>{{dataSrv.myAccount.availableCredit | currency}}</p>
 						</ion-item>
 					</ion-list>
 				</ion-card>
@@ -47,18 +47,21 @@
 						Contact Info
 					</ion-card-header>
 					<ion-list>
+						<!-- Mailing address -->
 						<ion-item text-right>
 							<ion-icon name="navigate" item-left></ion-icon>
-							<h2>{{acctProvider.myAccount.address}}</h2>
-							<h3>{{acctProvider.myAccount.city.concat(", ", acctProvider.myAccount.stateCode, " ", acctProvider.myAccount.postalCode)}}</h3>
+							<h2>{{dataSrv.myAccount.address}}</h2>
+							<h3>{{dataSrv.myAccount.city.concat(", ", dataSrv.myAccount.stateCode, " ", dataSrv.myAccount.postalCode)}}</h3>
 						</ion-item>
+						<!-- Phone number -->
 						<ion-item text-right>
 							<ion-icon name="call" item-left></ion-icon>
-							{{acctProvider.myAccount.contactPhone}}
+							{{dataSrv.myAccount.contactPhone}}
 						</ion-item>
+						<!-- Email -->
 						<ion-item text-right>
 							<ion-icon name="mail" item-left></ion-icon>
-							{{acctProvider.myAccount.contactEmail}}
+							{{dataSrv.myAccount.contactEmail}}
 						</ion-item>
 					</ion-list>
 				</ion-card>

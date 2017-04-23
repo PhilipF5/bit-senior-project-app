@@ -1,57 +1,58 @@
+/*
+	Profile View Page
+	=================
+	Shows a buyer's profile history.
+*/
+
+// Standard page stuff
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { ProfileProvider } from '../../providers/profile';
-import { AccountProvider } from '../../providers/account';
-import { AuctionProvider } from '../../providers/auction';
-import { LotProvider } from '../../providers/lot';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
+
+// Import pages for navigation
 import { LotPage } from '../../pages/lot/lot';
+
+// Import needed libraries
 import * as moment from 'moment';
 import 'moment-timezone';
+import * as models from '../app/classes';
 
-/*
-  Generated class for the ProfileView page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
  	selector: 'page-profile-view',
  	templateUrl: 'profile-view.html'
 })
-
-export class ProfileViewPage {
+export class ProfileViewPage extends BaseView {
 	
-	lotPage;
+	// Navigation pages
+	public lotPage: any;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public profileProvider: ProfileProvider, public accountProvider: AccountProvider, public loadCtrl: LoadingController, public auctionProvider: AuctionProvider, public lotProvider: LotProvider) {
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
+		// Navigation pages
 		this.lotPage = LotPage;
 	}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad ProfileViewPage');
-	}
 	
-	navToLot(id) {
-		let loader = this.loadCtrl.create({
-      		content: "Loading..."
-    	});
-    	loader.present();
-		this.auctionProvider.loadAuction(this.auctionProvider.auction.id)
-		.then(() => {
-			for (let lot of this.auctionProvider.auction.lots) {
-				if (lot.id == id) {
-					this.lotProvider.activeLot = lot;
-					loader.dismiss();
-					this.navCtrl.push(this.lotPage);
-				}
-			}
-		});
-	}
-	
+	// Format timestamps with Moment Timezone
 	formatBidTimestamp(input) {
 		return moment(input)
 		.tz("America/New_York")
 		.format("M/DD/YY [at] h:mm:ss A (z)");
+	}
+	
+	// Load page for lot
+	navToLot(id) {
+		this.createLoader("Loading...");
+		this.dataSrv.refreshAuction()
+		.then(() => {
+			this.dataSrv.activeLot = id;
+			this.dismissLoader();
+			this.navCtrl.push(this.lotPage);
+		});
 	}
 
 }

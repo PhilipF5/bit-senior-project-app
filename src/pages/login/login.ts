@@ -1,69 +1,47 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
-import { LoginProvider } from '../../providers/login';
-import { AccountProvider } from '../../providers/account';
-import { ProfileProvider } from '../../providers/profile';
-import { AuctionProvider } from '../../providers/auction';
-import { Http, Headers } from '@angular/http';
-
-
 /*
-  Generated class for the Login page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+	Login Page Script
+	=================
+	Form to enter username and password.
+	Should be displayed as a Modal.
 */
+
+// Standard page stuff
+import { Component } from '@angular/core';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
+
 @Component({
 	selector: 'page-login',
 	templateUrl: 'login.html'
 })
-export class LoginPage {
+export class LoginPage extends BaseView {
 
-	username: string;
-	password: string;
+	// Data-bound to the corresponding fields on the form
+	public username: string;
+	public password: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loginProvider: LoginProvider, public acctProvider: AccountProvider, public profileProvider: ProfileProvider, public auctionProvider: AuctionProvider, public viewCtrl: ViewController, public loadCtrl: LoadingController, public http: Http) {}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad LoginPage');
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
 
-	login() {
-		let loader = this.loadCtrl.create({
-      		content: "Logging in..."
-    	});
-    	loader.present();
-		console.log("Logging in with username " + this.username + " ...");
-		var headers = new Headers();
-		headers.append("Content-Type", "application/json");
-		this.http.post("https://auctionitapi.azurewebsites.net/api/login", JSON.stringify(this.username + ' ' + this.password), {headers: headers})
-		.subscribe(
-			res => this.loginProvider.creds = res.json(),
-			(err) => {},
+	// Tell the DataProvider to log the user in
+	public login() {
+		this.createLoader("Logging in...");
+		this.dataSrv.login(this.username, this.password)
+		.then(
+			// Handle the result
 			() => {
-				if (this.loginProvider.creds.apiKey != null) {
-					if (this.loginProvider.creds.role == "user") {
-						Promise.all([
-							this.acctProvider.loadMyAccount(),
-							this.profileProvider.loadMyProfile(),
-							this.auctionProvider.loadAllAuctions()
-						]).then(() => {
-							loader.dismiss();
-							this.viewCtrl.dismiss();
-						});
-					}
-					else if (this.loginProvider.creds.role == "admin") {
-						Promise.all([
-							this.auctionProvider.loadAllAuctions(),
-							this.acctProvider.loadAllAccounts().then(() => {
-								this.profileProvider.loadAllProfiles();
-							})
-						]).then(() => {
-							loader.dismiss();
-							this.viewCtrl.dismiss();
-						})
-					}
-				}
+				this.dismissLoader();
+				this.dismissView();
+			},
+			(err) => {
+				this.dismissLoader();
+				this.showAlert("Login failed", err);
 			}
 		);
 	}

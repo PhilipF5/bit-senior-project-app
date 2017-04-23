@@ -1,35 +1,47 @@
+<!--
+	Home Page
+	=========
+	Dashboard for both users and admins.
+-->
+
+<!-- Page header -->
 <ion-header>
   <ion-navbar color="primary">
       <button ion-button icon-only menuToggle><ion-icon name="menu"></ion-icon></button>
+	  <!-- Logo on this page only -->
       <img src="./assets/logo.png">
   </ion-navbar>
 </ion-header>
 
+<!-- Everything else -->
 <ion-content padding>
-	<!--
-		BEGIN USER VIEW ----------------------------------
-	-->
-    <ion-grid *ngIf="loginProvider.creds.role == 'user'">
+	<!-- BEGIN USER VIEW --------------------------------------------------------->
+    <ion-grid *ngIf="dataSrv.role == 'user'">
         <ion-row>
             <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
                 <ion-card>
+					<!-- Greeting -->
                     <ion-card-header>
-                        Hi, {{loginProvider.creds.firstName}} {{loginProvider.creds.lastName}}.
+                        Hi, {{dataSrv.creds.firstName}} {{dataSrv.creds.lastName}}.
                     </ion-card-header>
                     <ion-list>
+						<!-- Credit available on account -->
                         <ion-item>
                             <ion-icon name="cash" item-left></ion-icon>
-							<h2>{{acctProvider.myAccount.availableCredit | currency}}</h2>
+							<h2>{{dataSrv.myAccount.availableCredit | currency}}</h2>
 							<p>Available Credit</p>
                         </ion-item>
-                        <button *ngIf="auctionProvider.currentAuction.id == null" ion-item disabled>
+						<!-- Current auction greyed out if not present -->
+                        <button *ngIf="dataSrv.currentAuction.id == null" ion-item disabled>
                             <ion-icon name="megaphone" item-left></ion-icon>
                             Current Auction
                         </button>
-						<button *ngIf="auctionProvider.currentAuction.id != null" ion-item (click)="navToAuction(auctionProvider.currentAuction.id)">
+						<!-- Current auction if there is one -->
+						<button *ngIf="dataSrv.currentAuction.id != null" ion-item (click)="navToAuction(dataSrv.currentAuction.id)">
                             <ion-icon name="megaphone" color="go" item-left></ion-icon>
                             Current Auction
                         </button>
+						<!-- Link to ProfileViewPage with purchase history -->
                         <button ion-item (click)="navCtrl.push(profileViewPage)">
                             <ion-icon name="pricetag" item-left></ion-icon>
                             Purchase History
@@ -42,15 +54,17 @@
                     <ion-card-header>
                         Upcoming Auctions
                     </ion-card-header>
+					<!-- List of upcoming auctions -->
                     <ion-list>
-                        <template ngFor let-auct [ngForOf]="auctionProvider.auctions">
-							<button *ngIf="isUpcoming(auct)" ion-item (click)="navToAuction(auct.id)">
+                        <template ngFor let-auct [ngForOf]="dataSrv.auctions">
+							<button *ngIf="dataSrv.auctionTiming(auct) == 'upcoming'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 								<p>{{formatDate(auct.startTime)}}</p>
-								<ion-badge *ngIf="isRegistered(auct)" color="go" item-right>
+								<!-- Show badge for whether user is registered -->
+								<ion-badge *ngIf="dataSrv.isRegForAuction(auct)" color="go" item-right>
 									Registered
 								</ion-badge>
-								<ion-badge *ngIf="!isRegistered(auct)" color="danger" item-right>
+								<ion-badge *ngIf="!dataSrv.isRegForAuction(auct)" color="danger" item-right>
 									Unregistered
 								</ion-badge>
 							</button>
@@ -63,16 +77,17 @@
 	<!--
 		BEGIN ADMIN VIEW ----------------------------------
 	-->
-	<ion-grid *ngIf="loginProvider.creds.role == 'admin'">
+	<ion-grid *ngIf="dataSrv.role == 'admin'">
         <ion-row>
             <ion-col col-12 col-sm-9 col-md-6 col-lg-3 col-xl-3>
                 <ion-card>
                     <ion-card-header>
                         Auctions in Progress
                     </ion-card-header>
+					<!-- List of auctions happening right now -->
                     <ion-list>
-						<template ngFor let-auct [ngForOf]="auctionProvider.auctions">
-							<button *ngIf="auctionProvider.isCurrent(auct)" ion-item (click)="navToAuction(auct.id)">
+						<template ngFor let-auct [ngForOf]="dataSrv.auctions">
+							<button *ngIf="dataSrv.auctionTiming(auct) == 'current'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 								<p>Ends at {{formatTime(auct.endTime)}}</p>
 							</button>
@@ -83,9 +98,10 @@
                     <ion-card-header>
                         Upcoming Auctions
                     </ion-card-header>
+					<!-- List of future auctions -->
                     <ion-list>
-                        <template ngFor let-auct [ngForOf]="auctionProvider.auctions">
-							<button *ngIf="isUpcoming(auct)" ion-item (click)="navToAuction(auct.id)">
+                        <template ngFor let-auct [ngForOf]="dataSrv.auctions">
+							<button *ngIf="dataSrv.auctionTiming(auct) == 'upcoming'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>
 								<p>{{formatDate(auct.startTime)}}</p>
 							</button>
@@ -96,8 +112,9 @@
             <ion-col col-12 col-sm-9 col-md-6 col-lg-5 col-xl-3>
                 <ion-card>
                     <ion-card-header>
-                        Most Popular States for Auctions
+                        Total Sales by Vehicle Type
                     </ion-card-header>
+					<!-- "Sales by Type" chart -->
                     <canvas #chartCanvas></canvas>
                 </ion-card>
             </ion-col>
@@ -106,8 +123,9 @@
                     <ion-card-header>
                         Top Dealers
                     </ion-card-header>
+					<!-- Top four dealers by total purchases amount -->
                     <ion-list>
-						<template ngFor let-acct [ngForOf]="acctProvider.sortBySpent" let-i="index">
+						<template ngFor let-acct [ngForOf]="dataSrv.accountsBySpent" let-i="index">
 							<ion-item *ngIf="i < 4">
 								<h2>{{acct.owner}}</h2>
 								<p>{{acct.buyers.length}} {{acct.buyers.length == 1 ? "buyer" : "buyers"}}</p>
@@ -125,8 +143,9 @@
                     <ion-card-header>
                         Top Individual Buyers
                     </ion-card-header>
+					<!-- Top four buyers by total purchases amount -->
                     <ion-list>
-						<template ngFor let-profile [ngForOf]="profileProvider.sortBySpent" let-i="index">
+						<template ngFor let-profile [ngForOf]="dataSrv.profilesBySpent" let-i="index">
 							<ion-item *ngIf="i < 4">
 								<h2>{{profile.fullName}}</h2>
 								<p>{{profile.accountOwner}}</p>

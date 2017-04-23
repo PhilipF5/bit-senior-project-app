@@ -1,65 +1,61 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { LoginProvider } from '../providers/login';
-
 /*
-  Generated class for the Account provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
+	Account Provider Service
+	========================
+	Manages account-related data.
 */
+
+// Standard service stuff
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+// Import needed libraries
+import * as models from '../app/classes';
+
 @Injectable()
 export class AccountProvider {
 	
-	myAccount = {
-		address: null,
-		availableCredit: null,
-		city: null,
-		contactEmail: null,
-		contactPhone: null,
-		id: null,
-		owner: null,
-		postalCode: null,
-		state: null,
-		stateCode: null,
-		totalCredit: null,
-		totalSpent: null,
-		usedCredit: null
-	};
-	
-	accounts = [];
-	
-	sortBySpent = [];
-	
-	selectedAcct = 0;
-	
-	selectedAcctID = 1;
+	// Array containing all accounts
+	public accounts: models.Account[] = [];
+	// Array containing current user's account
+	public myAccount: models.Account = new models.Account();
+	// Index and ID of selected account on AccountListPage
+	public selectedAcct: number = 0;
+	public selectedAcctID: number = 1;
+	// Array containing all accounts sorted by total spent (descending)
+	public sortBySpent: models.Account[];
 
-	constructor(public http: Http, public loginProvider: LoginProvider) {
+	constructor(public http: Http) {
 		console.log('Hello Account Provider');
 	}
 	
-	loadMyAccount() {
+	// Create new account
+	public createAccount(acct: any, apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			// Use HTTPS POST
+			let headers = new Headers();
+			let newAccount: models.Account;
+			headers.append("Content-Type", "application/json");
+			this.http.post("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey + "/create", JSON.stringify(acct), {headers: headers})
 			.subscribe(
-				res => this.myAccount = res.json(),
+				res => newAccount = res.json(),
 				(err) => {},
 				() => {
-					resolve();
+					resolve(newAccount);
 				}
 			);
 		});
 	}
 	
-	loadAllAccounts() {
+	// Load all accounts
+	public loadAllAccounts(apiKey: string) {
 		return new Promise((resolve, reject) => {
-			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey)
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
 			.subscribe(
 				res => this.accounts = res.json(),
 				(err) => {},
 				() => {
+					// Duplicate the array and order it by total spent
 					this.sortBySpent = this.accounts.slice().sort((obj1, obj2) => {
 						if (obj1.totalSpent < obj2.totalSpent) {
 							return -1;
@@ -69,7 +65,22 @@ export class AccountProvider {
 						}
 						else return 0;
 					});
+					// Change from ascending to descending order
 					this.sortBySpent.reverse();
+					resolve();
+				}
+			);
+		});
+	}
+	
+	// Load the current user's account
+	public loadMyAccount(apiKey: string) {
+		return new Promise((resolve, reject) => {
+			this.http.get("https://auctionitapi.azurewebsites.net/api/accounts/" + apiKey)
+			.subscribe(
+				res => this.myAccount = res.json(),
+				(err) => {},
+				() => {
 					resolve();
 				}
 			);

@@ -1,25 +1,29 @@
-import { Component } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
-import { LoginProvider } from '../../providers/login';
-import { AccountProvider } from '../../providers/account';
-
 /*
-  Generated class for the CreateAccount page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+	Create Account Page Script
+	==========================
+	Form to create a new dealer account.
+	Should be displayed as a modal.
 */
+
+// Standard page stuff
+import { Component } from '@angular/core';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+
+// Import base view and main data service
+import { BaseView } from '../../app/base-view';
+import { DataProvider } from '../../providers/data';
+
+// Import needed libraries
+import * as models from '../../app/classes';
+
 @Component({
 	selector: 'page-create-account',
 	templateUrl: 'create-account.html'
 })
+export class CreateAccountPage extends BaseView {
 
-export class CreateAccountPage {
-
-	loader;
-
-	account = {
+	// Special object for new account
+	public account: any = {
 		dealerName: null,
 		contactPhone: null,
 		contactEmail: null,
@@ -29,45 +33,35 @@ export class CreateAccountPage {
 		state: null,
 		postalCode: null
 	};
-	
-	newAccount;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public viewCtrl: ViewController, public loginProvider: LoginProvider, public loadCtrl: LoadingController, public acctProvider: AccountProvider, public alertCtrl: AlertController) {}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad CreateAccountPage');
+	// Constructor injects all base view and data service dependencies
+	constructor(public dataSrv: DataProvider, public alertCtrl: AlertController, public loadCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
+		// Pass along to the base view constructor
+		super(alertCtrl, loadCtrl, modalCtrl, navCtrl, navParams, toastCtrl, viewCtrl);
 	}
 	
-	submit() {
-		this.loader = this.loadCtrl.create({
-      		content: "Loading..."
-    	});
-    	this.loader.present();
-		var headers = new Headers();
-		headers.append("Content-Type", "application/json");
-		this.http.post("https://auctionitapi.azurewebsites.net/api/accounts/" + this.loginProvider.creds.apiKey + "/create", JSON.stringify(this.account), {headers: headers})
-		.subscribe(
-			res => this.newAccount = res.json(),
-			(err) => {},
-			() => {
-				this.acctProvider.loadAllAccounts()
-				.then(() => {
-					this.loader.dismiss();
-					this.viewCtrl.dismiss();
-					let alert = this.alertCtrl.create({
-						title: 'Dealer created',
-						subTitle: this.newAccount.owner,
-						buttons: ['OK'],
-						enableBackdropDismiss: false
-					});
-					alert.present();
-				});
-			}
-		);
-	}
-	
+	// Return to AccountListPage
 	cancel() {
 		this.viewCtrl.dismiss();
+	}
+	
+	// Submit the new dealer to API
+	submit() {
+		this.createLoader("Loading...");
+		this.dataSrv.createAccount(this.account)
+		.then(
+			(newAccount: models.Account) => {
+				this.dismissLoader();
+				this.viewCtrl.dismiss();
+				let alert = this.alertCtrl.create({
+					title: 'Dealer created',
+					subTitle: newAccount.owner,
+					buttons: ['OK'],
+					enableBackdropDismiss: false
+				});
+				alert.present();
+			}
+		);
 	}
 
 }
