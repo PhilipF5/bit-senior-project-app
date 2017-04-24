@@ -61,8 +61,8 @@ describe("Account Provider Service", () => {
         acctProvider.loadAllAccounts("apiKey");
 		// Check if sortBySpent is in the right order
 		let correctOrder = true;
-        for (let i = 0; i < length - 1; i++) {
-			if (acctProvider.accounts[i].totalSpent < acctProvider.accounts[i + 1].totalSpent) {
+        for (let i = 0; i < acctProvider.sortBySpent.length - 1; i++) {
+			if (acctProvider.sortBySpent[i].totalSpent < acctProvider.sortBySpent[i + 1].totalSpent) {
 				correctOrder = false;
 			}
 		}
