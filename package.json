@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.1.4",
-    "@types/jasmine": "^2.5.47",
+    "@types/jasmine": "2.5.41",
     "@types/moment-timezone": "^0.2.34",
     "@types/node": "^7.0.13",
     "angular-cli": "^1.0.0-beta.28.3",
