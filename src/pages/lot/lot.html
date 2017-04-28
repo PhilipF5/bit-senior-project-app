@@ -20,7 +20,7 @@
 				<ion-card>
 					<!-- Lot details -->
 					<ion-card-header text-center>
-						<h1>Lot #{{dataSrv.activeLot.id}}</h1>
+						<h1 class="lotID">Lot #{{dataSrv.activeLot.id}}</h1>
 					</ion-card-header>
 					<ion-list>
 						<ion-item>
@@ -82,7 +82,7 @@
 						Place New Bid
 					</ion-card-header>
 					<!-- Quick Bid automatically bids $1,000 above current max -->
-					<button ion-button icon-left color="go" large round (click)="quickBid()">
+					<button ion-button class="quickbid" icon-left color="go" large round (click)="quickBid()">
 						<ion-icon name="logo-usd"></ion-icon>
 						+1,000
 					</button>
@@ -103,7 +103,7 @@
 						<template ngFor let-bid [ngForOf]="dataSrv.activeLot.bids">
 							<ion-item *ngIf="bid.status == 'Placed' || bid.status == 'Winner'">
 								{{formatBidTime(bid.bidTime)}}
-								<h2 item-right>{{bid.amount | currency}}</h2>
+								<h2 class="maxbid" item-right>{{bid.amount | currency}}</h2>
 							</ion-item>
 						</template>
 						<template ngFor let-bid [ngForOf]="dataSrv.activeLot.bids">

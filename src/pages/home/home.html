@@ -28,7 +28,7 @@
 						<!-- Credit available on account -->
                         <ion-item>
                             <ion-icon name="cash" item-left></ion-icon>
-							<h2>{{dataSrv.myAccount.availableCredit | currency}}</h2>
+							<h2 class="credit">{{dataSrv.myAccount.availableCredit | currency}}</h2>
 							<p>Available Credit</p>
                         </ion-item>
 						<!-- Current auction greyed out if not present -->
@@ -37,7 +37,7 @@
                             Current Auction
                         </button>
 						<!-- Current auction if there is one -->
-						<button *ngIf="dataSrv.currentAuction.id != null" ion-item (click)="navToAuction(dataSrv.currentAuction.id)">
+						<button *ngIf="dataSrv.currentAuction.id != null" ion-item class="currentauction" (click)="navToAuction(dataSrv.currentAuction.id)">
                             <ion-icon name="megaphone" color="go" item-left></ion-icon>
                             Current Auction
                         </button>
