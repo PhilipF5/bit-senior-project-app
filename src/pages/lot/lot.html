@@ -58,17 +58,17 @@
 				<!-- If bidding is open -->
 				<ion-card *ngIf="dataSrv.activeLotIsOpen()" text-center padding color="go">
 					Bidding is
-					<h1 margin>Open</h1>
+					<h1 class="status" margin>Open</h1>
 					<p>Current Price: {{dataSrv.activeLot.currentPrice | currency}}</p>
 					<!-- Admins can mark the highest bid as the winner -->
-					<button *ngIf="dataSrv.role == 'admin'" ion-button round (click)="acceptBid()">
+					<button *ngIf="dataSrv.role == 'admin'" ion-button class="acceptbid" round (click)="acceptBid()">
 						Accept &amp; Close
 					</button>
 				</ion-card>
 				<!-- If the lot has been sold -->
 				<ion-card *ngIf="dataSrv.activeLotIsSold()" text-center padding color="danger">
 					This lot has been
-					<h1 margin>SOLD</h1>
+					<h1 class="status" margin>SOLD</h1>
 					Winning Bid: {{dataSrv.activeLot.currentPrice | currency}}
 				</ion-card>
 				<!-- If bidding hasn't opened yet -->

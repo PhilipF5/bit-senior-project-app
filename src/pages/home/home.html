@@ -85,7 +85,7 @@
                         Auctions in Progress
                     </ion-card-header>
 					<!-- List of auctions happening right now -->
-                    <ion-list>
+                    <ion-list class="currentauctions">
 						<template ngFor let-auct [ngForOf]="dataSrv.auctions">
 							<button *ngIf="dataSrv.auctionTiming(auct) == 'current'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>
