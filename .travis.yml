@@ -27,6 +27,7 @@ install:
 
 before_script:
 - nohup bash -c "webdriver-manager start 2>&1 &"
+- ionic serve &
 
 script:
 - protractor
