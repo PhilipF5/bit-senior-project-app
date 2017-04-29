@@ -26,6 +26,7 @@ install:
 - npm install
 
 before_script:
+- google-chrome --version
 - nohup bash -c "webdriver-manager start 2>&1 &"
 
 script:
