@@ -262,9 +262,11 @@ export class DataProvider {
 				Promise.all([
 					this.auctionProvider.loadAllAuctions(this.apiKey, this.role),
 					this.acctProvider.loadAllAccounts(this.apiKey)
-				]).then(() => 
+				]).then(() => Promise.all([
+					// Load home page chart data for admin
+					this.loadChartsDataTypes(),
 					this.profileProvider.loadAllProfiles(this.acctProvider.accounts)
-				).then(() =>
+				])).then(() =>
 					resolve()
 				);
 			}
@@ -283,14 +285,7 @@ export class DataProvider {
 				else {
 					this.loadData()
 					.then(() => {
-						// Load home page chart data for admin only
-						if (this.role == "admin") {
-							this.loadChartsDataTypes()
-							.then(() => resolve());
-						}
-						else {
-							resolve();
-						}
+						resolve();
 					});
 				}
 			});
