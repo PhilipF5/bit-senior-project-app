@@ -30,7 +30,7 @@
 				Account
 			</button>
 			<!-- Admin-specific menu items -->
-			<button ion-item menuClose *ngIf="dataSrv.role == 'admin'" (click)="nav.push(accountListPage)">
+			<button ion-item class="accounts" menuClose *ngIf="dataSrv.role == 'admin'" (click)="nav.push(accountListPage)">
 				<ion-icon name="contacts" item-left></ion-icon>
 				Accounts
 			</button>

@@ -21,7 +21,7 @@
 					<!-- Dealer list header -->
 					<ion-card-header>
 						Registered Dealers
-						<button ion-button icon-only text-right outline small round (click)="createAccount()">
+						<button ion-button class="addaccount" icon-only text-right outline small round (click)="createAccount()">
 							<ion-icon name="add"></ion-icon>
 						</button>
 					</ion-card-header>
@@ -40,7 +40,7 @@
 					<!-- Buyer list header -->
 					<ion-card-header>
 						Buyer Profiles
-						<button ion-button icon-only text-right outline small round (click)="createBuyer()">
+						<button ion-button class="addbuyer" icon-only text-right outline small round (click)="createBuyer()">
 							<ion-icon name="add"></ion-icon>
 						</button>
 						<p>{{dataSrv.accounts[dataSrv.selectedAcctIndex].owner}}</p>

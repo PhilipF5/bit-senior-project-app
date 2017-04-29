@@ -20,19 +20,19 @@
 				<ion-list>
 					<ion-item>
 						<ion-label floating>Dealer name</ion-label>
-						<ion-input type="text" [(ngModel)]="account.dealerName"></ion-input>
+						<ion-input type="text" class="dealername" [(ngModel)]="account.dealerName"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label floating>Contact email address</ion-label>
-						<ion-input type="text" [(ngModel)]="account.contactEmail"></ion-input>
+						<ion-input type="text" class="email" [(ngModel)]="account.contactEmail"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label floating>Contact phone number</ion-label>
-						<ion-input type="text" [(ngModel)]="account.contactPhone"></ion-input>
+						<ion-input type="text" class="phone" [(ngModel)]="account.contactPhone"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label floating>Credit amount</ion-label>
-						<ion-input type="text" [(ngModel)]="account.creditAmount"></ion-input>
+						<ion-input type="text" class="credit" [(ngModel)]="account.creditAmount"></ion-input>
 					</ion-item>
 				</ion-list>
 			</ion-col>
@@ -40,24 +40,24 @@
 				<ion-list>
 					<ion-item>
 						<ion-label floating>Street address</ion-label>
-						<ion-input type="text" [(ngModel)]="account.streetAddress"></ion-input>
+						<ion-input type="text" class="address" [(ngModel)]="account.streetAddress"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label floating>City</ion-label>
-						<ion-input type="text" [(ngModel)]="account.city"></ion-input>
+						<ion-input type="text" class="city" [(ngModel)]="account.city"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label floating>State</ion-label>
-						<ion-input type="text" [(ngModel)]="account.state"></ion-input>
+						<ion-input type="text" class="state" [(ngModel)]="account.state"></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label floating>Postal code</ion-label>
-						<ion-input type="text" [(ngModel)]="account.postalCode"></ion-input>
+						<ion-input type="text" class="postal" [(ngModel)]="account.postalCode"></ion-input>
 					</ion-item>
 				</ion-list>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-	<button ion-button full (click)="submit()">Submit</button>
+	<button ion-button class="submit" full (click)="submit()">Submit</button>
 	<button ion-button color="danger" full (click)="cancel()">Cancel</button>
 </ion-content>
