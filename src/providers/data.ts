@@ -315,11 +315,14 @@ export class DataProvider {
 	
 	// Reloads active lot
 	public refreshActiveLot() {
-		for (let lot of this.auctionProvider.auction.lots) {
-			if (lot.id == this.lotProvider.activeLot.id) {
-				this.lotProvider.activeLot = lot;
+		return new Promise((resolve, reject) => {
+			for (let lot of this.auctionProvider.auction.lots) {
+				if (lot.id == this.lotProvider.activeLot.id) {
+					this.lotProvider.activeLot = lot;
+				}
 			}
-		}
+			resolve();
+		});
 	}
 	
 	// Reloads auction

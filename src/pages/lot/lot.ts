@@ -50,13 +50,13 @@ export class LotPage extends BaseView {
 								// Reload all data so it's current
 								this.createLoader("Refreshing...");
 								this.dataSrv.loadData()
-								.then(() => {
+								.then(() =>
 									this.dataSrv.refreshAuction()
-									.then(() => {
-										this.dataSrv.refreshActiveLot();
-									});
-									this.dismissLoader();
-								});
+								).then(() => 
+									this.dataSrv.refreshActiveLot()
+								).then(() =>
+									this.dismissLoader()
+								);
 							}
 						}
 					]
@@ -94,13 +94,13 @@ export class LotPage extends BaseView {
 												// Reload all data so it's current
 												this.createLoader("Refreshing...");
 												this.dataSrv.loadData()
-												.then(() => {
+												.then(() =>
 													this.dataSrv.refreshAuction()
-													.then(() => {
-														this.dataSrv.refreshActiveLot();
-													});
-													this.dismissLoader();
-												});
+												).then(() => 
+													this.dataSrv.refreshActiveLot()
+												).then(() =>
+													this.dismissLoader()
+												);
 											}
 										}
 									]
