@@ -179,7 +179,6 @@ export class DataProvider {
 		if (!auct) {
 			auct = this.auctionProvider.auction;
 		}
-		console.log(this.profileProvider.profile.auctions);
 		return this.auctionProvider.isRegistered(auct, this.profileProvider.profile.auctions);
 	}
 	
@@ -262,9 +261,11 @@ export class DataProvider {
 				Promise.all([
 					this.auctionProvider.loadAllAuctions(this.apiKey, this.role),
 					this.acctProvider.loadAllAccounts(this.apiKey)
-				]).then(() => 
+				]).then(() => Promise.all([
+					// Load home page chart data for admin
+					this.loadChartsDataTypes(),
 					this.profileProvider.loadAllProfiles(this.acctProvider.accounts)
-				).then(() =>
+				])).then(() =>
 					resolve()
 				);
 			}
@@ -283,14 +284,7 @@ export class DataProvider {
 				else {
 					this.loadData()
 					.then(() => {
-						// Load home page chart data for admin only
-						if (this.role == "admin") {
-							this.loadChartsDataTypes()
-							.then(() => resolve());
-						}
-						else {
-							resolve();
-						}
+						resolve();
 					});
 				}
 			});
@@ -321,11 +315,14 @@ export class DataProvider {
 	
 	// Reloads active lot
 	public refreshActiveLot() {
-		for (let lot of this.auctionProvider.auction.lots) {
-			if (lot.id == this.lotProvider.activeLot.id) {
-				this.lotProvider.activeLot = lot;
+		return new Promise((resolve, reject) => {
+			for (let lot of this.auctionProvider.auction.lots) {
+				if (lot.id == this.lotProvider.activeLot.id) {
+					this.lotProvider.activeLot = lot;
+				}
 			}
-		}
+			resolve();
+		});
 	}
 	
 	// Reloads auction

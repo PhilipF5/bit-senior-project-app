@@ -26,7 +26,7 @@ export class AccountProvider {
 	public sortBySpent: models.Account[];
 
 	constructor(public http: Http) {
-		console.log('Hello Account Provider');
+		
 	}
 	
 	// Create new account

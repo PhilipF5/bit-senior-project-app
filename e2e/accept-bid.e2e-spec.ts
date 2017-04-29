@@ -43,7 +43,7 @@ describe("Accept Bid", () => {
 	
 	it("should refresh with lot closed", () => {
 		element(by.css(".alert-button")).click().then(() => {
-			browser.driver.sleep(15000);
+			browser.driver.sleep(18000);
 			expect(element(by.css("h1.status")).getAttribute("innerHTML")).toContain("SOLD");
 		});
 	});

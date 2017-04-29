@@ -15,7 +15,7 @@
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
-			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 offset-lg-3 col-xl-3>
+			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 col-xl-3>
 				<ion-card>
 					<!-- Auction ID, city, and time -->
 					<ion-card-header text-center>
@@ -32,32 +32,31 @@
 						</ion-item>
 					</ion-list>
 				</ion-card>
-				<ion-card>
-					<ion-card-header>Lot Listing</ion-card-header>
-					<!-- List of lots in the auction -->
-					<ion-list class="lotlist">
-						<ion-item-sliding *ngFor="let lot of dataSrv.activeAuction.lots">
-							<button ion-item (click)="navToLot(lot.id)">
-								<ion-badge item-left>#{{lot.id}}</ion-badge>
-								<h2>{{lot.desc}}</h2>
-								<h3>{{lot.mileage}} miles</h3>
-								<p>{{lot.bidsCount}} bids</p>
-								<h2 item-right>{{lot.currentPrice | currency}}</h2>
+			</ion-col>
+			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 col-xl-3>
+				<!-- List of lots in the auction -->
+				<ion-list class="lotlist">
+					<ion-item-sliding *ngFor="let lot of dataSrv.activeAuction.lots">
+						<button ion-item (click)="navToLot(lot.id)">
+							<p>Lot #{{lot.id}}</p>
+							<h2>{{lot.year + " " + lot.make + " " + lot.model}}</h2>
+							<h3>{{lot.mileage}} miles</h3>
+							<p>{{lot.bidsCount}} bids</p>
+							<h2 item-right>{{lot.currentPrice | currency}}</h2>
+						</button>
+						<!-- Quick bid / quick close on mobile devices -->
+						<ion-item-options side="right">
+							<button *ngIf="dataSrv.role == 'user'" ion-button color="go">
+								<ion-icon name="logo-usd"></ion-icon>
+								+1,000
 							</button>
-							<!-- Quick bid / quick close on mobile devices -->
-							<ion-item-options side="right">
-								<button *ngIf="dataSrv.role == 'user'" ion-button color="go">
-									<ion-icon name="logo-usd"></ion-icon>
-									+1,000
-								</button>
-								<button *ngIf="dataSrv.role == 'admin'" ion-button color="go">
-									<ion-icon name="checkmark"></ion-icon>
-									Close
-								</button>
-							</ion-item-options>
-						</ion-item-sliding>
-					</ion-list>
-				</ion-card>
+							<button *ngIf="dataSrv.role == 'admin'" ion-button color="go">
+								<ion-icon name="checkmark"></ion-icon>
+								Close
+							</button>
+						</ion-item-options>
+					</ion-item-sliding>
+				</ion-list>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
