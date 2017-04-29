@@ -7,7 +7,7 @@
 <!-- Page header -->
 <ion-header>
   <ion-navbar color="primary">
-      <button ion-button icon-only menuToggle><ion-icon name="menu"></ion-icon></button>
+      <button ion-button class="menu" icon-only menuToggle><ion-icon name="menu"></ion-icon></button>
 	  <!-- Logo on this page only -->
       <img src="./assets/logo.png">
   </ion-navbar>
@@ -28,7 +28,7 @@
 						<!-- Credit available on account -->
                         <ion-item>
                             <ion-icon name="cash" item-left></ion-icon>
-							<h2>{{dataSrv.myAccount.availableCredit | currency}}</h2>
+							<h2 class="credit">{{dataSrv.myAccount.availableCredit | currency}}</h2>
 							<p>Available Credit</p>
                         </ion-item>
 						<!-- Current auction greyed out if not present -->
@@ -37,7 +37,7 @@
                             Current Auction
                         </button>
 						<!-- Current auction if there is one -->
-						<button *ngIf="dataSrv.currentAuction.id != null" ion-item (click)="navToAuction(dataSrv.currentAuction.id)">
+						<button *ngIf="dataSrv.currentAuction.id != null" ion-item class="currentauction" (click)="navToAuction(dataSrv.currentAuction.id)">
                             <ion-icon name="megaphone" color="go" item-left></ion-icon>
                             Current Auction
                         </button>
@@ -85,7 +85,7 @@
                         Auctions in Progress
                     </ion-card-header>
 					<!-- List of auctions happening right now -->
-                    <ion-list>
+                    <ion-list class="currentauctions">
 						<template ngFor let-auct [ngForOf]="dataSrv.auctions">
 							<button *ngIf="dataSrv.auctionTiming(auct) == 'current'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>

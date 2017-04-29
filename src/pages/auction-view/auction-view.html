@@ -19,7 +19,7 @@
 				<ion-card>
 					<!-- Auction ID, city, and time -->
 					<ion-card-header text-center>
-						<p>Auction #{{dataSrv.activeAuction.id}}</p>
+						<p class="auctionID">Auction #{{dataSrv.activeAuction.id}}</p>
 						<h1>{{dataSrv.activeAuction.city.concat(', ', dataSrv.activeAuction.stateCode)}}</h1>
 						<h3>{{formatDate()}}</h3>
 						<h3>{{formatTime()}}</h3>
@@ -35,7 +35,7 @@
 				<ion-card>
 					<ion-card-header>Lot Listing</ion-card-header>
 					<!-- List of lots in the auction -->
-					<ion-list>
+					<ion-list class="lotlist">
 						<ion-item-sliding *ngFor="let lot of dataSrv.activeAuction.lots">
 							<button ion-item (click)="navToLot(lot.id)">
 								<ion-badge item-left>#{{lot.id}}</ion-badge>
