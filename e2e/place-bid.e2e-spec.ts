@@ -11,7 +11,7 @@ describe("Place New Bid", () => {
 		expect(element(by.css("page-login")).isPresent()).toBeTruthy();
 	});
 	
-	it("should login successfully", () => {
+	it("should log in as buyer", () => {
 		element(by.css(".username input")).sendKeys("coopek");
 		element(by.css(".password input")).sendKeys("dbd4");
 		element(by.css(".login")).click().then(() => {

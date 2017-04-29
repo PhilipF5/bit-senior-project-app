@@ -11,7 +11,7 @@ describe("Create New Buyer", () => {
 		expect(element(by.css("page-login")).isPresent()).toBeTruthy();
 	});
 	
-	it("should login successfully", () => {
+	it("should log in as admin", () => {
 		element(by.css(".username input")).sendKeys("davidg");
 		element(by.css(".password input")).sendKeys("admin");
 		element(by.css(".login")).click().then(() => {
@@ -21,7 +21,6 @@ describe("Create New Buyer", () => {
 	});
 	
 	it("should navigate to Account List Page", () => {
-		//browser.explore();
 		element(by.css("ion-navbar button.menu")).click().then(() => {
 			browser.driver.sleep(1000);
 			element(by.css("button.accounts")).click().then(() => {

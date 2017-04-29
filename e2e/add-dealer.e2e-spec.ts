@@ -11,7 +11,7 @@ describe("Create New Dealer", () => {
 		expect(element(by.css("page-login")).isPresent()).toBeTruthy();
 	});
 	
-	it("should login successfully", () => {
+	it("should log in as admin", () => {
 		element(by.css(".username input")).sendKeys("davidg");
 		element(by.css(".password input")).sendKeys("admin");
 		element(by.css(".login")).click().then(() => {
