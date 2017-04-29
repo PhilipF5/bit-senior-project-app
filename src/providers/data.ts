@@ -179,7 +179,6 @@ export class DataProvider {
 		if (!auct) {
 			auct = this.auctionProvider.auction;
 		}
-		console.log(this.profileProvider.profile.auctions);
 		return this.auctionProvider.isRegistered(auct, this.profileProvider.profile.auctions);
 	}
 	
