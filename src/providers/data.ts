@@ -295,7 +295,20 @@ export class DataProvider {
 	public logout() {
 		this.loginProvider.creds = new models.Credentials();
 		this.auctionProvider.currentAuction = new models.Auction();
+		this.auctionProvider.auction = new models.Auction();
+		this.auctionProvider.auctions = [];
+		this.acctProvider.myAccount = new models.Account();
+		this.acctProvider.accounts = [];
 		this.profileProvider.profile = new models.Profile();
+		this.profileProvider.profiles = [];
+		this.acctProvider.sortBySpent = [];
+		this.profileProvider.sortBySpent = [];
+		this.lotProvider.activeLot = new models.Lot();
+		this.chartData = {
+			models: null,
+			states: null,
+			types: null
+		};
 	}
 	
 	// Place new bid
