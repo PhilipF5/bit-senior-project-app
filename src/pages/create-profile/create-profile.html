@@ -14,20 +14,22 @@
 
 <!-- Everything else -->
 <ion-content padding>
+	<form>
 	<ion-list>
 		<ion-item>
 			<ion-label floating>First name</ion-label>
-			<ion-input type="text" class="firstname" [(ngModel)]="user.firstName"></ion-input>
+			<ion-input type="text" class="firstname" name="firstname" [(ngModel)]="user.firstName"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label floating>Last name</ion-label>
-			<ion-input type="text" class="lastname" [(ngModel)]="user.lastName"></ion-input>
+			<ion-input type="text" class="lastname" name="lastname" [(ngModel)]="user.lastName"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label floating>Username</ion-label>
-			<ion-input type="text" class="username" [(ngModel)]="user.username"></ion-input>
+			<ion-input type="text" class="username" name="username" [(ngModel)]="user.username"></ion-input>
 		</ion-item>
 	</ion-list>
-	<button ion-button class="submit" full (click)="submit()">Submit</button>
+	<input type="submit" ion-button class="submit" full (click)="submit()" text="Submit">
 	<button ion-button color="danger" full (click)="cancel()">Cancel</button>
+	</form>
 </ion-content>
