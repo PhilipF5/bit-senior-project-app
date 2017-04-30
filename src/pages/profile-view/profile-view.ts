@@ -41,7 +41,8 @@ export class ProfileViewPage extends BaseView {
 	formatBidTimestamp(input) {
 		return moment(input)
 		.tz("America/New_York")
-		.format("M/DD/YY [at] h:mm:ss A (z)");
+		.format("M/DD/YY [at] h:mm:ss A (z)")
+		.split(" at ");
 	}
 	
 	// Load page for lot
