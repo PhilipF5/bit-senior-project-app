@@ -55,7 +55,7 @@ export class BaseView {
 			data: {
 				labels: data.modelNames,
 				datasets: [{
-    				label: "Test",
+    				label: "Vehicles",
 					data: data.salesByVolume,
 					// Use randomColor to generate the colors we need
 					backgroundColor: randomColor({
@@ -89,7 +89,7 @@ export class BaseView {
 			data: {
 				labels: data.stateNames,
 				datasets: [{
-    				label: "Test",
+    				label: "Vehicles",
 					data: data.salesByVolume,
 					// Use randomColor to generate the colors we need
 					backgroundColor: randomColor({
@@ -119,7 +119,7 @@ export class BaseView {
 			data: {
 				labels: data.typeNames,
 				datasets: [{
-    				label: "Test",
+    				label: "Vehicles",
 					data: data.salesByVolume,
 					// Use randomColor to generate the colors we need
 					backgroundColor: randomColor({
