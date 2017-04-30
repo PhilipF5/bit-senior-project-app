@@ -15,7 +15,7 @@
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
-			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 col-xl-3>
+			<ion-col col-xs-12 col-md-6>
 				<ion-card>
 					<!-- Auction ID, city, and time -->
 					<ion-card-header text-center>
@@ -33,7 +33,7 @@
 					</ion-list>
 				</ion-card>
 			</ion-col>
-			<ion-col col-12 col-sm-9 col-md-6 col-lg-6 col-xl-3>
+			<ion-col col-xs-12 col-md-6>
 				<!-- List of lots in the auction -->
 				<ion-list class="lotlist">
 					<ion-item-sliding *ngFor="let lot of dataSrv.activeAuction.lots">

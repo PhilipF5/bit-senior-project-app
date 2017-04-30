@@ -19,17 +19,19 @@
 		<ion-row>
 			<ion-col col-12>
 				<ion-card>
-					<ion-list>
-						<ion-item>
-							<ion-label floating>Username</ion-label>
-							<ion-input class="username" type="text" [(ngModel)]="username"></ion-input>
-						</ion-item>
-						<ion-item>
-							<ion-label floating>Password / Auth Key</ion-label>
-							<ion-input class="password" type="password" [(ngModel)]="password"></ion-input>
-						</ion-item>
-					</ion-list>
-					<button ion-button class="login" block (click)="login()">Login</button>
+					<form>
+						<ion-list>
+							<ion-item>
+								<ion-label floating>Username</ion-label>
+								<ion-input class="username" name="username" type="text" [(ngModel)]="username"></ion-input>
+							</ion-item>
+							<ion-item>
+								<ion-label floating>Password / Auth Key</ion-label>
+								<ion-input class="password" name="password" type="password" [(ngModel)]="password"></ion-input>
+							</ion-item>
+						</ion-list>
+						<input type="submit" ion-button class="login" block (click)="login()" text="Log In">
+					</form>
 				</ion-card>
 			</ion-col>
 		</ion-row>

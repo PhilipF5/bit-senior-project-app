@@ -6,11 +6,15 @@
 
 <!-- Page header -->
 <ion-header>
-  <ion-navbar color="primary">
-      <button ion-button class="menu" icon-only menuToggle><ion-icon name="menu"></ion-icon></button>
-	  <!-- Logo on this page only -->
-      <img src="./assets/logo.png">
-  </ion-navbar>
+	<ion-navbar color="primary">
+		<button ion-button class="menu" icon-only menuToggle><ion-icon name="menu"></ion-icon></button>
+		<!-- Logo on this page only -->
+		<ion-title>Dashboard</ion-title>
+		<ion-buttons end>
+			<!-- Log Out Button -->
+			<button ion-button class="logout" icon-only (click)="logout()" item-right><ion-icon name="log-out"></ion-icon></button>
+		</ion-buttons>
+	</ion-navbar>
 </ion-header>
 
 <!-- Everything else -->
@@ -18,8 +22,8 @@
 	<!-- BEGIN USER VIEW --------------------------------------------------------->
     <ion-grid *ngIf="dataSrv.role == 'user'">
         <ion-row>
-            <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
-                <ion-card>
+            <ion-col col-xs-12 col-sm-6 col-lg-4 offset-lg-2>
+                <!--<ion-card>-->
 					<!-- Greeting -->
                     <ion-card-header>
                         Hi, {{dataSrv.creds.firstName}} {{dataSrv.creds.lastName}}.
@@ -47,30 +51,30 @@
                             Purchase History
                         </button>
                     </ion-list>
-                </ion-card>
+                <!--</ion-card>-->
             </ion-col>
-            <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
-                <ion-card>
-                    <ion-card-header>
+            <ion-col col-xs-12 col-sm-6 col-lg-4>
+                <!--<ion-card>-->
+                    <ion-list-header>
                         Upcoming Auctions
-                    </ion-card-header>
+                    </ion-list-header>
 					<!-- List of upcoming auctions -->
                     <ion-list>
                         <template ngFor let-auct [ngForOf]="dataSrv.auctions">
 							<button *ngIf="dataSrv.auctionTiming(auct) == 'upcoming'" ion-item (click)="navToAuction(auct.id)">
 								<h2>{{auct.city}}, {{auct.stateCode}}</h2>
-								<p>{{formatDate(auct.startTime)}}</p>
+								<h3>{{formatDate(auct.startTime)}}</h3>
 								<!-- Show badge for whether user is registered -->
-								<ion-badge *ngIf="dataSrv.isRegForAuction(auct)" color="go" item-right>
+								<p *ngIf="dataSrv.isRegForAuction(auct)" color="go">
 									Registered
-								</ion-badge>
-								<ion-badge *ngIf="!dataSrv.isRegForAuction(auct)" color="danger" item-right>
+								</p>
+								<p *ngIf="!dataSrv.isRegForAuction(auct)" color="danger">
 									Unregistered
-								</ion-badge>
+								</p>
 							</button>
 						</template>
                     </ion-list>
-                </ion-card>
+                <!--</ion-card>-->
             </ion-col>
         </ion-row>
     </ion-grid>

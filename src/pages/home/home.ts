@@ -43,15 +43,7 @@ export class HomePage extends BaseView {
 		// Navigation pages
 		this.profileViewPage = ProfileViewPage;
 		this.auctionViewPage = AuctionViewPage;
-		// Lock user into login modal
-		let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
-		modal.onDidDismiss(() => {
-			if (this.dataSrv.role == "admin") {
-				// Load the "Sales by Type" chart
-				this.loadTypesChart(this.chartCanvas, this.dataSrv.chartData.types);
-			}
-		});
-		modal.present();
+		this.login();
  	}
 	
 	// Format dates and times with Moment Timezone
@@ -65,6 +57,25 @@ export class HomePage extends BaseView {
 		return moment(input)
 		.tz('America/New_York')
 		.format("h:mm A");
+	}
+	
+	// Show login form
+	public login() {
+		// Lock user into login modal
+		let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
+		modal.onDidDismiss(() => {
+			if (this.dataSrv.role == "admin") {
+				// Load the "Sales by Type" chart
+				this.loadTypesChart(this.chartCanvas, this.dataSrv.chartData.types);
+			}
+		});
+		modal.present();
+	}
+	
+	// Clear data and log back in
+	public logout() {
+		this.dataSrv.logout();
+		this.login();
 	}
 	
 	// Load AuctionViewPage

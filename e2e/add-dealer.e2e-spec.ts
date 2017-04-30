@@ -25,7 +25,7 @@ describe("Create New Dealer", () => {
 			browser.driver.sleep(1000);
 			element(by.css("button.accounts")).click().then(() => {
 				browser.driver.sleep(1000);
-				expect(element(by.css("ion-navbar ion-title")).getAttribute("innerHTML")).toContain("Dealer Accounts");
+				expect(element(by.css("ion-navbar ion-title.dealeraccounts")).getAttribute("innerHTML")).toContain("Dealer Accounts");
 			});
 		});
 	});

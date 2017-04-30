@@ -35,6 +35,7 @@ export class ReportsPage extends BaseView {
 	
 	// Fires when the page has loaded
 	ionViewDidLoad() {
+		this.createLoader("Loading...");
 		// Load each chart's data in sequence
 		this.dataSrv.loadChartsDataModels()
 		.then(() => this.dataSrv.loadChartsDataStates())
@@ -44,6 +45,7 @@ export class ReportsPage extends BaseView {
 			this.loadModelsChart(this.modelsCanvas, this.dataSrv.chartData.models);
 			this.loadStatesChart(this.statesCanvas, this.dataSrv.chartData.states);
 			this.loadTypesChart(this.typesCanvas, this.dataSrv.chartData.types);
+			this.dismissLoader();
 		});
 	}
 

@@ -56,32 +56,4 @@ export class MyApp {
 		this.reportsPage = ReportsPage;
   	}
 	
-	// Begin logout procedure
-	showLogoutConfirm() {
-		let confirm = this.alertCtrl.create({
-			title: 'Log out?',
-			message: 'Are you sure you want to log out?',
-			buttons: [
-				{
-					text: 'Cancel',
-					handler: () => {
-						// Do nothing
-					}
-				},
-				{
-					text: 'Log Out',
-					handler: () => {
-						// Close the menu and run the logout code
-						this.menuCtrl.close();
-						this.dataSrv.logout();
-						// Lock the user back into the login screen
-						let modal = this.modalCtrl.create(LoginPage, {}, {enableBackdropDismiss: false});
-						modal.present();
-					}
-				}
-			]
-		});
-		confirm.present();
-	}
-	
 }

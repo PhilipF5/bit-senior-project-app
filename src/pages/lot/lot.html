@@ -16,7 +16,7 @@
 <ion-content padding>
 	<ion-grid>
 		<ion-row>
-			<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+			<ion-col col-xs-12 col-lg-4>
 				<ion-card>
 					<!-- Lot details -->
 					<ion-card-header text-center>
@@ -54,6 +54,8 @@
 				<ion-card *ngIf="dataSrv.hasWonActiveLot()" text-center padding color="secondary">
 					<h2>Your dealer has won this lot!</h2>
 				</ion-card>
+			</ion-col>
+			<ion-col col-xs-12 col-lg-4>
 				<!-- Show a card based on lot status -->
 				<!-- If bidding is open -->
 				<ion-card *ngIf="dataSrv.activeLotIsOpen()" text-center padding color="go">
@@ -94,6 +96,8 @@
 					</ion-item>
 					<button ion-button round (click)="confirmBid()">Bid</button>
 				</ion-card>
+			</ion-col>
+			<ion-col col-xs-12 col-lg-4>
 				<!-- After the lot is opened, show history of bids -->
 				<ion-card *ngIf="dataSrv.auctionTiming != 'upcoming'">
 					<ion-card-header>
