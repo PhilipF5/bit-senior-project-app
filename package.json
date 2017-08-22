@@ -1,7 +1,7 @@
 {
-  "name": "bit-senior-project-app",
+  "name": "senior-project-client",
   "author": "Philip Fulgham",
-  "homepage": "",
+  "version": "1.0.0-rc.1",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -69,5 +69,5 @@
       "locator": "ios"
     }
   ],
-  "description": "bit-senior-project-app: Ionic 2 hybrid app for Auction It project"
+  "description": "Ionic Framework hybrid app for Virginia Tech BIT senior project, Spring 2017"
 }
