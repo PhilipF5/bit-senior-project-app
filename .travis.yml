@@ -20,19 +20,13 @@ before_install:
 install:
 - npm install -g ionic@2.2.1 cordova@6.5.0
 - npm install -g angular-cli
-- npm install -g karma@1.6.0
-- npm install -g protractor@5.1.1
-- webdriver-manager update --standalone
 - npm install
 
 before_script:
 - google-chrome --version
-- nohup bash -c "webdriver-manager start 2>&1 &"
 
 script:
 - npm run ionic:build
-- protractor
-- karma start karma.conf.js --single-run
 
 deploy:
   provider: heroku
