@@ -18,10 +18,10 @@ before_install:
 - export CHROME_BIN=/usr/bin/google-chrome
 
 install:
-- npm install -g ionic cordova
+- npm install -g ionic@2.2.1 cordova@6.5.0
 - npm install -g angular-cli
-- npm install -g karma
-- npm install -g protractor
+- npm install -g karma@1.6.0
+- npm install -g protractor@5.1.1
 - webdriver-manager update --standalone
 - npm install
 
