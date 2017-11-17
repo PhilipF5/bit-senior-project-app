@@ -1,0 +1,41 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+- '7.4'
+
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+    - google-chrome-beta
+
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- export CHROME_BIN=/usr/bin/google-chrome
+
+install:
+- npm install -g ionic cordova
+- npm install -g angular-cli
+- npm install -g karma
+- npm install -g protractor
+- webdriver-manager update --standalone
+- npm install
+
+before_script:
+- google-chrome --version
+- nohup bash -c "webdriver-manager start 2>&1 &"
+
+script:
+- protractor
+- karma start karma.conf.js --single-run
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: S9JGB/FQ5ZHIf4vd5RjzSMrR8P8GQF19kC3Mmzvk2DFgC8gGPmaR+sBzAGXEfskbo+UgvB9xVjg4LEizPm1+pNj2QaUUDGEAhE7yEKXpLx+StqJWeD7b9KzaPhm+oBK63FMq+U6NqnMd46LnNSQn5VYWYaS/uJ6OweyNsQEOLaMyCM8reHq322YYRFxzQXFyc9z6wS1GjlgDbq2LqdvsK7/N+JOqBfnpMpmp3kyr5SdzvAIdSGMz7pVe4ZWrk9YYfFB1Mnx+2HKRsTW8bTb1J0hKwVT4WLWcsExxhsPSdw5SBgoutKPVm7CjfcK+sVavoNPSxyA6pPJMpRL9gdBoWRYdgN7lDrYtemMhvBKc89+FveB+ELyJSVHUMD3J+rsDlValVPqM2CODw5LvTXF+lDjEE6o1vQy9OW0A5yr/5t29buXNcoStgXLm7hIpeCNhXo+z3CXFDZg2h/uXnnmLNTII3jISioEArkVDRSegII/fuNYVIv9UfrET6DhxBiVgOMyvzoMPJlHCddpKkxs084DsSgRDMrJ7KlZAxuMYjF6Cerv/k8/ToLLvgs3bNr8388ee7wDkGrITUYFWV16Q93RUatjkUKl2dESMO3aecT4Y51vlc8esduT4UfieKBsAxkBb/MVk7ZEDqHUb+TltfIIrntke7zYasXfuuAhZ1WA=
+  app: fathomless-cliffs-99890
+  skip_cleanup: true
